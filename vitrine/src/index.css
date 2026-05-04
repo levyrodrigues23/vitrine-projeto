@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@theme {
+  --color-white: #e6e8e3;
+  --color-blue: #4b70e0;
+  --color-blue-dark: #3558c4;
+  --color-green-base: #b5e8c3;
+  --color-green-base-dark: #8dd4a3;
+  --color-red: #e50e0e;
+  --color-red-dark: #c00b0b;
+  --color-yellow: #fcf59b;
+  --color-black: #2b2c30;
+  --color-green-dark: #668c4d;
+  --color-gray-base: #575048;
+  --color-gray-base-dark: #3d3833;
+
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "Iosevka Charon Mono", monospace;
+}
