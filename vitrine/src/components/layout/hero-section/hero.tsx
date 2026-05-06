@@ -13,8 +13,10 @@ export default function Hero({
     return (
         <section>
             <Text as="h1" variant="title-1">{title}</Text>
-            <Text as="p" variant="body-md"> {subtitle} </Text>
-            <Carousel />
+            <Text as="p" variant="body-md">
+                {subtitle}
+            </Text>
+            <Carousel images={images} aria-label={title} />
         </section>
     )
 }

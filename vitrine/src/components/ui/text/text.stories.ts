@@ -20,7 +20,7 @@ export const Default: Story = {
 
 export const Title1: Story = {
   args: {
-    children: "Title 1",
+    children: "Esse aqui é o titulo 1",
     variant: "title-1",
     as: "h1",
   },
@@ -28,7 +28,7 @@ export const Title1: Story = {
 
 export const Title2: Story = {
   args: {
-    children: "Title 2",
+    children: "Esse aqui é o titulo 2",
     variant: "title-2",
     as: "h2",
   },
@@ -36,7 +36,7 @@ export const Title2: Story = {
 
 export const Title3: Story = {
   args: {
-    children: "Title 3",
+    children: "Esse aqui é o titulo 3",
     variant: "title-3",
     as: "h3",
   },
@@ -44,14 +44,28 @@ export const Title3: Story = {
 
 export const BodySmBold: Story = {
   args: {
-    children: "Small Bold Body",
+    children: "Esse aqui é o corpo sm bold",
     variant: "body-sm-bold",
   },
 };
 
 export const BodyMdBold: Story = {
   args: {
-    children: "Medium Bold Body",
+    children: "Esse aqui é o corpo md bold",
     variant: "body-md-bold",
   },
 };
+
+export const bodyLg: Story = {
+  args:{
+    children: "Esse aqui é o corpo lg",
+    variant: "body-lg"
+  }
+}
+
+export const bodyLgBold: Story = {
+  args:{
+    children: "Esse aqui é o corpo lg bold",
+    variant: "body-lg-bold"
+  }
+}

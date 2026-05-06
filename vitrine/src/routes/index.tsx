@@ -14,7 +14,7 @@ import { ProducaoCientificaPage } from '../pages/producao-cientifica/producao-ci
 import { ProducaoTecnicaPage } from '../pages/producao-tecnica/producao-tecnica.page'
 import { ProfessoresPage } from '../pages/professores/professores.page'
 import ComponentsExamplesPage from '../pages/components-examples/components-examples'
-import Layout from '../components/layout/layout'
+import Layout from '../components/layout/main-layout/layout'
 
 export const router = createBrowserRouter([
     {

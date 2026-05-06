@@ -32,14 +32,21 @@ export const buttonVariants = cva("group rounded-full text-center inline-flex it
 
 
 
-interface ButtonProps extends VariantProps<typeof buttonVariants>, Omit<React.ComponentProps<"button">, "size" | "disabled"> {
-
-}
+export interface ButtonProps
+    extends VariantProps<typeof buttonVariants>,
+        Omit<React.ComponentProps<"button">, "size" | "disabled"> {}
 
 
 
 export function Button({ size, variant, className, disabled, children, ...props }: ButtonProps) {
-    return <button className={buttonVariants({ size, variant, disabled, className })} {...props}>
-        {children}
-    </button>
+    return (
+        <button
+            type="button"
+            className={buttonVariants({ size, variant, disabled, className })}
+            disabled={Boolean(disabled)}
+            {...props}
+        >
+            {children}
+        </button>
+    );
 }

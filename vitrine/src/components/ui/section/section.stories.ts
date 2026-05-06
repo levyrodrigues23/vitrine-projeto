@@ -13,8 +13,8 @@ type Story = StoryObj<typeof Section>;
 
 export const Default: Story = {
   args: {
-    title: "Section Title",
-    description: "This is a description for the section.",
+    title: "Professores",
+    description: "essa seção trata a respeito dos professores",
     children: "Section content goes here.",
   },
 };
