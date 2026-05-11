@@ -32,7 +32,7 @@ export default function Carousel({
             role="region"
             aria-roledescription="carousel"
             aria-label={ariaLabel ?? "Carrossel de imagens"}
-            className="relative w-full aspect-video overflow-hidden rounded-xl bg-gray-200"
+            className="relative max-w-2xl w-full aspect-video overflow-hidden rounded-xl bg-gray-200"
         >
             <img
                 src={images[index]}
@@ -44,7 +44,7 @@ export default function Carousel({
                 <>
                     <button
                         type="button"
-                        onClick={goPrev}
+                        onClick={goPrev} 
                         className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/45 px-3 py-2 text-white backdrop-blur-sm hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                         aria-label="Slide anterior"
                     >

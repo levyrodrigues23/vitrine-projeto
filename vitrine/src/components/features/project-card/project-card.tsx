@@ -7,9 +7,10 @@ export interface ProjectCardProps {
     description: string;
     category: string;
     imageUrl?: string;
+    keywords?: string[];
 }
 
-export function ProjectCard({ title, description, category, imageUrl }: ProjectCardProps) {
+export function ProjectCard({ title, description, category, imageUrl, keywords }: ProjectCardProps) {
     return (
         <Card variant="interactive" className="overflow-hidden flex flex-col h-full">
             {imageUrl && (
@@ -33,6 +34,15 @@ export function ProjectCard({ title, description, category, imageUrl }: ProjectC
                 </CardDescription>
             </CardContent>
             <CardFooter>
+                {keywords && keywords.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                        {keywords.map((keyword, index) => (
+                            <Badge key={index} variant="outline">
+                                {keyword}
+                            </Badge>
+                        ))}
+                    </div>
+                )}
                 <Button variant="primary" className="w-full">Ver Projeto</Button>
             </CardFooter>
         </Card>

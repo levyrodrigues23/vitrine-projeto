@@ -24,4 +24,5 @@ export const Interactive: Story = {
     children: "Interactive Card",
     className: "p-6",
   },
+  
 };

@@ -10,11 +10,11 @@ export function ProfessorCard({ name, imageUrl }: ProfessorCardProps) {
     return (
         <Card variant="interactive" className="overflow-hidden flex flex-col h-full">
             {imageUrl && (
-                <div className="w-full h-48 overflow-hidden">
+                <div className="w-full h-48 overflow-hidden ">
                     <img 
                         src={imageUrl} 
                         alt={name} 
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        className="w-full h-full object-cover object-top transition-transform duration-300 hover:scale-105"
                     />
                 </div>
             )}
