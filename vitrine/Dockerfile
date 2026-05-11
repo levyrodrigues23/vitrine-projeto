@@ -1,16 +1,22 @@
 FROM node:20-alpine AS build
 
+# Evita baixar navegadores pesados do Playwright
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+
 WORKDIR /app
 
-COPY package*.json ./
+# Ativa o pnpm no container (seu projeto usa pnpm)
+RUN corepack enable pnpm
+    
+# Copia os arquivos do pacote e o lockfile do pnpm
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm install
+# Instala de forma muito mais rápida usando o pnpm
+RUN pnpm install
 
 COPY . .
 
-RUN npm run build
-
-
+RUN pnpm run build
 
 FROM nginx:stable-alpine
 

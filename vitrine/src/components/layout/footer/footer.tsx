@@ -17,8 +17,8 @@ export function Footer() {
     return (
         <footer className="mt-auto bg-blue text-white">
             <div className="container mx-auto flex flex-col gap-10 px-4 py-10 md:flex-row md:items-start md:justify-between md:gap-8">
-                <div className="flex flex-col items-center gap-3 md:max-w-xs md:items-start">
-                    <img src="/logo-ufc.png" alt="Universidade Federal do Ceará" className="h-12 w-auto" />
+                <div className="flex flex-col items-center gap-7 md:max-w-xs md:items-start">
+                    <img src="/logo-ufc.png" alt="Universidade Federal do Ceará" className="md:h-30 h-15 w-auto" />
                     <Text as="p" variant="body-md" className="text-center text-white/90 md:text-left">
                         Universidade Federal do Ceará
                     </Text>
@@ -31,7 +31,7 @@ export function Footer() {
                             className="text-white/80 transition hover:text-white"
                             aria-label="Acessar o site da ufc itapajé"
                         >
-                            <Icon svg={Chrome} size="md" className="text-current" />
+                            <Icon svg={Chrome} size="lg" className="text-current" />
                         </a>
                         <a
                             href="https://www.instagram.com/ufc.itapaje?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
@@ -40,7 +40,7 @@ export function Footer() {
                             className="text-white/80 transition hover:text-white"
                             aria-label="instagram da universidade federal do ceará - campus itapajé"
                         >
-                            <Icon svg={Insta} size="md" className="text-current" />
+                            <Icon svg={Insta} size="lg" className="text-current" />
                         </a>
                     </div>
                 </div>
