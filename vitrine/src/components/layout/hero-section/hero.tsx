@@ -1,15 +1,33 @@
-import { Input, Text } from "../../ui";
+import { Icon, Input, Text } from "../../ui";
 import Carousel from "../../ui/carousel/carousel";
 import Separator from "../separator/separator";
+import HomeIcon from "../../../assets/icons/home-icon.svg?react";
 
 interface HeroProps {
   title: string;
   subtitle: string;
-  images: string[];
+  images?: string[];
   className?: string;
+  showSearch?: boolean;
+  showSeparator?: boolean;
+  showIcon?: boolean;
+  iconSvg?: React.FC<React.ComponentProps<"svg">>;
+  iconSize?: "sm" | "md" | "lg" | "xl" | "xl2" | "xl3";
 }
 
-export default function Hero({ title, subtitle, images }: HeroProps) {
+export default function Hero({
+  title,
+  subtitle,
+  images,
+  showSearch = false,
+  showSeparator = false,
+  showIcon = false,
+  iconSvg,
+  iconSize,
+}: HeroProps) {
+  const iconComponent = iconSvg ?? HomeIcon;
+  const resolvedIconSize = iconSize ?? "xl3";
+
   return (
     <section className="mb-12">
       <div
@@ -17,20 +35,27 @@ export default function Hero({ title, subtitle, images }: HeroProps) {
         aria-label={title}
       >
         <div className="space-y-4 md:m-30">
-          <Text as="h1" className="" variant="title-1">
+          
+          <div className="flex items-center gap-5">
+             <Text as="h1" className="" variant="title-1">
             {title}
           </Text>
-          <Text as="p" variant="body-lg" className="md:w-115">
+          {showIcon ? (
+            <Icon svg={iconComponent} size={resolvedIconSize} />
+          ) : null}
+          </div>
+         
+          <Text as="p" variant="body-lg" className="md:w-160">
             {subtitle}
           </Text>
-          <Input placeholder="Buscar projetos..." className="max-w-lg" />
+          {showSearch ? (
+            <Input placeholder="Buscar projetos..." className="max-w-lg" />
+          ) : null}
         </div>
         <Carousel images={images} aria-label={title} />
       </div>
 
-      <div className="mt-6 w-screen relative left-1/2 right-1/2 -translate-x-1/2">
-        <Separator/>
-      </div>
+      <div className="mt-6 w-full">{showSeparator && <Separator />}</div>
     </section>
   );
 }

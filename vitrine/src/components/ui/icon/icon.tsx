@@ -12,6 +12,8 @@ export const iconVariants = cva("", {
       md: "w-6 h-6",
       lg: "w-8 h-8",
       xl: "w-10 h-10",
+      xl2: "w-12 h-12",
+      xl3: "w-16 h-16",
     }
   },
   defaultVariants: {
@@ -28,8 +30,8 @@ interface IconsProps extends ComponentProps<"svg">, VariantProps<typeof iconVari
 
 
 
-export default function Icon({ svg: SvgComponent, animate, className, ...props }: IconsProps) {
+export default function Icon({ svg: SvgComponent, animate, size,  className, ...props }: IconsProps) {
   return (
-    <SvgComponent className={iconVariants({ animate, className })} {...props} />
+    <SvgComponent className={iconVariants({ animate, size, className })} {...props} />
   )
 }

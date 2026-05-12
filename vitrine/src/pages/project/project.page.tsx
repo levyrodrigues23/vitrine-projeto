@@ -14,23 +14,24 @@ export function ProjectPage() {
       <div className="relative w-full min-h-120">
         <div className="absolute inset-0 bg-[url('https://www.sintufce.org.br/wp-content/uploads/2024/10/Itapaje-scaled.jpg')] bg-cover bg-center z-0" />
         <div className="absolute inset-0 bg-black/50 z-0" />
-          {featuredProjects.map((project) => (
+          
+        <div className="relative z-10 p-6 mt-100 mb-10 space-y-4">
+            {featuredProjects.map((project) => (
             <Badge key={project.id} variant="tertiary">
               {project.category}
             </Badge>
           ))}
-        <div className="relative z-10 p-6">
           <Text as="h1" variant="title-2" className="text-white">
             Engedados: Escola de inovação e cocriação em engenharia de software
             e ciencia de dados
           </Text>
           <div className="flex justify-start items-center">
             <Text as="p" className="text-white  ">
-            Palavras‑chaves
+            Palavras‑chaves: 
           </Text>
           {featuredProjects.map((project) => (
-            <Badge key={project.id} variant="tertiary" className="">
-              {project.keywords?.join(", ")}
+            <Badge key={project.id} variant="tertiary" >
+              {project.keywords}
             </Badge>
           ))}
           </div>

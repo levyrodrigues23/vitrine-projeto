@@ -4,7 +4,8 @@ import Text from "../text/text";
 interface SectionProps extends React.ComponentProps<"section">{
     title: string;
     description?: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
+    
 }
 
 export default function Section({ title, description, children, ...props}: SectionProps) {
