@@ -1,4 +1,12 @@
-﻿export enum ProjectCategory {
+﻿export interface WorkDone {
+  title: string;
+  description: string;
+  category: ProjectCategory;
+  imageUrl?: string;
+  keywords?: string[];
+}
+
+export enum ProjectCategory {
   Inovacao = "Inovacao",
   Extensao = "Extensao",
   Cientifico = "Cientifico",
@@ -16,4 +24,5 @@ export interface Project {
   imageUrl?: string;
   link?: string;
   keywords?: string[];
+  worksDone?: WorkDone[];
 }

@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 export const separatorVariants = cva("shrink-0 bg-gray-base/30", {
     variants: {
         variant: {
-            horizontal: "h-px min-h-px w-full",
+            horizontal: " min-h-px w-full",
             vertical: "h-full min-h-16 w-px min-w-px self-stretch",
         },
     },

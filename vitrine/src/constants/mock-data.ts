@@ -7,9 +7,17 @@ export const MOCK_PROJECTS: Project[] = [
     title: "Sistema de Gestão Acadêmica",
     description: "Plataforma web para gerenciamento de cursos, alunos e notas",
     category: ProjectCategory.Pesquisa,
-    imageUrl:
-      "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
     keywords: ["Sistema", "Gestão", "Acadêmica"],
+    worksDone: [
+  {
+    title: "Sistema X",
+    description: "Descricao...",
+    category: ProjectCategory.Cientifico,
+    imageUrl: "...",
+    keywords: ["IA", "Dados"],
+  },
+],
   },
   {
     id: "2",
@@ -19,6 +27,15 @@ export const MOCK_PROJECTS: Project[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop",
     keywords: ["App", "Mobile", "Eventos"],
+    worksDone: [
+      {
+        title: "Trabalho 1",
+        description: "Descrição do trabalho 1",
+        category: ProjectCategory.Cientifico,
+        imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
+        keywords: ["IA", "Dados"],
+      },
+    ],
   },
   {
     id: "3",
@@ -27,6 +44,15 @@ export const MOCK_PROJECTS: Project[] = [
     category: ProjectCategory.Cientifico,
     imageUrl:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop",
+    worksDone: [
+      {
+        title: "Trabalho 2",
+        description: "Descrição do trabalho 2",
+        category: ProjectCategory.Cientifico,
+        imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
+        keywords: ["IA", "Dados"],
+      },
+    ],
   },
   {
     id: "4",
@@ -35,6 +61,15 @@ export const MOCK_PROJECTS: Project[] = [
     category: ProjectCategory.Cientifico,
     imageUrl:
       "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=300&fit=crop",
+    worksDone: [
+      {
+        title: "Trabalho 3",
+        description: "Descrição do trabalho 3",
+        category: ProjectCategory.Cientifico,
+        imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
+        keywords: ["IA", "Dados"],
+      },
+    ],
   },
   {
     id: "5",
@@ -43,6 +78,15 @@ export const MOCK_PROJECTS: Project[] = [
     category: ProjectCategory.Ensino,
     imageUrl:
       "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop",
+    worksDone: [
+      {
+        title: "Trabalho 4",
+        description: "Descrição do trabalho 4",
+        category: ProjectCategory.Cientifico,
+        imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
+        keywords: ["IA", "Dados"],
+      },
+    ],
   },
   {
     id: "6",
@@ -51,6 +95,15 @@ export const MOCK_PROJECTS: Project[] = [
     category: ProjectCategory.Tecnico,
     imageUrl:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop",
+    worksDone: [
+      {
+        title: "Trabalho 5",
+        description: "Descrição do trabalho 5",
+        category: ProjectCategory.Cientifico,
+        imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
+        keywords: ["IA", "Dados"],
+      },
+    ],
   },
 ];
 

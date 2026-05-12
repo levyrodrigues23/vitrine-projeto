@@ -10,11 +10,12 @@ import { LoginPage } from '../pages/login/login.page'
 import { MinicursosPage } from '../pages/minicursos/minicursos.page'
 import { NotFoundPage } from '../pages/notfound/not-found.page'
 import { PortalEgressosPage } from '../pages/portal-egressos/portal-egressos.page'
-import { ProducaoCientificaPage } from '../pages/producao-cientifica/producao-cientifica.page'
 import { ProducaoTecnicaPage } from '../pages/producao-tecnica/producao-tecnica.page'
 import { ProfessoresPage } from '../pages/professores/professores.page'
 import ComponentsExamplesPage from '../pages/components-examples/components-examples'
 import Layout from '../components/layout/main-layout/layout'
+import { ProjectPage } from '../pages/project/project.page'
+import ProducaoCientificaPage from '../pages/producao-cientifica/producao-cientifica.page'
 
 export const router = createBrowserRouter([
     {
@@ -61,6 +62,14 @@ export const router = createBrowserRouter([
             {
                 path: "components-examples",
                 element: <ComponentsExamplesPage/>
+            },
+            {
+                path: "/projetos",
+                element: <ProjectPage/>
+            },
+            {
+                path: "/projetos/:id",
+                element: <ProjectPage/>
             }
         ]
     },
