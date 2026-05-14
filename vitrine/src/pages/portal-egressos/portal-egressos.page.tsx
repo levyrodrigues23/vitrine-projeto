@@ -1,7 +1,12 @@
+import Hero from "../../components/layout/hero-section/hero";
+import { Section } from "../../components/ui";
+
 export function PortalEgressosPage() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Portal de Egressos</h1>
-    </div>
-  )
+    <>
+      <Hero title="Portal de Egressos" subtitle="" />
+      <Section title="O que voce encontra" />
+      <Section title="Beneficios" showSeparator={false} />
+    </>
+  );
 }

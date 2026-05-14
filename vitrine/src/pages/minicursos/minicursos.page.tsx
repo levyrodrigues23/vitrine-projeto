@@ -1,7 +1,12 @@
+import Hero from "../../components/layout/hero-section/hero";
+import { Section } from "../../components/ui";
+
 export function MinicursosPage() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Minicursos</h1>
-    </div>
-  )
+    <>
+      <Hero title="Minicursos" subtitle="" />
+      <Section title="Cursos em destaque" />
+      <Section title="Como funciona" showSeparator={false} />
+    </>
+  );
 }

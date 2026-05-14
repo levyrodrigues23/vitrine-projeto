@@ -1,7 +1,12 @@
+import Hero from "../../components/layout/hero-section/hero";
+import { Section } from "../../components/ui";
+
 export function AgendaPage() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Agenda</h1>
-    </div>
-  )
+    <>
+      <Hero title="Agenda" subtitle="" />
+      <Section title="Proximos eventos" />
+      <Section title="Como participar" showSeparator={false} />
+    </>
+  );
 }

@@ -1,7 +1,12 @@
+import Hero from "../../components/layout/hero-section/hero";
+import { Section } from "../../components/ui";
+
 export function ProfessoresPage() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Professores</h1>
-    </div>
-  )
+    <>
+      <Hero title="Professores" subtitle="" />
+      <Section title="Corpo docente" />
+      <Section title="Areas de atuacao" showSeparator={false} />
+    </>
+  );
 }

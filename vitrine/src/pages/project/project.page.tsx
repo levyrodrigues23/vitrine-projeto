@@ -3,128 +3,156 @@ import { MOCK_PROJECTS } from "../../constants/mock-data";
 import { ProjectCategory } from "../../types/project.types";
 import { WorksDone } from "../../components/features/trabalhos-feitos/trabalhos-feitos";
 import Separator from "../../components/layout/separator/separator";
+import { ProfessorCard } from "../../components/features/professor-card/professor-card";
+import { MOCK_TEACHERS } from "../../constants/mock-data";
 
 export function ProjectPage() {
   const featuredProjects = MOCK_PROJECTS.filter(
     (project) => project.category === ProjectCategory.Cientifico,
   );
+  const featuredProject = featuredProjects[0];
+  const objectives = [
+    {
+      id: "01",
+      title: "Projeto qualquer",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+      id: "02",
+      title: "Projeto qualquer",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+      id: "03",
+      title: "Projeto qualquer",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+      id: "04",
+      title: "Projeto qualquer",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+  ];
 
   return (
     <div className="flex flex-col">
-      <div className="relative w-full min-h-120">
-        <div className="absolute inset-0 bg-[url('https://www.sintufce.org.br/wp-content/uploads/2024/10/Itapaje-scaled.jpg')] bg-cover bg-center z-0" />
-        <div className="absolute inset-0 bg-black/50 z-0" />
-          
-        <div className="relative z-10 p-6 mt-100 mb-10 space-y-4">
-            {featuredProjects.map((project) => (
-            <Badge key={project.id} variant="tertiary">
-              {project.category}
-            </Badge>
-          ))}
-          <Text as="h1" variant="title-2" className="text-white">
+      <section className="relative isolate min-h-[420px] overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.sintufce.org.br/wp-content/uploads/2024/10/Itapaje-scaled.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/45 to-black/20" />
+        <div
+          className="absolute inset-0]"
+          aria-hidden="true"
+        />
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-16 md:py-24">
+          <div className="flex flex-wrap items-center gap-2">
+            {featuredProject ? (
+              <Badge variant="secondary" className="ml-0 px-3 py-1 text-xs">
+                {featuredProject.category}
+              </Badge>
+            ) : null}
+            {featuredProject?.keywords?.map((keyword) => (
+              <Badge
+                key={keyword}
+                variant="outline"
+                className="ml-0 px-3 py-1 text-xs text-white border-white/60"
+              >
+                {keyword}
+              </Badge>
+            ))}
+          </div>
+          <Text as="h1" variant="title-2" className="text-white max-w-3xl">
             Engedados: Escola de inovação e cocriação em engenharia de software
             e ciencia de dados
           </Text>
-          <div className="flex justify-start items-center">
-            <Text as="p" className="text-white  ">
-            Palavras‑chaves: 
-          </Text>
-          {featuredProjects.map((project) => (
-            <Badge key={project.id} variant="tertiary" >
-              {project.keywords}
-            </Badge>
-          ))}
-          </div>
-          
-        </div>
-      </div>
-
-      <div className="mx-10 mt-10 space-y-4">
-        <Text as="h1" variant="title-3" className="text-black mt-4 ">
-          | Descrição do projeto
-        </Text>
-
-        <div className="mx-10 bg-transparent shadow-[-8px_0_20px_rgba(161,161,170,0.5)]  border-2 border-solid border-gray-300 p-8 pb-10 rounded-2xl h-auto md:max-w-300">
-          <Text className="p-10">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            tempus, nunc nec tempus vulputate, tortor ex mollis ipsum, in
-            hendrerit nulla nunc eget urna. Suspendisse potenti. Praesent
-            aliquam sagittis risus, at blandit risus porttitor nec. Integer
-            pharetra facilisis dignissim. Nullam auctor elit et vulputate
-            pharetra. Fusce ipsum dolor, condimentum et augue eget, tempor
-            rutrum arcu. Integer ultrices non justo in sodales. Nam cursus non
-            augue in volutpat. Nullam nec commodo tellus. Mauris egestas
-            tristique egestas. Donec at rhoncus magna, et consequat arcu.
-            Phasellus cursus congue augue ac ultrices.
+          <Text as="p" variant="body-lg" className="text-white/80 max-w-2xl">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </Text>
         </div>
-      </div>
-      <Separator className="md:mt-30" />
-      <div className="mx-10  space-y-4">
-        <Text as="h1" variant="title-3" className="text-black mb-10 mt-10">
-          | Objetivos
-        </Text>
+      </section>
 
-        <div className="flex justify-between items-center w-full space-x-3">
-          <div className="border border-zinc-300 border-l-4 border-l-black h-fit  p-4 rounded-2xl flex flex-col pr-15 md:w-100 ">
-            <Text as="h1" variant="title-3-normal">
-              1
-            </Text>
-            <Text variant="body-lg-bold">Projeto qualquer</Text>
-            <Text variant="body-md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Text>
-          </div>
-          <div className="border border-zinc-300 border-l-4 border-l-black h-fit  p-4 rounded-2xl flex flex-col pr-15 md:w-100">
-            <Text as="h1" variant="title-3-normal">
-              1
-            </Text>
-            <Text variant="body-lg-bold">Projeto qualquer</Text>
-            <Text variant="body-md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+      <div className="mx-auto w-full max-w-6xl px-6 py-12 space-y-12">
+        <section className="space-y-4" data-aos="fade-up">
+          <Text as="h2" variant="title-3" className="text-black">
+            | Descrição do projeto
+          </Text>
+          <div className="rounded-2xl border border-gray-base/20 bg-white/90 p-8 shadow-sm">
+            <Text variant="body-md" className="text-gray-base">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+              tempus, nunc nec tempus vulputate, tortor ex mollis ipsum, in
+              hendrerit nulla nunc eget urna. Suspendisse potenti. Praesent
+              aliquam sagittis risus, at blandit risus porttitor nec. Integer
+              pharetra facilisis dignissim. Nullam auctor elit et vulputate
+              pharetra. Fusce ipsum dolor, condimentum et augue eget, tempor
+              rutrum arcu. Integer ultrices non justo in sodales. Nam cursus non
+              augue in volutpat. Nullam nec commodo tellus. Mauris egestas
+              tristique egestas. Donec at rhoncus magna, et consequat arcu.
+              Phasellus cursus congue augue ac ultrices.
             </Text>
           </div>
-          <div className="border border-zinc-300 border-l-4 border-l-black h-fit  p-4 rounded-2xl flex flex-col pr-15 md:w-100">
-            <Text as="h1" variant="title-3-normal">
-              1
-            </Text>
-            <Text variant="body-lg-bold">Projeto qualquer</Text>
-            <Text variant="body-md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Text>
-          </div>
-          <div className="border border-zinc-300 border-l-4 border-l-black h-fit  p-4 rounded-2xl flex flex-col pr-15 md:w-100">
-            <Text as="h1" variant="title-3-normal">
-              1
-            </Text>
-            <Text variant="body-lg-bold">Projeto qualquer</Text>
-            <Text variant="body-md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Text>
-          </div>
-        </div>
+        </section>
 
-        <Separator className="md:mt-30" />
-        <Text as="h1" variant="title-3" className="text-black mb-10 mt-10 ">
-          | Trabalhos feitos
-        </Text>
-        <div className="flex justify-between items-center w-full space-x-3">
-          {featuredProjects[0].worksDone?.map((work, index) => (
-            <WorksDone key={index} {...work} />
-          ))}
-        </div>
+        <Separator spacing="lg" />
+
+        <section className="space-y-6" data-aos="fade-up">
+          <Text as="h2" variant="title-3" className="text-black">
+            | Objetivos
+          </Text>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {objectives.map((objective) => (
+              <div
+                key={objective.id}
+                className="rounded-2xl border border-gray-base/20 bg-white p-5 shadow-sm space-y-2"
+              >
+                <Text
+                  as="span"
+                  variant="body-md-bold"
+                  className="text-gray-base-dark"
+                >
+                  {objective.id}
+                </Text>
+                <Text as="h3" variant="body-lg-bold" className="text-black">
+                  {objective.title}
+                </Text>
+                <Text variant="body-md">{objective.description}</Text>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <Separator spacing="lg" />
+
+        <section className="space-y-6" data-aos="fade-up">
+          <Text as="h2" variant="title-3" className="text-black">
+            | Professores envolvidos
+          </Text>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {MOCK_TEACHERS.map((teacher) => (
+              <ProfessorCard
+                key={teacher.id}
+                name={teacher.name}
+                imageUrl={teacher.imageUrl}
+              />
+            ))}
+          </div>
+        </section>
+
+        <Separator spacing="lg" />
+
+        <section className="space-y-6" data-aos="fade-up">
+          <Text as="h2" variant="title-3" className="text-black">
+            | Trabalhos feitos
+          </Text>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredProject?.worksDone?.map((work, index) => (
+              <WorksDone key={index} {...work} />
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

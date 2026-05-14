@@ -1,7 +1,19 @@
+import Hero from "../../components/layout/hero-section/hero";
+import ExportIcon from "../../assets/icons/export.svg?react";
+import { Section } from "../../components/ui";
+
 export function ProducaoTecnicaPage() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Produção Técnica</h1>
-    </div>
-  )
+    <>
+      <Hero
+        title="Producao Tecnica"
+        subtitle=""
+        iconSvg={ExportIcon}
+        showIcon
+        iconSize="xl3"
+      />
+      <Section title="Entregaveis" />
+      <Section title="Fluxo de publicacao" showSeparator={false} />
+    </>
+  );
 }

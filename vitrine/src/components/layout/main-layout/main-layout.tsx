@@ -1,4 +1,6 @@
-import { Outlet } from "react-router";
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router";
+import AOS from "aos";
 import {
   HEADER_NAV_LINKS,
   MENU_NAV_LINKS,
@@ -8,6 +10,21 @@ import MainContent from "../main-content/main-content";
 import MenuResponsive from "../menu-responsive/menu-responsive";
 
 export default function MainLayout() {
+  const location = useLocation();
+
+  useEffect(() => {
+    AOS.init({
+      duration: 500,
+      easing: "ease-out",
+      offset: 120,
+      once: true,
+    });
+  }, []);
+
+  useEffect(() => {
+    AOS.refresh();
+  }, [location.pathname]);
+
   return (
     <div className="flex min-h-screen flex-col">
       <MenuResponsive

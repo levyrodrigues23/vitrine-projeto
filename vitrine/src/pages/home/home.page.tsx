@@ -1,10 +1,9 @@
 import Hero from "../../components/layout/hero-section/hero";
-import { Card, Input, Section } from "../../components/ui";
+import { Section } from "../../components/ui";
 import { ProjectCard } from "../../components/features";
 import { MOCK_PROJECTS } from "../../constants/mock-data";
 import banner1 from "../../assets/images/teste1.jpg";
 import banner2 from "../../assets/images/teste2.jpg";
-import Separator from "../../components/layout/separator/separator";
 import { ProfessorCard } from "../../components/features/professor-card/professor-card";
 import { MOCK_TEACHERS } from "../../constants/mock-data";
 
@@ -16,12 +15,11 @@ export function HomePage() {
     <>
       <Hero
         title="Vitrine de Projetos"
-        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        subtitle="Pesquisa, inovacao e extensao do Campus Itapaje em um so lugar. Encontre projetos, areas e professores e acompanhe os resultados."
         images={[banner1, banner2]}
         showSearch
+        showSeparator
       />
-      
-      
 
       <Section
         title="Projetos em Destaque"
@@ -40,30 +38,24 @@ export function HomePage() {
         </div>
       </Section>
 
-      
-
       <Section
-        title="Professores"
-        description="Veja os professores que fazem parte dos projetos."
+        title="Atalhos por categoria"
+        description="Encontre projetos por categoria e área de interesse."
       >
-        
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {featuredProfessors.map((professor)=>(
-              <ProfessorCard
-                key={professor.id}
-                name={professor.name}
-                imageUrl={professor.imageUrl}
-              />
-            ))}
-          </div>
-        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {featuredProfessors.map((professor) => (
+            <ProfessorCard
+              key={professor.id}
+              name={professor.name}
+              imageUrl={professor.imageUrl}
+            />
+          ))}
+        </div>
       </Section>
 
-      
-
       <Section
-        title="Notícias"
-        description="Veja as últimas notícias que saíram na mídia sobre a UFC."
+        title="Projetos em destaque"
+        description="Confira os projetos mais recentes e populares em nosso campus!"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           {[1, 2, 3].map((i) => (
@@ -72,7 +64,7 @@ export function HomePage() {
               className="bg-green-base rounded-lg p-6 hover:shadow-lg transition-shadow"
             >
               <div className="h-40 bg-white/30 rounded mb-4" />
-              <h3 className="font-semibold text-black mb-2">Notícia {i}</h3>
+              <h3 className="font-semibold text-black mb-2">Projeto {i}</h3>
               <p className="text-sm text-gray-base">
                 Conteúdo será carregado em breve...
               </p>
@@ -80,8 +72,6 @@ export function HomePage() {
           ))}
         </div>
       </Section>
-
-      
     </>
   );
 }

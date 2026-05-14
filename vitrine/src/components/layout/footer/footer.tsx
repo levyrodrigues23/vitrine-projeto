@@ -16,7 +16,7 @@ export function Footer() {
 
     return (
         <footer className="mt-auto bg-blue text-white">
-            <div className="container mx-auto flex flex-col gap-10 px-4 py-10 md:flex-row md:items-start md:justify-between md:gap-8">
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-10 md:flex-row md:items-start md:justify-between md:gap-8">
                 <div className="flex flex-col items-center gap-7 md:max-w-xs md:items-start">
                     <img src="/logo-ufc.png" alt="Universidade Federal do Ceará" className="md:h-30 h-15 w-auto" />
                     <Text as="p" variant="body-md" className="text-center text-white/90 md:text-left">
@@ -107,7 +107,7 @@ export function Footer() {
 
             <Separator variant="horizontal" className="bg-white/15" />
 
-            <div className="container mx-auto px-4 py-4">
+            <div className="mx-auto w-full max-w-6xl px-6 py-4">
                 <Text
                     as="p"
                     variant="body-md"

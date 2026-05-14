@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
+    "aos": "^2.3.4",
     "axios": "^1.16.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -33,6 +34,7 @@
     "@storybook/react": "^10.3.6",
     "@storybook/react-vite": "^10.3.6",
     "@tailwindcss/vite": "^4.2.4",
+    "@types/aos": "^3.0.8",
     "@types/babel__core": "^7.20.5",
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",

@@ -4,4 +4,6 @@ dist
 .storybook
 .vscode
 Dockerfile
+.dockerignore
+.gitignore
 README.md

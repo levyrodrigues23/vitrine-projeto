@@ -1,4 +1,4 @@
-type Artigo = {
+export type Artigo = {
   id: string;
   title: string;
   authors: string[];
@@ -11,7 +11,7 @@ type Artigo = {
   projectId?: string;
 };
 
-type Congresso = {
+export type Congresso = {
   id: string;
   event: string;
   location: string;

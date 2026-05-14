@@ -19,6 +19,7 @@ export default function Hero({
   title,
   subtitle,
   images,
+  className,
   showSearch = false,
   showSeparator = false,
   showIcon = false,
@@ -27,35 +28,56 @@ export default function Hero({
 }: HeroProps) {
   const iconComponent = iconSvg ?? HomeIcon;
   const resolvedIconSize = iconSize ?? "xl3";
+  const hasImages = Boolean(images?.length);
 
   return (
-    <section className="mb-12">
+    <section
+      className={`relative mb-12 overflow-hidden pb-6 md:pb-10 ${className ?? ""}`}
+    >
       <div
-        className="flex flex-col md:flex-row items-center justify-center gap-8 p-4"
+        className="absolute inset-0"
+        aria-hidden="true"
+      />
+      <div
+        className="relative mx-auto grid w-full max-w-6xl gap-10 px-6 py-12 md:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] md:items-center"
         aria-label={title}
       >
-        <div className="space-y-4 md:m-30">
-          
-          <div className="flex items-center gap-5">
-             <Text as="h1" className="" variant="title-1">
-            {title}
-          </Text>
-          {showIcon ? (
-            <Icon svg={iconComponent} size={resolvedIconSize} />
-          ) : null}
+        <div className="space-y-5 text-left">
+          <div className="flex items-center gap-4">
+            <Text as="h1" className="tracking-tight" variant="title-1">
+              {title}
+            </Text>
+            {showIcon ? (
+              <Icon svg={iconComponent} size={resolvedIconSize} />
+            ) : null}
           </div>
-         
-          <Text as="p" variant="body-lg" className="md:w-160">
-            {subtitle}
-          </Text>
+
+          {subtitle ? (
+            <Text
+              as="p"
+              variant="body-lg"
+              className="text-gray-base-dark max-w-2xl"
+            >
+              {subtitle}
+            </Text>
+          ) : null}
           {showSearch ? (
-            <Input placeholder="Buscar projetos..." className="max-w-lg" />
+            <Input
+              placeholder="Buscar projetos..."
+              className="w-full max-w-md bg-white/90 shadow-sm backdrop-blur border-gray-base/20"
+            />
           ) : null}
         </div>
-        <Carousel images={images} aria-label={title} />
+        {hasImages ? (
+          <div className="w-full max-w-md md:max-w-lg md:justify-self-end">
+            <Carousel images={images} aria-label={title} />
+          </div>
+        ) : null}
       </div>
 
-      <div className="mt-6 w-full">{showSeparator && <Separator />}</div>
+      <div className="mt-6 w-full">
+        {showSeparator && <Separator spacing="sm" />}
+      </div>
     </section>
   );
 }

@@ -6,15 +6,18 @@
   keywords?: string[];
 }
 
-export enum ProjectCategory {
-  Inovacao = "Inovacao",
-  Extensao = "Extensao",
-  Cientifico = "Cientifico",
-  Tecnico = "Tecnico",
-  Tcc = "Tcc",
-  Ensino = "Ensino",
-  Pesquisa = "Pesquisa",
-}
+export const ProjectCategory = {
+  Inovacao: "Inovacao",
+  Extensao: "Extensao",
+  Cientifico: "Cientifico",
+  Tecnico: "Tecnico",
+  Tcc: "Tcc",
+  Ensino: "Ensino",
+  Pesquisa: "Pesquisa",
+} as const;
+
+export type ProjectCategory =
+  (typeof ProjectCategory)[keyof typeof ProjectCategory];
 
 export interface Project {
   id: string;

@@ -1,7 +1,12 @@
+import Hero from "../../components/layout/hero-section/hero";
+import { Section } from "../../components/ui";
+
 export function EmpreendedorismoPage() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Empreendedorismo</h1>
-    </div>
-  )
+    <>
+      <Hero title="Empreendedorismo" subtitle="" />
+      <Section title="Programas e iniciativas" />
+      <Section title="Como participar" showSeparator={false} />
+    </>
+  );
 }
