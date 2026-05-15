@@ -1,4 +1,4 @@
-import Hero from "../../components/layout/hero-section/hero";
+import PageHero from "../../components/layout/page-hero/page-hero";
 import { Card, Section, Text } from "../../components/ui";
 
 export function AdminPage() {
@@ -33,9 +33,9 @@ export function AdminPage() {
 
   return (
     <>
-      <Hero
-        title="Administracao"
-        subtitle="Area interna para gerenciar projetos e conteudo da vitrine."
+      <PageHero
+        title="Administração"
+        subtitle="Área interna para gerenciar projetos e conteúdo da vitrine."
       />
       <Section
         title="Acoes principais"

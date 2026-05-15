@@ -11,7 +11,7 @@ export const buttonVariants = cva("group rounded-full text-center inline-flex it
                 secondary: "bg-gradient-to-br from-green-base to-green-base-dark hover:from-green-base-dark hover:to-green-base text-black border-green-base",
                 tertiary: "bg-gradient-to-br from-red to-red-dark hover:from-red-dark hover:to-red text-white border-red",
                 quaternary: "bg-gradient-to-br from-gray-base to-gray-base-dark hover:from-gray-base-dark hover:to-gray-base text-white border-gray-base",
-
+                
             },
             size: {
                 sm: "px-2 py-1",

@@ -41,7 +41,7 @@ export const MOCK_PROJECTS: Project[] = [
     id: "3",
     title: "Dashboard de Analytics",
     description: "Dashboard interativo para análise de dados em tempo real",
-    category: ProjectCategory.Cientifico,
+    category: ProjectCategory.Extensao,
     imageUrl:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop",
     worksDone: [

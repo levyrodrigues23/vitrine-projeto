@@ -1,19 +1,15 @@
-import Hero from "../../components/layout/hero-section/hero";
-import ExportIcon from "../../assets/icons/export.svg?react";
+import PageHero from "../../components/layout/page-hero/page-hero";
 import { Section } from "../../components/ui";
 
 export function ProducaoTecnicaPage() {
   return (
     <>
-      <Hero
-        title="Producao Tecnica"
-        subtitle=""
-        iconSvg={ExportIcon}
-        showIcon
-        iconSize="xl3"
+      <PageHero
+        title="Produção técnica"
+        subtitle="Artefatos, softwares e ferramentas desenvolvidos em disciplinas integradoras e projetos."
       />
-      <Section title="Entregaveis" />
-      <Section title="Fluxo de publicacao" showSeparator={false} />
+      <Section title="Entregáveis" />
+      <Section title="Fluxo de publicação" showSeparator={false} />
     </>
   );
 }

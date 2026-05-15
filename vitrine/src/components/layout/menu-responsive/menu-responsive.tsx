@@ -56,7 +56,7 @@ export default function MenuResponsive({
             className="hidden h-12 w-auto shrink-0 md:block"
           />
 
-          <nav className="hidden min-w-0 flex-1 items-center justify-end gap-4 font-sans md:flex lg:gap-5">
+          <nav className="hidden min-w-0 flex-1 flex-wrap items-center justify-end gap-x-3 gap-y-1 font-sans md:flex lg:gap-x-4">
             {headerNavLinks.map(({ label, to }) => (
               <NavLink
                 key={to}

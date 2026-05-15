@@ -29,6 +29,7 @@ export function HomePage() {
           {featuredProjects.map((project) => (
             <ProjectCard
               key={project.id}
+              to={`/projetos/${project.id}`}
               title={project.title}
               description={project.description}
               category={project.category}

@@ -1,12 +1,12 @@
-import Hero from "../../components/layout/hero-section/hero";
+import PageHero from "../../components/layout/page-hero/page-hero";
 import { Card, Section, Text } from "../../components/ui";
 
 export function LoginPage() {
   return (
     <>
-      <Hero
+      <PageHero
         title="Login"
-        subtitle="Acesso restrito para administracao e atualizacao de projetos."
+        subtitle="Acesso restrito para administração e atualização de conteúdo da vitrine."
       />
       <Section
         title="Area restrita"

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import {
   Card,
   CardDescription,
@@ -6,7 +7,7 @@ import {
   CardTitle,
 } from "../../ui/card/card";
 import { Badge } from "../../ui/badge/badge";
-import { Button } from "../../ui/button/button";
+import { Button, buttonVariants } from "../../ui/button/button";
 
 export interface ProjectCardProps {
   title: string;
@@ -14,6 +15,7 @@ export interface ProjectCardProps {
   category: string;
   imageUrl?: string;
   keywords?: string[];
+  to?: string;
 }
 
 export function ProjectCard({
@@ -22,18 +24,19 @@ export function ProjectCard({
   category,
   imageUrl,
   keywords,
+  to,
 }: ProjectCardProps) {
-  return (
+  const card = (
     <Card
       variant="interactive"
-      className="group overflow-hidden flex flex-col h-full rounded-2xl border border-gray-base/20 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-base/20 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1"
     >
-      <div className="relative w-full h-48 overflow-hidden">
+      <div className="relative h-48 w-full overflow-hidden">
         {imageUrl ? (
           <img
             src={imageUrl}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="h-full w-full bg-gradient-to-br from-blue to-green-base" />
@@ -61,17 +64,42 @@ export function ProjectCard({
               <Badge
                 key={index}
                 variant="outline"
-                className="ml-0 px-3 py-1 text-xs border-gray-base/30 text-gray-base-dark"
+                className="ml-0 border-gray-base/30 px-3 py-1 text-xs text-gray-base-dark"
               >
                 {keyword}
               </Badge>
             ))}
           </div>
         ) : null}
-        <Button variant="primary" size="md" className="w-full">
-          Ver Projeto
-        </Button>
+        {to ? (
+          <span
+            className={buttonVariants({
+              variant: "primary",
+              size: "md",
+              className: "pointer-events-none w-full justify-center",
+            })}
+          >
+            Ver projeto
+          </span>
+        ) : (
+          <Button variant="primary" size="md" className="w-full">
+            Ver Projeto
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
+
+  if (to) {
+    return (
+      <Link
+        to={to}
+        className="block h-full rounded-2xl text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-dark"
+      >
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 }

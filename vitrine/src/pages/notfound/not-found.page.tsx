@@ -1,12 +1,12 @@
-import Hero from "../../components/layout/hero-section/hero";
+import PageHero from "../../components/layout/page-hero/page-hero";
 import { Card, Section, Text } from "../../components/ui";
 
 export function NotFoundPage() {
   return (
     <>
-      <Hero
+      <PageHero
         title="404"
-        subtitle="Nao encontramos a pagina que voce tentou acessar."
+        subtitle="Não encontramos a página que você tentou acessar."
       />
       <Section
         title="Pagina nao encontrada"
