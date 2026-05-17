@@ -63,6 +63,28 @@ export default function Carousel({
 
                         </span>
                     </button>
+
+                    <div 
+                        className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 flex gap-2"
+                        role="tablist"
+                        aria-label="Seletor de slides"
+                    >
+                        {images.map((_, i) => (
+                            <button
+                                key={i}
+                                type="button"
+                                role="tab"
+                                aria-selected={i === index}
+                                aria-label={`Ir para slide ${i + 1}`}
+                                onClick={() => setIndex(i)}
+                                className={`h-2 rounded-full transition-all duration-300 ${
+                                    i === index 
+                                        ? 'w-8 bg-white' 
+                                        : 'w-2 bg-white/60 hover:bg-white/80'
+                                }`}
+                            />
+                        ))}
+                    </div>
                 </>
             ) : null}
         </div>
