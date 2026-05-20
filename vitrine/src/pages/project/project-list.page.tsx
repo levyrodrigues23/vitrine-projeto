@@ -48,7 +48,7 @@ export function ProjectListPage() {
     <>
       <PageHero
         title="Projetos"
-        subtitle="Pesquisa, extensão e inovação do campus — explore por categoria ou busque por palavra-chave."
+        subtitle="Veja os projetos da categoria selecionada ou busque por palavra-chave."
       />
       <section
         className="mx-auto w-full max-w-6xl px-6 pb-16"

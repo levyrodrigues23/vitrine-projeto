@@ -8,9 +8,9 @@ export const separatorVariants = cva("shrink-0 bg-gray-base/30", {
     },
     spacing: {
       none: "",
-      sm: "my-4",
-      md: "my-8",
-      lg: "my-12",
+      sm: "mt-4",
+      md: "mt-8",
+      lg: "mt-12",
     },
   },
   defaultVariants: {

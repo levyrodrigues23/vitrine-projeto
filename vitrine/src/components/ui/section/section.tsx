@@ -5,18 +5,21 @@ interface SectionProps extends React.ComponentProps<"section"> {
   title: string;
   description?: string;
   children?: React.ReactNode;
+  SectionWhite?: boolean;
   align?: "left" | "center";
   showSeparator?: boolean;
   separatorSpacing?: "none" | "sm" | "md" | "lg";
 }
 
-export default function Section({
+export default function 
+Section({
   title,
   description,
   children,
   align = "left",
   showSeparator = true,
   separatorSpacing = "md",
+  SectionWhite = false,
   className,
   ...props
 }: SectionProps) {
@@ -25,10 +28,10 @@ export default function Section({
   return (
     <section
       data-aos="fade-up"
-      className={`mx-auto w-full max-w-6xl px-6 py-12 space-y-4 ${alignmentClass} ${className ?? ""}`}
+      className={`mx-auto w-full max-w-6xl px-6 pb-12 space-y-4 ${alignmentClass} ${className ?? ""}`}
       {...props}
     >
-      <Text as="h2" variant="title-2">
+      <Text as="h2" variant="title-3">
         {title}
       </Text>
       {description ? (
@@ -37,11 +40,14 @@ export default function Section({
           variant="body-lg"
           className={`text-gray-base ${align === "center" ? "mx-auto max-w-2xl" : "max-w-2xl"}`}
         >
+          
           {description}
         </Text>
       ) : null}
-      {children}
-      {showSeparator ? <Separator spacing={separatorSpacing} /> : null}
+      
+      {SectionWhite ? <div className="bg-white rounded-2xl p-4 text-shadow-olive-200 shadow-2xl">{children}</div> : children}
+      
+      {showSeparator ? <Separator spacing={separatorSpacing}  variant="horizontal" /> : null}
     </section>
   );
 }
