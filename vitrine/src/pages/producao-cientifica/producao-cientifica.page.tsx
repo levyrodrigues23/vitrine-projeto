@@ -10,23 +10,33 @@ export default function ProducaoCientificaPage() {
         title="Produção científica"
         subtitle="Conheça os registros e resultados das pesquisas desenvolvidas no Campus Itapaje."
       />
-      <Section title="O que é a produção científica?">
-         <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
-            <Text className="pt-3 pl-3" as="h2" variant="body-lg">
-              Uma <strong>produção científica</strong> é o resultado de um processo de pesquisa, onde são gerados novos conhecimentos, descobertas ou soluções para problemas específicos. Ela pode se manifestar de diversas formas, como artigos publicados em revistas acadêmicas, apresentações em congressos, patentes, livros e outros tipos de publicações. 
-              <br /><br />
-              A produção científica é fundamental para o avanço do conhecimento em diferentes áreas e contribui para o desenvolvimento da sociedade, influenciando políticas públicas, práticas profissionais e inovações tecnológicas.
-            </Text>
+      <Section title="| O que é a produção científica?">
+        <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
+          <Text className="pt-3 pl-3" as="h2" variant="body-lg">
+            Uma <strong>produção científica</strong> é o resultado de um
+            processo de pesquisa, onde são gerados novos conhecimentos,
+            descobertas ou soluções para problemas específicos. Ela pode se
+            manifestar de diversas formas, como artigos publicados em revistas
+            acadêmicas, apresentações em congressos, patentes, livros e outros
+            tipos de publicações.
+            <br />
+            <br />A produção científica é fundamental para o avanço do
+            conhecimento em diferentes áreas e contribui para o desenvolvimento
+            da sociedade, influenciando políticas públicas, práticas
+            profissionais e inovações tecnológicas.
+          </Text>
 
-            <img
-              src={Paper}
-              alt="Icone de pessoa lendo um artigo"
-              className=" w-100 h-100 md:w-64 md:h-64 md:ml-6 "
-            />
-          </div>
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-         
-        </Text>
+          <img
+            src={Paper}
+            alt="Icone de pessoa lendo um artigo"
+            className=" w-100 h-100 md:w-64 md:h-64 md:ml-6 "
+          />
+        </div>
+        <Text
+          as="h2"
+          variant="body-lg"
+          className="text-center md:text-left"
+        ></Text>
       </Section>
       <Section title="Acessar categorias" showSeparator={false}>
         <Text as="h2" variant="body-lg" className="text-center md:text-left">

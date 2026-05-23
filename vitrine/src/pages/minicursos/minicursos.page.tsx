@@ -7,6 +7,8 @@ import {
   Text,
   buttonVariants,
 } from "../../components/ui";
+import Minicurso from "../../assets/icons/mini-course.svg"
+
 
 export function MinicursosPage() {
   const [filter, setFilter] = useState<"all" | "interno" | "externo">("all");
@@ -42,13 +44,20 @@ export function MinicursosPage() {
         title="Minicursos"
         subtitle="Cursos de curta duracao para publico interno e externo do campus."
       />
-      <Section title="Sobre os minicursos">
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-          Esta pagina lista as ofertas de minicursos do Campus Itapaje. As
-          atividades podem ser destinadas ao publico interno (alunos e
-          servidores) ou ao publico externo, com indicacao do tipo em cada
-          minicurso.
-        </Text>
+      <Section title="| Sobre os minicursos">
+        <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
+                <Text className="pt-3 pl-3" as="h2" variant="body-lg">
+                  O <strong>Portal de Egressos</strong> tem o objetivo de mostrar as atividades e ações dos estudantes egressos do Campus, destacando suas trajetórias profissionais, acadêmicas e de pesquisa. O portal é um espaço para compartilhar notícias, histórias de sucesso, oportunidades de networking e recursos para os egressos, fortalecendo a conexão entre a instituição e seus ex-alunos. Através do portal, os egressos podem se manter informados sobre eventos, programas de desenvolvimento profissional e oportunidades de colaboração, promovendo uma comunidade ativa e engajada mesmo após a conclusão da graduação.
+                  <br />
+   
+                </Text>
+      
+                <img
+                  src={Minicurso}
+                  alt="Icone de uma pessoa com um diploma, simbolizando os egressos do campus."
+                  className=" w-100 h-100 md:w-72 md:h-72 md:ml-6 "
+                />
+              </div>
       </Section>
       <Section title="Filtrar por tipo" showSeparator={false}>
         <Text as="h2" variant="body-lg" className="text-center md:text-left">

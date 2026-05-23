@@ -20,7 +20,12 @@
     "lucide-react": "^1.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "tailwind-merge": "^3.5.0"
+    "tailwind-merge": "^3.5.0",
+    "typeit-react": "^2.7.8"
+    ,
+    "fuse.js": "^6.6.2"
+    ,
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",

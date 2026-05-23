@@ -1,21 +1,36 @@
 import { NavLink } from "react-router";
 import PageHero from "../../components/layout/page-hero/page-hero";
 import { Card, Section, Text, buttonVariants } from "../../components/ui";
+import Emprenderorismo from "../../assets/icons/empreendorismo.jpg"
 
 export function EmpreendedorismoPage() {
   return (
     <>
       <PageHero
         title="Empreendedorismo"
-        subtitle="Startups, editais, fomento e iniciativas que conectam formacao ao ecossistema de inovacao."
+        subtitle="Startups, editais, fomento e iniciativas que conectam ideias ao ecossistema de inovacao."
       />
-      <Section title="Empreendedorismo no campus">
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-          Esta area apresenta os projetos e oportunidades ligados ao
-          empreendedorismo do Campus Itapaje. O objetivo e apoiar ideias que
-          possam virar negocios, fortalecer a cultura de inovacao e aproximar
-          estudantes, professores e parceiros do ecossistema local.
-        </Text>
+      <Section title="O que é Empreendedorismo?">
+        <div className="flex md:flex-row flex-col bg-white p-4 items-center rounded-2xl text-shadow-olive-200 shadow-2xl">
+          <Text className="pt-3 pl-3" as="h2" variant="body-lg">
+            O <strong>empreendedorismo</strong> transforma ideias em solucoes e
+            negocios sustentaveis, conectando conhecimento academico a desafios
+            reais do territorio. No campus, isso acontece por meio de
+            iniciativas, startups, desafios e programas de fomento que
+            impulsionam a inovacao.
+            <br />
+            <br />A partir desse movimento, estudantes desenvolvem competencias
+            como criatividade, validacao de mercado e trabalho em equipe,
+            aproximando a universidade da comunidade e do ecossistema local.
+          </Text>
+
+          <img
+
+            src={Emprenderorismo}
+            alt="Icone de marcador representando oportunidades de empreendedorismo"
+            className=" object-cover w-100 h-100 md:w-72 md:h-72 md:ml-6 "
+          />
+        </div>
       </Section>
       <Section title="Acessar categorias" showSeparator={false}>
         <Text as="h2" variant="body-lg" className="text-center md:text-left">

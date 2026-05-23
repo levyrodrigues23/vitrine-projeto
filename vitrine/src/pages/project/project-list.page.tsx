@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { NavLink, useLocation } from "react-router";
+import { NavLink, useLocation, useSearchParams } from "react-router";
 import PageHero from "../../components/layout/page-hero/page-hero";
 import { ProjectCard } from "../../components/features";
 import { BlockHelp, Input, Text } from "../../components/ui";
@@ -27,7 +27,9 @@ function categoryFromPath(pathname: string): "all" | ProjectCategory {
 export function ProjectListPage() {
   const { pathname } = useLocation();
   const activeCategory = categoryFromPath(pathname);
-  const [query, setQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialQuery = searchParams.get("busca") ?? "";
+  const [query, setQuery] = useState(initialQuery);
 
   const filtered = useMemo(() => {
     let list =
@@ -87,19 +89,27 @@ export function ProjectListPage() {
           ))}
         </div>
 
-        <label className="mx-auto mb-10 block max-w-xl">
-          <span className="mb-2 block text-left text-sm font-semibold text-gray-base-dark">
-            Buscar
-          </span>
-          <Input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Digite algo"
-            aria-label="Buscar projetos por nome ou palavra-chave"
-            className="h-11 bg-white"
-          />
-        </label>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSearchParams(query ? { busca: query } : {});
+          }}
+          className="mx-auto mb-10 block max-w-xl"
+        >
+          <label>
+            <span className="mb-2 block text-left text-sm font-semibold text-gray-base-dark">
+              Buscar
+            </span>
+            <Input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Digite algo"
+              aria-label="Buscar projetos por nome ou palavra-chave"
+              className="h-11 bg-white"
+            />
+          </label>
+        </form>
 
         {filtered.length === 0 ? (
           <p className="text-center text-gray-base">

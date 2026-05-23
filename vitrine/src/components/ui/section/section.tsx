@@ -2,7 +2,7 @@ import Separator from "../../layout/separator/separator";
 import Text from "../text/text";
 
 interface SectionProps extends React.ComponentProps<"section"> {
-  title: string;
+  title?: string;
   description?: string;
   children?: React.ReactNode;
   SectionWhite?: boolean;
@@ -31,7 +31,7 @@ Section({
       className={`mx-auto w-full max-w-6xl px-6 pb-12 space-y-4 ${alignmentClass} ${className ?? ""}`}
       {...props}
     >
-      <Text as="h2" variant="title-3">
+      <Text as="h2" variant="title-3" className="my-13">
         {title}
       </Text>
       {description ? (

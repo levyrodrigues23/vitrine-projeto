@@ -33,7 +33,7 @@ export function AboutVitrinePage() {
       />
       <Section 
       align="center"
-      title="O que é a Vitrine de Projetos?">
+      title="| O que é a Vitrine de Projetos?">
         <Text as="h2" variant="body-lg" className="text-center md:text-left">
           <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
             <Text className="pt-3 pl-3" as="h2" variant="body-lg">
