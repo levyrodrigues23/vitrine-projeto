@@ -1,11 +1,14 @@
+import { NavLink } from "react-router";
+
 import PageHero from "../../components/layout/page-hero/page-hero";
-import { Card, Section, Text } from "../../components/ui";
+import { Card, Section, Text, buttonVariants } from "../../components/ui";
 
 export function AdminPage() {
   const actions = [
     {
-      title: "Cadastrar projeto",
-      description: "Inclua novos projetos na vitrine do campus.",
+      title: "Abrir gerenciador",
+      description: "Escolha entre egresso, projeto, artigo e startup.",
+      to: "/gerenciador",
     },
     {
       title: "Gerenciar usuarios",
@@ -50,6 +53,14 @@ export function AdminPage() {
               <Text variant="body-md" className="text-gray-base">
                 {action.description}
               </Text>
+              {action.to ? (
+                <NavLink
+                  to={action.to}
+                  className={`${buttonVariants({ variant: "primary", size: "md" })} mt-4 inline-flex w-full justify-center`}
+                >
+                  Ir para o painel
+                </NavLink>
+              ) : null}
             </Card>
           ))}
         </div>

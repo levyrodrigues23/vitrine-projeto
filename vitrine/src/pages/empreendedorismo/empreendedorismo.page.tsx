@@ -2,6 +2,9 @@ import { NavLink } from "react-router";
 import PageHero from "../../components/layout/page-hero/page-hero";
 import { Card, Section, Text, buttonVariants } from "../../components/ui";
 import Emprenderorismo from "../../assets/icons/empreendorismo.jpg"
+import Pesquisa from "../../assets/icons/pesquisa-nobg (1).svg";
+import Extensao from "../../assets/icons/extensao-nobg (1).svg";
+import Inovacao from "../../assets/icons/inovacao-nobg (1).svg";
 
 export function EmpreendedorismoPage() {
   return (
@@ -32,13 +35,76 @@ export function EmpreendedorismoPage() {
           />
         </div>
       </Section>
-      <Section title="Acessar categorias" showSeparator={false}>
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-          Escolha uma categoria para conhecer iniciativas, editais e projetos
-          ligados ao empreendedorismo no campus.
-        </Text>
+        <div className="flex flex-col gap-28 my-24 px-8 items-center">
+       
+        <div
+          data-aos="fade-up"
+          className="flex flex-col items-center text-center gap-6"
+        >
+          <img
+            src={Pesquisa}
+            alt="Imagem representando startups do campus"
+            className="w-52 md:w-72 object-contain"
+          />
+
+          <div className="max-w-md space-y-2">
+            <Text as="h2" variant="title-3">
+              Startups do Campus
+            </Text>
+
+            <Text variant="body-md" className="text-gray-base leading-relaxed">
+              Ideias em fase de validacao e projetos em evolucao.
+            </Text>
+          </div>
+        </div>
+
+        
+        <div
+          data-aos="fade-up"
+          className="flex flex-col items-center text-center gap-6"
+        >
+          <img
+            src={Extensao}
+            alt="Imagem representando extensão"
+            className="w-52 md:w-72 object-contain"
+          />
+
+          <div className="max-w-md space-y-2">
+            <Text as="h2" variant="title-3">
+              Editais e oportunidades
+            </Text>
+
+            <Text variant="body-md" className="text-gray-base leading-relaxed">
+              Chamadas, fomento e oportunidades para novos projetos.
+            </Text>
+          </div>
+        </div>
+
+        
+        <div
+          data-aos="fade-up"
+          className="flex flex-col items-center text-center gap-6"
+        >
+          <img
+            src={Inovacao}
+            alt="Imagem representando inovação"
+            className="w-52 md:w-72 object-contain"
+          />
+
+          <div className="max-w-md space-y-2">
+            <Text as="h2" variant="title-3">
+              Empresa Jr
+            </Text>
+
+            <Text variant="body-md" className="text-gray-base leading-relaxed">
+              Projetos de consultoria e experiencias praticas.
+            </Text>
+          </div>
+        </div>
+      </div>
+      <Section title="Experimente explorar por categoria!" showSeparator={false} align="center">
         <div className="grid gap-6 md:grid-cols-3">
-          <Card className="p-6 space-y-4 text-center md:text-left">
+          <Card className="flex flex-col p-6 space-y-4 text-center md:text-left">
             <Text as="h3" variant="body-lg-bold">
               Startups do Campus
             </Text>
@@ -52,7 +118,7 @@ export function EmpreendedorismoPage() {
               Ver startups
             </NavLink>
           </Card>
-          <Card className="p-6 space-y-4 text-center md:text-left">
+          <Card className="flex flex-col p-6 space-y-4 text-center md:text-left">
             <Text as="h3" variant="body-lg-bold">
               Editais e Oportunidades
             </Text>
@@ -66,7 +132,7 @@ export function EmpreendedorismoPage() {
               Ver editais
             </NavLink>
           </Card>
-          <Card className="p-6 space-y-4 text-center md:text-left">
+          <Card className="flex flex-col p-6 space-y-4 text-center md:text-left">
             <Text as="h3" variant="body-lg-bold">
               Empresa Jr
             </Text>

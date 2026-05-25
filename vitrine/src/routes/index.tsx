@@ -8,6 +8,11 @@ import { EmpreendedorismoPage } from "../pages/empreendedorismo/empreendedorismo
 import { LoginPage } from "../pages/login/login.page";
 import { MinicursosPage } from "../pages/minicursos/minicursos.page";
 import { NotFoundPage } from "../pages/notfound/not-found.page";
+import { AdicionarArtigoPage } from "../pages/gerenciador/adicionar-artigo.page";
+import { AdicionarEgressoPage } from "../pages/gerenciador/adicionar-egresso.page";
+import { AdicionarProjetoPage } from "../pages/gerenciador/adicionar-projeto.page";
+import { AdicionarStartupPage } from "../pages/gerenciador/adicionar-startup.page";
+import { GerenciadorPage } from "../pages/gerenciador/gerenciador.page";
 import { PortalEgressosPage } from "../pages/portal-egressos/portal-egressos.page";
 import { EgressosPage } from "../pages/portal-egressos/egressos.page";
 import { NoticiasEgressosPage } from "../pages/portal-egressos/noticias-egressos.page";
@@ -114,11 +119,31 @@ export const router = createBrowserRouter([
         path: "projetos/:id",
         element: <ProjectDetailPage />,
       },
+      {
+        path: "admin",
+        element: <AdminPage />,
+      },
+      {
+        path: "gerenciador",
+        element: <GerenciadorPage />,
+      },
+      {
+        path: "gerenciador/egressos",
+        element: <AdicionarEgressoPage />,
+      },
+      {
+        path: "gerenciador/projetos",
+        element: <AdicionarProjetoPage />,
+      },
+      {
+        path: "gerenciador/artigos",
+        element: <AdicionarArtigoPage />,
+      },
+      {
+        path: "gerenciador/startups",
+        element: <AdicionarStartupPage />,
+      },
     ],
-  },
-  {
-    path: "/admin",
-    element: <AdminPage />,
   },
   {
     path: "/login",

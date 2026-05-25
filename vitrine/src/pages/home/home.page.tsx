@@ -8,13 +8,7 @@ import banner2 from "../../assets/images/teste2.jpg";
 import { ProfessorCard } from "../../components/features/professor-card/professor-card";
 import { MOCK_TEACHERS } from "../../constants/mock-data";
 import { NavLink } from "react-router";
-import {
-  Atom,
-  Handshake,
-  Lightbulb,
-  BookOpen,
-  ArrowRight,
-} from "lucide-react";
+import { Atom, Handshake, Lightbulb, BookOpen, ArrowRight } from "lucide-react";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -136,22 +130,6 @@ export function HomePage() {
               description={project.description}
               category={project.category}
               imageUrl={project.imageUrl}
-            />
-          ))}
-        </div>
-      </Section>
-
-      <Section
-        title="Professores em destaque"
-        description="Alguns dos docentes que contribuem com pesquisa, ensino e extensão no campus."
-        showSeparator={false}
-      >
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {featuredProfessors.map((professor) => (
-            <ProfessorCard
-              key={professor.id}
-              name={professor.name}
-              imageUrl={professor.imageUrl}
             />
           ))}
         </div>
