@@ -1,10 +1,18 @@
 import { useState } from "react";
-
+import {useProjectStore} from "../../store/useProjectStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button, FormField, FormPage, FormSectionCard, FormSelect, FormTextarea, Input } from "../../components/ui";
+import {
+  Button,
+  FormField,
+  FormPage,
+  FormSectionCard,
+  FormSelect,
+  FormTextarea,
+  Input,
+} from "../../components/ui";
 
 const articleSchema = z.object({
   title: z.string().min(3, "Informe o título do artigo."),
@@ -34,6 +42,11 @@ const defaultValues: ArticleFormValues = {
 
 export function AdicionarArtigoPage() {
   const [submitted, setSubmitted] = useState<ArticleFormValues | null>(null);
+  
+  const addProject = useProjectStore((state) => state.addProject);
+  
+  
+  
 
   const {
     register,
@@ -49,35 +62,61 @@ export function AdicionarArtigoPage() {
   return (
     <FormPage
       title="Adicionar artigo"
-      subtitle="Tela editorial para cadastrar publicações, autoria e vínculo com linhas de pesquisa."
-      eyebrow="Produção científica"
-      metrics={[
-        { label: "Estrutura", value: "Acadêmica", detail: "Campos organizados para leitura rápida em catálogo." },
-        { label: "Modo visual", value: "Curto e claro", detail: "Mais foco em autoria, ano e resumo do trabalho." },
-        { label: "Publicação", value: "Lista + detalhe", detail: "Pensado para cards e uma página individual depois." },
-      ]}
-      sideTitle="O que essa página prioriza"
-      sideDescription="O objetivo é registrar a publicação sem excesso de ruído visual, deixando autoria e tipo de veículo sempre aparentes."
-      sideNotes={[
-        { title: "Autoria", description: "Nome, grupo e instituição com separação clara." },
-        { title: "Veículo", description: "Revista, congresso, capítulo ou coletânea." },
-        { title: "Resumo", description: "Trecho curto para card de listagem e busca." },
-      ]}
+      subtitle="Cadastro de publicações científicas com autoria, veículo e vínculo com linhas de pesquisa."
     >
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        <FormSectionCard title="Dados da publicação" description="Preencha primeiro os dados que identificam o artigo em catálogo.">
+        <FormSectionCard
+          title="Dados da publicação"
+          description="Preencha primeiro os dados que identificam o artigo em catálogo."
+        >
           <div className="grid gap-5 md:grid-cols-2">
-            <FormField label="Título do artigo" required error={errors.title?.message}>
-              <Input {...register("title")} placeholder="Ex.: Tecnologias para inclusão e acessibilidade" className={errors.title ? "border-red/60 focus-visible:ring-red/30" : ""} />
+            <FormField
+              label="Título do artigo"
+              required
+              error={errors.title?.message}
+            >
+              <Input
+                {...register("title")}
+                placeholder="Ex.: Tecnologias para inclusão e acessibilidade"
+                className={
+                  errors.title ? "border-red/60 focus-visible:ring-red/30" : ""
+                }
+              />
             </FormField>
             <FormField label="Ano" required error={errors.year?.message}>
-              <Input {...register("year")} type="number" placeholder="2024" className={errors.year ? "border-red/60 focus-visible:ring-red/30" : ""} />
+              <Input
+                {...register("year")}
+                type="number"
+                placeholder="2024"
+                className={
+                  errors.year ? "border-red/60 focus-visible:ring-red/30" : ""
+                }
+              />
             </FormField>
             <FormField label="Autores" required error={errors.authors?.message}>
-              <Input {...register("authors")} placeholder="Equipe de Pesquisa, nome 2, nome 3" className={errors.authors ? "border-red/60 focus-visible:ring-red/30" : ""} />
+              <Input
+                {...register("authors")}
+                placeholder="Equipe de Pesquisa, nome 2, nome 3"
+                className={
+                  errors.authors
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
             </FormField>
-            <FormField label="Tipo de publicação" required error={errors.publicationType?.message}>
-              <FormSelect {...register("publicationType")} className={errors.publicationType ? "border-red/60 focus-visible:ring-red/30" : ""}>
+            <FormField
+              label="Tipo de publicação"
+              required
+              error={errors.publicationType?.message}
+            >
+              <FormSelect
+                {...register("publicationType")}
+                className={
+                  errors.publicationType
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              >
                 <option value="artigo">Artigo</option>
                 <option value="congresso">Congresso / Simpósio</option>
                 <option value="capitulo">Capítulo de livro</option>
@@ -87,58 +126,148 @@ export function AdicionarArtigoPage() {
           </div>
         </FormSectionCard>
 
-        <FormSectionCard title="Informações complementares" description="Dados que ajudam na exibição do card e na navegação futura.">
+        <FormSectionCard
+          title="Informações complementares"
+          description="Dados que ajudam na exibição do card e na navegação futura."
+        >
           <div className="grid gap-5 md:grid-cols-2">
-            <FormField label="Periódico / Evento" required error={errors.venue?.message}>
-              <Input {...register("venue")} placeholder="Nome da revista, evento ou coletânea" className={errors.venue ? "border-red/60 focus-visible:ring-red/30" : ""} />
+            <FormField
+              label="Periódico / Evento"
+              required
+              error={errors.venue?.message}
+            >
+              <Input
+                {...register("venue")}
+                placeholder="Nome da revista, evento ou coletânea"
+                className={
+                  errors.venue ? "border-red/60 focus-visible:ring-red/30" : ""
+                }
+              />
             </FormField>
             <FormField label="Link de acesso" error={errors.link?.message}>
-              <Input {...register("link")} placeholder="https://..." className={errors.link ? "border-red/60 focus-visible:ring-red/30" : ""} />
+              <Input
+                {...register("link")}
+                placeholder="https://..."
+                className={
+                  errors.link ? "border-red/60 focus-visible:ring-red/30" : ""
+                }
+              />
             </FormField>
           </div>
 
-          <FormField label="Resumo curto" required className="mt-5" error={errors.summary?.message}>
-            <FormTextarea {...register("summary")} placeholder="Descreva a pesquisa e o principal resultado em poucas linhas." className={errors.summary ? "border-red/60 focus-visible:ring-red/30" : ""} />
+          <FormField
+            label="Resumo curto"
+            required
+            className="mt-5"
+            error={errors.summary?.message}
+          >
+            <FormTextarea
+              {...register("summary")}
+              placeholder="Descreva a pesquisa e o principal resultado em poucas linhas."
+              className={
+                errors.summary ? "border-red/60 focus-visible:ring-red/30" : ""
+              }
+            />
           </FormField>
         </FormSectionCard>
 
-        <FormSectionCard title="Catalogação visual" description="Bloco de apoio para organizar a publicação por linhas e palavras-chave.">
+        <FormSectionCard
+          title="Catalogação visual"
+          description="Bloco de apoio para organizar a publicação por linhas e palavras-chave."
+        >
           <div className="grid gap-5 md:grid-cols-2">
-            <FormField label="Linha de pesquisa" required error={errors.researchLine?.message}>
-              <Input {...register("researchLine")} placeholder="Ex.: Sistemas inteligentes" className={errors.researchLine ? "border-red/60 focus-visible:ring-red/30" : ""} />
+            <FormField
+              label="Linha de pesquisa"
+              required
+              error={errors.researchLine?.message}
+            >
+              <Input
+                {...register("researchLine")}
+                placeholder="Ex.: Sistemas inteligentes"
+                className={
+                  errors.researchLine
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
             </FormField>
-            <FormField label="Palavras-chave" required error={errors.keywords?.message}>
-              <Input {...register("keywords")} placeholder="educação, IA, inclusão" className={errors.keywords ? "border-red/60 focus-visible:ring-red/30" : ""} />
+            <FormField
+              label="Palavras-chave"
+              required
+              error={errors.keywords?.message}
+            >
+              <Input
+                {...register("keywords")}
+                placeholder="educação, IA, inclusão"
+                className={
+                  errors.keywords
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
             </FormField>
           </div>
         </FormSectionCard>
 
         {submitted ? (
-          <FormSectionCard title="Último envio" description="Resumo do payload que o formulário gerou depois da validação.">
+          <FormSectionCard
+            title="Último envio"
+            description="Resumo do payload que o formulário gerou depois da validação."
+          >
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">Título</p>
-                <p className="mt-2 text-sm font-semibold text-black">{submitted.title}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
+                  Título
+                </p>
+                <p className="mt-2 text-sm font-semibold text-black">
+                  {submitted.title}
+                </p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">Autores</p>
-                <p className="mt-2 text-sm font-semibold text-black">{submitted.authors}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
+                  Autores
+                </p>
+                <p className="mt-2 text-sm font-semibold text-black">
+                  {submitted.authors}
+                </p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">Tipo</p>
-                <p className="mt-2 text-sm font-semibold text-black">{submitted.publicationType}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
+                  Tipo
+                </p>
+                <p className="mt-2 text-sm font-semibold text-black">
+                  {submitted.publicationType}
+                </p>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">Ano</p>
-                <p className="mt-2 text-sm font-semibold text-black">{submitted.year}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
+                  Ano
+                </p>
+                <p className="mt-2 text-sm font-semibold text-black">
+                  {submitted.year}
+                </p>
               </div>
             </div>
           </FormSectionCard>
         ) : null}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-          <Button type="submit" variant="quaternary" className="px-6 py-3" disabled={isSubmitting}>Salvar rascunho</Button>
-          <Button type="submit" variant="primary" className="px-6 py-3" disabled={isSubmitting}>Publicar artigo</Button>
+          <Button
+            type="submit"
+            variant="quaternary"
+            className="px-6 py-3"
+            disabled={isSubmitting}
+          >
+            Salvar rascunho
+          </Button>
+          <Button
+            type="submit"
+            variant="primary"
+            className="px-6 py-3"
+            disabled={isSubmitting}
+          >
+            Publicar artigo
+          </Button>
         </div>
       </form>
     </FormPage>

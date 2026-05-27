@@ -3,8 +3,8 @@ import { NavLink, useLocation, useSearchParams } from "react-router";
 import PageHero from "../../components/layout/page-hero/page-hero";
 import { ProjectCard } from "../../components/features";
 import { BlockHelp, Input, Text } from "../../components/ui";
-import { MOCK_PROJECTS } from "../../constants/mock-data";
 import { ProjectCategory } from "../../types/project.types";
+import { useProjects } from "../../hooks/useProjects";
 
 const CATEGORY_LINKS: {
   id: "all" | ProjectCategory;
@@ -31,11 +31,13 @@ export function ProjectListPage() {
   const initialQuery = searchParams.get("busca") ?? "";
   const [query, setQuery] = useState(initialQuery);
 
+  const { projects, loading, error } = useProjects();
+
   const filtered = useMemo(() => {
-    let list =
+    const list =
       activeCategory === "all"
-        ? MOCK_PROJECTS
-        : MOCK_PROJECTS.filter((p) => p.category === activeCategory);
+        ? projects
+        : projects.filter((p) => p.category === activeCategory);
     const q = query.trim().toLowerCase();
     if (!q) return list;
     return list.filter(
@@ -44,7 +46,7 @@ export function ProjectListPage() {
         p.description.toLowerCase().includes(q) ||
         p.keywords?.some((k) => k.toLowerCase().includes(q)),
     );
-  }, [activeCategory, query]);
+  }, [activeCategory, query, projects]);
 
   return (
     <>
@@ -62,7 +64,7 @@ export function ProjectListPage() {
           </Text>
           <BlockHelp
             topicLabel="catálogo e filtros"
-            explanation="Use as categorias para ver só pesquisa, extensão ou inovação. A busca filtra por título, descrição ou palavras-chave dos projetos. Os dados são mockados até existir API."
+            explanation="Use as categorias para ver só pesquisa, extensão ou inovação. A busca filtra por título, descrição ou palavras-chave dos projetos."
           />
         </div>
 
@@ -111,21 +113,25 @@ export function ProjectListPage() {
           </label>
         </form>
 
-        {filtered.length === 0 ? (
+        {loading ? (
+          <p className="text-center text-gray-base">Carregando...</p>
+        ) : error ? (
+          <p className="text-center text-gray-base">Erro: {error}</p>
+        ) : filtered.length === 0 ? (
           <p className="text-center text-gray-base">
             Nenhum projeto encontrado com esses critérios.
           </p>
         ) : (
           <ul className="grid list-none grid-cols-1 gap-6 p-0 md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((project) => (
-              <li key={project.id} className="min-h-[320px]">
+              <li key={project.id} className="min-h-80">
                 <ProjectCard
                   to={`/projetos/${project.id}`}
                   title={project.title}
                   description={project.description}
                   category={project.category}
                   imageUrl={project.imageUrl}
-                  keywords={project.keywords}
+          
                 />
               </li>
             ))}

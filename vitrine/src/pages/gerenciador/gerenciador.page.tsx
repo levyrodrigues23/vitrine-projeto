@@ -1,150 +1,101 @@
 import { NavLink } from "react-router";
+import { Card, Text, buttonVariants } from "../../components/ui";
+import { useAuthStore } from "../../store/useAuthStore";
 
-import PageHero from "../../components/layout/page-hero/page-hero";
-import {
-  Badge,
-  Card,
-  Section,
-  Text,
-  buttonVariants,
-} from "../../components/ui";
+const actions = [
+  {
+    title: "Projeto",
+    description: "Pesquisa, extensão ou inovação.",
+    to: "/gerenciador/projetos",
+    icon: "📁",
+    color: "bg-blue/8 border-blue/15 hover:border-blue/30",
+    badge: "from-blue/20 to-blue/5",
+  },
+  {
+    title: "Egresso",
+    description: "Trajetória e área de atuação.",
+    to: "/gerenciador/egressos",
+    icon: "🎓",
+    color: "bg-green-base/8 border-green-base/15 hover:border-green-base/30",
+    badge: "from-green-base/20 to-green-base/5",
+  },
+  {
+    title: "Artigo",
+    description: "Publicações e produções científicas.",
+    to: "/gerenciador/artigos",
+    icon: "📄",
+    color: "bg-yellow/8 border-yellow/15 hover:border-yellow/30",
+    badge: "from-yellow/20 to-yellow/5",
+  },
+  {
+    title: "Startup",
+    description: "Ideias e iniciativas empreendedoras.",
+    to: "/gerenciador/startups",
+    icon: "🚀",
+    color: "bg-red/8 border-red/15 hover:border-red/30",
+    badge: "from-red/20 to-red/5",
+  },
+  {
+    title: "Produção Técnica",
+    description: "Softwares, patentes e relatórios.",
+    to: "/gerenciador/producao-tecnica",
+    icon: "⚙️",
+    color: "bg-blue-dark/8 border-blue-dark/15 hover:border-blue-dark/30",
+    badge: "from-blue-dark/20 to-blue-dark/5",
+  },
+];
 
 export function GerenciadorPage() {
-  const actions = [
-    {
-      title: "Adicionar egresso",
-      description: "Cadastro com formação, contato e área de atuação.",
-      to: "/gerenciador/egressos",
-      accent: "from-blue/10 to-white",
-    },
-    {
-      title: "Adicionar projeto",
-      description: "Fluxo para pesquisa, extensão ou inovação.",
-      to: "/gerenciador/projetos",
-      accent: "from-green-base/10 to-white",
-    },
-    {
-      title: "Adicionar artigo",
-      description: "Cadastro de publicações com autoria e referências.",
-      to: "/gerenciador/artigos",
-      accent: "from-yellow/15 to-white",
-    },
-    {
-      title: "Adicionar startup",
-      description: "Página para validar ideia, setor e estágio.",
-      to: "/gerenciador/startups",
-      accent: "from-red/10 to-white",
-    },
-  ];
-
-  const categories = [
-    {
-      title: "Inovação",
-      description: "Produtos, serviços e protótipos com foco em impacto.",
-      badge: "Prioridade alta",
-    },
-    {
-      title: "Extensão",
-      description: "Ações conectadas ao território e à comunidade.",
-      badge: "Ciclo contínuo",
-    },
-    {
-      title: "Pesquisa",
-      description: "Produção científica, validação e experimentação.",
-      badge: "Base acadêmica",
-    },
-  ];
+  const user = useAuthStore((state) => state.user);
 
   return (
-    <>
-      <PageHero
-        title="Gerenciador de cadastros"
-        subtitle="Área visual para escolher o tipo de conteúdo antes de entrar na estrutura de cada formulário."
-      />
+    <div className="mx-auto max-w-5xl px-6 py-10 md:py-14">
+      <div className="mb-10 space-y-1">
+        <Text
+          as="p"
+          variant="body-sm-bold"
+          className="uppercase tracking-widest text-gray-base"
+        >
+          Painel de gestão
+        </Text>
+        <Text as="h1" variant="title-1" className="text-black">
+          Olá, {user?.name?.split(" ")[0] ?? "Gerenciador"}.
+        </Text>
+        <Text as="p" variant="body-md" className="text-gray-base">
+          Selecione o tipo de conteúdo que deseja cadastrar.
+        </Text>
+      </div>
 
-      <Section
-        title="Atalhos de criação"
-        description="Cada card leva para um fluxo de cadastro específico, sem misturar campos diferentes em uma única página."
-      >
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {actions.map((action) => (
-            <Card
-              key={action.title}
-              variant="interactive"
-              className={`group flex h-full flex-col justify-between overflow-hidden bg-linear-to-br ${action.accent} p-6`}
-            >
-              <div className="space-y-4">
-                <Badge variant="outline">Fluxo direto</Badge>
-                <div className="space-y-2">
-                  <Text as="h3" variant="body-lg-bold" className="text-black">
-                    {action.title}
-                  </Text>
-                  <Text variant="body-md" className="text-gray-base">
-                    {action.description}
-                  </Text>
-                </div>
-              </div>
-
-              <NavLink
-                to={action.to}
-                className={`${buttonVariants({ variant: "primary", size: "md" })} mt-6 w-full justify-center`}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {actions.map((action) => (
+          <Card
+            key={action.title}
+            className={`group flex flex-col justify-between gap-6 border p-6 transition-all duration-200 ${action.color}`}
+          >
+            <div className="space-y-3">
+              <div
+                className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br text-2xl ${action.badge}`}
               >
-                Abrir formulário
-              </NavLink>
-            </Card>
-          ))}
-        </div>
-      </Section>
-
-      <Section
-        title="Escolha a linha do conteúdo"
-        description="A mesma estrutura visual pode ser usada para pesquisa, extensão ou inovação, mantendo o cadastro padronizado."
-      >
-        <div className="grid gap-6 md:grid-cols-3">
-          {categories.map((category) => (
-            <Card
-              key={category.title}
-              className="space-y-4 p-6 shadow-lg shadow-black/5"
-            >
-              <Badge variant="secondary">{category.badge}</Badge>
-              <div className="space-y-2">
+                {action.icon}
+              </div>
+              <div className="space-y-1">
                 <Text as="h3" variant="body-lg-bold" className="text-black">
-                  {category.title}
+                  {action.title}
                 </Text>
-                <Text variant="body-md" className="text-gray-base">
-                  {category.description}
+                <Text variant="body-sm" className="text-gray-base">
+                  {action.description}
                 </Text>
               </div>
-            </Card>
-          ))}
-        </div>
-      </Section>
-
-      <Section title="Fluxo sugerido" showSeparator={false} align="center">
-        <div className="grid gap-6 md:grid-cols-3">
-          {[
-            "Selecionar o tipo de cadastro",
-            "Preencher os campos do formulário específico",
-            "Revisar e publicar o conteúdo",
-          ].map((step, index) => (
-            <Card
-              key={step}
-              className="p-6 text-center shadow-lg shadow-black/5"
+            </div>
+            <NavLink
+              to={action.to}
+              className={`${buttonVariants({ variant: "primary", size: "md" })} w-full justify-center`}
             >
-              <Text
-                as="p"
-                variant="body-sm-bold"
-                className="uppercase tracking-[0.24em] text-gray-base"
-              >
-                Etapa {index + 1}
-              </Text>
-              <Text as="h3" variant="body-lg-bold" className="mt-3 text-black">
-                {step}
-              </Text>
-            </Card>
-          ))}
-        </div>
-      </Section>
-    </>
+              Adicionar
+            </NavLink>
+          </Card>
+        ))}
+      </div>
+    </div>
   );
 }

@@ -1,9 +1,10 @@
 import { Navigate, useParams } from "react-router";
 import { Badge, Text } from "../../components/ui";
-import { MOCK_PROJECTS, MOCK_TEACHERS } from "../../constants/mock-data";
+import { MOCK_TEACHERS } from "../../constants/mock-data";
 import { WorksDone } from "../../components/features/trabalhos-feitos/trabalhos-feitos";
 import Separator from "../../components/layout/separator/separator";
 import { ProfessorCard } from "../../components/features/professor-card/professor-card";
+import { useProjects } from "../../hooks/useProjects";
 
 const objectives = [
   {
@@ -34,7 +35,16 @@ const objectives = [
 
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const project = MOCK_PROJECTS.find((p) => p.id === id);
+  const { projects, loading, error } = useProjects();
+  const project = projects.find((p) => p.id === id);
+
+  if (loading) {
+    return <p className="text-center text-gray-base">Carregando...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-gray-base">Erro: {error}</p>;
+  }
 
   if (!project) {
     return <Navigate to="/projetos" replace />;

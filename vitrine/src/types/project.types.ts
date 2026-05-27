@@ -7,11 +7,11 @@
 }
 
 export const ProjectCategory = {
-  Inovacao: "Inovacao",
-  Extensao: "Extensao",
-  Cientifico: "Cientifico",
-  Tecnico: "Tecnico",
-  Tcc: "Tcc",
+  Inovacao: "Inovação",
+  Extensao: "Extensão",
+  Cientifico: "Científico",
+  Tecnico: "écnico",
+  Tcc: "TCC",
   Ensino: "Ensino",
   Pesquisa: "Pesquisa",
 } as const;

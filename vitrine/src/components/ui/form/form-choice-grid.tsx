@@ -84,7 +84,9 @@ export function FormChoiceGrid({
                   <Text as="span" variant="body-lg-bold" className="text-black">
                     {choice.title}
                   </Text>
-                  {choice.badge ? <Badge variant="outline">{choice.badge}</Badge> : null}
+                  {choice.badge ? (
+                    <Badge variant="outline">{choice.badge}</Badge>
+                  ) : null}
                 </div>
                 <Text as="p" variant="body-md" className="text-gray-base">
                   {choice.description}
@@ -94,9 +96,7 @@ export function FormChoiceGrid({
           );
         })}
       </div>
-      {error ? (
-        <p className="text-xs font-semibold text-red">{error}</p>
-      ) : null}
+      {error ? <p className="text-xs font-semibold text-red">{error}</p> : null}
     </div>
   );
 }

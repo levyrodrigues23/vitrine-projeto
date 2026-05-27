@@ -15,7 +15,14 @@ type FormFieldProps = {
   className?: string;
 };
 
-export function FormField({ label, hint, error, required, children, className }: FormFieldProps) {
+export function FormField({
+  label,
+  hint,
+  error,
+  required,
+  children,
+  className,
+}: FormFieldProps) {
   return (
     <label className={`block space-y-2 ${className ?? ""}`}>
       <span className="flex items-center gap-2 text-sm font-semibold text-black">
@@ -24,12 +31,20 @@ export function FormField({ label, hint, error, required, children, className }:
       </span>
       {children}
       {hint ? (
-        <Text as="span" variant="body-sm-bold" className="block text-xs text-gray-base">
+        <Text
+          as="span"
+          variant="body-sm-bold"
+          className="block text-xs text-gray-base"
+        >
           {hint}
         </Text>
       ) : null}
       {error ? (
-        <Text as="span" variant="body-sm-bold" className="block text-xs text-red">
+        <Text
+          as="span"
+          variant="body-sm-bold"
+          className="block text-xs text-red"
+        >
           {error}
         </Text>
       ) : null}
@@ -49,7 +64,9 @@ export function FormTextarea(
   );
 }
 
-export function FormSelect(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
+export function FormSelect(
+  props: React.SelectHTMLAttributes<HTMLSelectElement>,
+) {
   return (
     <select
       {...props}
@@ -74,7 +91,11 @@ type FormSectionCardProps = {
   children: ReactNode;
 };
 
-export function FormSectionCard({ title, description, children }: FormSectionCardProps) {
+export function FormSectionCard({
+  title,
+  description,
+  children,
+}: FormSectionCardProps) {
   return (
     <Card className="space-y-5 p-6 md:p-8">
       <div className="space-y-2">
