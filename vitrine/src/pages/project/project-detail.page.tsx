@@ -3,7 +3,8 @@ import { Badge, Text } from "../../components/ui";
 import { MOCK_PROJECTS, MOCK_TEACHERS } from "../../constants/mock-data";
 import { WorksDone } from "../../components/features/trabalhos-feitos/trabalhos-feitos";
 import Separator from "../../components/layout/separator/separator";
-import { ProfessorCard } from "../../components/features/professor-card/professor-card";
+import { TeacherCard } from "../../components/features";
+
 
 const objectives = [
   {

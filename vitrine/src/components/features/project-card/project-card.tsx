@@ -16,7 +16,9 @@ export interface ProjectCardProps {
   imageUrl?: string;
   area?: string;
   to?: string;
+  keywords?: string[];
 }
+
 
 export function ProjectCard({
   icon,
@@ -33,7 +35,6 @@ export function ProjectCard({
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-base/20 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1"
     >
       {imageUrl ? (
-        /* ── Modo COM imagem: banner no topo com badge sobreposta ── */
         <>
           <div className="relative h-48 w-full overflow-hidden">
             <img
@@ -60,9 +61,7 @@ export function ProjectCard({
           </CardHeader>
         </>
       ) : (
-        /* ── Modo SEM imagem: ícone + badge inline, layout do screenshot ── */
         <CardHeader className="space-y-3 p-5">
-          {/* Linha superior: ícone à esquerda, badge à direita */}
           <div className="flex items-start justify-between">
             {icon && (
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-500">
@@ -77,7 +76,6 @@ export function ProjectCard({
             </Badge>
           </div>
 
-          {/* Título e descrição */}
           <CardTitle className="line-clamp-2 text-xl font-bold leading-snug">
             {title}
           </CardTitle>
@@ -87,7 +85,6 @@ export function ProjectCard({
         </CardHeader>
       )}
 
-      {/* Rodapé com área — separado por linha */}
       {area && (
         <CardFooter className="mt-auto flex flex-col items-start gap-0 px-5 pb-5 pt-0">
           <div className="mb-3 h-px w-full bg-gray-100" />

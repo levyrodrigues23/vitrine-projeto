@@ -37,12 +37,18 @@ export default function Text({
     ...props
 }: TextProps) {
 
-return React.createElement(
-as,
-{
-    className: textVariants({variant, className}),
-    ...props
-},
-children
-)
+const variantClass = textVariants({ variant });
+  
+  const mergedClassName = className
+    ? `${variantClass} ${className}`
+    : variantClass;
+
+  return React.createElement(
+    as,
+    {
+      className: mergedClassName,
+      ...props,
+    },
+    children
+  );
 }

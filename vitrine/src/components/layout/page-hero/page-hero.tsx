@@ -16,7 +16,7 @@ export default function PageHero({ title, subtitle, className }: PageHeroProps) 
       aria-labelledby={titleId}
     >
       <div
-        className="absolute inset-0 bg-gradient-to-br from-green-base/35 via-white-base to-blue/12"
+        className="absolute inset-0 bg-linear-to-br from-green-base/35 via-white-base to-blue/12"
         aria-hidden
       />
       <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 py-14 text-center md:py-20">

@@ -1,12 +1,10 @@
 import Hero from "../../components/layout/hero-section/hero";
 import { useNavigate } from "react-router";
 import { Section, Card, Text } from "../../components/ui";
-import { ProjectCard } from "../../components/features";
-import { MOCK_PROJECTS } from "../../constants/mock-data";
+import { ProjectCard, TeacherCard } from "../../components/features";
+import { MOCK_PROJECTS, MOCK_TEACHERS } from "../../constants/mock-data";
 import banner1 from "../../assets/images/teste1.jpg";
 import banner2 from "../../assets/images/teste2.jpg";
-import { ProfessorCard } from "../../components/features/professor-card/professor-card";
-import { MOCK_TEACHERS } from "../../constants/mock-data";
 import { NavLink } from "react-router";
 import {
   Atom,
@@ -24,7 +22,6 @@ export function HomePage() {
     navigate(url);
   };
   const featuredProjects = MOCK_PROJECTS.slice(0, 3);
-  const featuredProfessors = MOCK_TEACHERS.slice(0, 4);
   const moreProjects = MOCK_PROJECTS.slice(3, 6);
 
   const categories = [
@@ -142,16 +139,19 @@ export function HomePage() {
       </Section>
 
       <Section
-        title="Professores em destaque"
-        description="Alguns dos docentes que contribuem com pesquisa, ensino e extensão no campus."
-        showSeparator={false}
+        title="Corpo Docente"
+        description="Conheça os professores que lideram nossos projetos e pesquisas."
+        align="center"
       >
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {featuredProfessors.map((professor) => (
-            <ProfessorCard
-              key={professor.id}
-              name={professor.name}
-              imageUrl={professor.imageUrl}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {MOCK_TEACHERS.map((teacher) => (
+            <TeacherCard
+              key={teacher.id}
+              name={teacher.name}
+              role={teacher.role || "Professor"}
+              imageUrl={teacher.imageUrl || ""}
+              githubUrl={teacher.githubUrl}
+              lattesUrl={teacher.lattesUrl}
             />
           ))}
         </div>
