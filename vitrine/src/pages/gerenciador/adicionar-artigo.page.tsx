@@ -1,5 +1,4 @@
 import { useState } from "react";
-import {useProjectStore} from "../../store/useProjectStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -42,11 +41,6 @@ const defaultValues: ArticleFormValues = {
 
 export function AdicionarArtigoPage() {
   const [submitted, setSubmitted] = useState<ArticleFormValues | null>(null);
-  
-  const addProject = useProjectStore((state) => state.addProject);
-  
-  
-  
 
   const {
     register,

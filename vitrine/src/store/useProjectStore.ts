@@ -1,45 +1,20 @@
-﻿import { create } from "zustand";
+import { create } from "zustand";
+import type { ProjectCategory } from "../types/project.types";
 
-export type ProjectStoreItem = {
-  id: string;
-  title: string;
-  description: string;
-  category: "inovação" | "extensão" | "pesquisa";
-  area: "sistemas" | "software" | "redes" | "outro";
-  keywords: string[];
-  responsible: string;
-  year: number;
-  status: "andamento" | "concluido" | "validacao";
-  imageUrl?: string;
-  createdAt: string;
-};
-
-type AddProjectInput = Omit<ProjectStoreItem, "id" | "createdAt">;
+export type ProjectFilterCategory = "all" | ProjectCategory;
 
 type ProjectStore = {
-  projects: ProjectStoreItem[];
-  addProject: (input: AddProjectInput) => void;
-  removeProject: (id: string) => void;
-  clearProjects: () => void;
+  activeCategory: ProjectFilterCategory;
+  searchQuery: string;
+  setActiveCategory: (category: ProjectFilterCategory) => void;
+  setSearchQuery: (query: string) => void;
+  resetFilters: () => void;
 };
 
 export const useProjectStore = create<ProjectStore>((set) => ({
-  projects: [],
-  addProject: (input) =>
-    set((state) => ({
-      projects: [
-        {
-          ...input,
-          id: crypto.randomUUID(),
-          createdAt: new Date().toISOString(),
-        },
-        ...state.projects,
-      ],
-    })),
-
-  removeProject: (id) =>
-    set((state) => ({
-      projects: state.projects.filter((project) => project.id !== id),
-    })),
-  clearProjects: () => set({ projects: [] }),
+  activeCategory: "all",
+  searchQuery: "",
+  setActiveCategory: (category) => set({ activeCategory: category }),
+  setSearchQuery: (query) => set({ searchQuery: query }),
+  resetFilters: () => set({ activeCategory: "all", searchQuery: "" }),
 }));

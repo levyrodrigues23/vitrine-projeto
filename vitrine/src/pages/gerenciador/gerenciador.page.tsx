@@ -16,7 +16,7 @@ const actions = [
     description: "Trajetória e área de atuação.",
     to: "/gerenciador/egressos",
     icon: "🎓",
-    color: "bg-green-base/8 border-green-base/15 hover:border-green-base/30",
+    color: "bg-white border-gray-200 hover:border-gray-300",
     badge: "from-green-base/20 to-green-base/5",
   },
   {
@@ -24,7 +24,7 @@ const actions = [
     description: "Publicações e produções científicas.",
     to: "/gerenciador/artigos",
     icon: "📄",
-    color: "bg-yellow/8 border-yellow/15 hover:border-yellow/30",
+    color: "bg-white border-gray-200 hover:border-gray-300",
     badge: "from-yellow/20 to-yellow/5",
   },
   {
@@ -32,7 +32,7 @@ const actions = [
     description: "Ideias e iniciativas empreendedoras.",
     to: "/gerenciador/startups",
     icon: "🚀",
-    color: "bg-red/8 border-red/15 hover:border-red/30",
+    color: "bg-white border-gray-200 hover:border-gray-300",
     badge: "from-red/20 to-red/5",
   },
   {
@@ -82,7 +82,7 @@ export function GerenciadorPage() {
                 <Text as="h3" variant="body-lg-bold" className="text-black">
                   {action.title}
                 </Text>
-                <Text variant="body-sm" className="text-gray-base">
+                <Text className="text-gray-base">
                   {action.description}
                 </Text>
               </div>

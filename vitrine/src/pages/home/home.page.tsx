@@ -5,8 +5,6 @@ import { ProjectCard } from "../../components/features";
 import { MOCK_PROJECTS } from "../../constants/mock-data";
 import banner1 from "../../assets/images/teste1.jpg";
 import banner2 from "../../assets/images/teste2.jpg";
-import { ProfessorCard } from "../../components/features/professor-card/professor-card";
-import { MOCK_TEACHERS } from "../../constants/mock-data";
 import { NavLink } from "react-router";
 import { Atom, Handshake, Lightbulb, BookOpen, ArrowRight } from "lucide-react";
 
@@ -18,7 +16,6 @@ export function HomePage() {
     navigate(url);
   };
   const featuredProjects = MOCK_PROJECTS.slice(0, 3);
-  const featuredProfessors = MOCK_TEACHERS.slice(0, 4);
   const moreProjects = MOCK_PROJECTS.slice(3, 6);
 
   const categories = [

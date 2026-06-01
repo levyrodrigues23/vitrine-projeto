@@ -13,6 +13,7 @@ export function ProjectsPage() {
         title="Projetos"
         subtitle="Conheça os projetos do campus organizados por pesquisa, extensão e inovação."
       />
+      
       <Section title="Como os projetos são organizados?" align="center">
         <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
           <Text className="pt-3 pl-3" as="h2" variant="body-lg">

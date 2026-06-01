@@ -2,5 +2,8 @@ export interface Teacher {
   id: string;
   name: string;
   imageUrl?: string;
+  descricao: string;
+  lattes: string;
+  grau: string;
 }
 

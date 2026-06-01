@@ -41,7 +41,13 @@ export function ProjectCard({
               alt={title}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.1), transparent)",
+              }}
+            />
             <Badge
               variant="default"
               className="absolute left-4 top-4 px-3 py-1 text-xs"
@@ -69,10 +75,7 @@ export function ProjectCard({
                 {icon}
               </div>
             )}
-            <Badge
-              variant="default"
-              className="ml-auto px-3 py-1 text-xs"
-            >
+            <Badge variant="default" className="ml-auto px-3 py-1 text-xs">
               {category}
             </Badge>
           </div>

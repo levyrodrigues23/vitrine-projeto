@@ -4,7 +4,7 @@ import { MOCK_TEACHERS } from "../../constants/mock-data";
 import { WorksDone } from "../../components/features/trabalhos-feitos/trabalhos-feitos";
 import Separator from "../../components/layout/separator/separator";
 import { ProfessorCard } from "../../components/features/professor-card/professor-card";
-import { useProjects } from "../../hooks/useProjects";
+import { useProject } from "../../hooks/useProject";
 
 const objectives = [
   {
@@ -35,8 +35,7 @@ const objectives = [
 
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { projects, loading, error } = useProjects();
-  const project = projects.find((p) => p.id === id);
+  const { project, loading, error } = useProject(id);
 
   if (loading) {
     return <p className="text-center text-gray-base">Carregando...</p>;
@@ -56,13 +55,19 @@ export function ProjectDetailPage() {
 
   return (
     <div className="flex flex-col">
-      <section className="relative isolate min-h-[420px] overflow-hidden">
+      <section className="relative isolate min-h-105 overflow-hidden">
         <img
           src={heroImage}
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/45 to-black/20" />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.2))",
+          }}
+        />
         <div className="absolute inset-0" aria-hidden />
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-16 md:py-24">
           <div className="flex flex-wrap items-center gap-2">

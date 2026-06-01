@@ -1,46 +1,17 @@
-﻿import { useCallback, useEffect, useState } from "react";
+﻿import { useQuery } from "@tanstack/react-query";
 import { listProjects } from "../services/projects.service";
-import type { Project } from "../types/project.types";
+import { queryKeys } from "../services/query-keys";
 
 export function useProjects() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const query = useQuery({
+    queryKey: queryKeys.projects,
+    queryFn: listProjects,
+  });
 
-  const refresh = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const list = await listProjects();
-      setProjects(list);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "erro ao carregar projetos",
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    let alive = true;
-    (async () => {
-      try {
-        const list = await listProjects();
-        if (alive) setProjects(list);
-      } catch (err) {
-        if (alive) {
-          setError(err instanceof Error ? err.message : "erro ao carregar projetos");
-        }
-      } finally {
-        if (alive) setLoading(false);
-      }
-    })();
-
-    return () => {
-      alive = false;
-    };
-  }, []);
-
-  return { projects, loading, error, refresh };
+  return {
+    projects: query.data ?? [],
+    loading: query.isLoading,
+    error: query.error instanceof Error ? query.error.message : null,
+    refresh: query.refetch,
+  };
 }

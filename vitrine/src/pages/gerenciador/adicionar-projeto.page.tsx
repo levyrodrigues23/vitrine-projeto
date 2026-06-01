@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { supabase } from "../../services/supabase";
-import { useProjectStore } from "../../store/useProjectStore";
+import { useCreateProject } from "../../hooks/useCreateProject";
+import type { Project } from "../../types/project.types";
 
 import {
   Button,
@@ -16,7 +16,6 @@ import {
   FormSelect,
   FormTextarea,
   Input,
-  Text,
 } from "../../components/ui";
 
 const projectSchema = z.object({
@@ -25,7 +24,7 @@ const projectSchema = z.object({
   area: z.enum(["sistemas", "software", "redes", "outro"]),
   keywords: z.string().min(3, "Inclua ao menos uma palavra-chave."),
   responsible: z.string().min(3, "Informe o responsável pelo projeto."),
-  summary: z.string().min(20, "Descreva melhor o projeto."),
+  description: z.string().min(20, "Descreva melhor o projeto."),
   year: z.coerce.number().int("Ano inválido.").min(2000, "Ano muito antigo."),
   status: z.enum(["andamento", "concluido", "validacao"]),
   imageFile: z.custom<FileList>().optional(),
@@ -39,18 +38,23 @@ const defaultValues: ProjectFormValues = {
   area: "sistemas",
   keywords: "",
   responsible: "",
-  summary: "",
+  description: "",
   year: new Date().getFullYear(),
   status: "andamento",
   imageFile: undefined,
 };
 
-const SUPABASE_BUCKET =
-  import.meta.env.VITE_SUPABASE_BUCKET ?? "project-images";
+const CATEGORY_MAP: Record<ProjectFormValues["category"], Project["category"]> =
+  {
+    inovação: "Inovação",
+    extensão: "Extensão",
+    pesquisa: "Pesquisa",
+  };
 
 export function AdicionarProjetoPage() {
   const [submitted, setSubmitted] = useState<ProjectFormValues | null>(null);
-  const addProject = useProjectStore((state) => state.addProject);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const { execute, loading } = useCreateProject();
 
   const {
     control,
@@ -63,37 +67,13 @@ export function AdicionarProjetoPage() {
   });
 
   const onSubmit = async (values: ProjectFormValues) => {
-    const file = values.imageFile?.[0];
-    let imageUrl: string | undefined;
+    setSubmitError(null);
 
-    if (file) {
-      const extension = file.name.split(".").pop() ?? "jpg";
-      const filePath = `projects/${crypto.randomUUID()}.${extension}`;
-
-      const { error } = await supabase.storage
-        .from(SUPABASE_BUCKET)
-        .upload(filePath, file, {
-          cacheControl: "3600",
-          contentType: file.type,
-          upsert: false,
-        });
-
-      if (error) {
-        console.error("Erro no upload da imagem:", error.message);
-        return;
-      }
-
-      const { data } = supabase.storage
-        .from(SUPABASE_BUCKET)
-        .getPublicUrl(filePath);
-
-      imageUrl = data.publicUrl;
-    }
-
-    addProject({
+    const project: Project = {
+      id: crypto.randomUUID(),
       title: values.title,
-      description: values.summary,
-      category: values.category,
+      description: values.description,
+      category: CATEGORY_MAP[values.category],
       area: values.area,
       keywords: values.keywords
         .split(",")
@@ -102,26 +82,30 @@ export function AdicionarProjetoPage() {
       responsible: values.responsible.trim(),
       year: values.year,
       status: values.status,
-      imageUrl,
-    });
+    };
+
+    const result = await execute(project, values.imageFile?.[0]);
+
+    if (!result.success) {
+      setSubmitError(result.error);
+      return;
+    }
 
     setSubmitted(values);
   };
-  const projects = useProjectStore((state) => state.projects);
-
-  useEffect(() => {
-    console.log("Projetos cadastrados:", projects);
-  }, [projects]);
 
   return (
     <FormPage
       title="Adicionar projeto"
       subtitle="Fluxo visual para registrar projetos com escolha explícita entre inovação, extensão e pesquisa."
-
     >
-
-
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        {submitError ? (
+          <div className="rounded-2xl border border-red/20 bg-red/5 p-4 text-sm text-red">
+            {submitError}
+          </div>
+        ) : null}
+
         <FormSectionCard
           title="Classificação do projeto"
           description="A seleção abaixo define a trilha de cadastro e facilita o uso futuro em filtros."
@@ -238,13 +222,15 @@ export function AdicionarProjetoPage() {
           <FormField
             label="Resumo do projeto"
             className="mt-5"
-            error={errors.summary?.message}
+            error={errors.description?.message}
           >
             <FormTextarea
-              {...register("summary")}
+              {...register("description")}
               placeholder="Explique objetivo, contexto, público-alvo e estágio atual."
               className={
-                errors.summary ? "border-red/60 focus-visible:ring-red/30" : ""
+                errors.description
+                  ? "border-red/60 focus-visible:ring-red/30"
+                  : ""
               }
             />
           </FormField>
@@ -342,7 +328,7 @@ export function AdicionarProjetoPage() {
             type="submit"
             variant="quaternary"
             className="px-6 py-3"
-            disabled={isSubmitting}
+            disabled={isSubmitting || loading}
           >
             Salvar rascunho
           </Button>
@@ -350,7 +336,7 @@ export function AdicionarProjetoPage() {
             type="submit"
             variant="primary"
             className="px-6 py-3"
-            disabled={isSubmitting}
+            disabled={isSubmitting || loading}
           >
             Publicar projeto
           </Button>

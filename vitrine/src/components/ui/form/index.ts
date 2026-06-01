@@ -7,4 +7,4 @@ export {
   FormTextarea,
   formControlClass,
 } from "./form-field";
-export { FormPage, type FormMetric, type FormSideNote } from "./form-page";
+export { FormPage } from "./form-page";
