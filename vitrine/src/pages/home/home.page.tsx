@@ -6,13 +6,7 @@ import { MOCK_PROJECTS, MOCK_TEACHERS } from "../../constants/mock-data";
 import banner1 from "../../assets/images/teste1.jpg";
 import banner2 from "../../assets/images/teste2.jpg";
 import { NavLink } from "react-router";
-import {
-  Atom,
-  Handshake,
-  Lightbulb,
-  BookOpen,
-  ArrowRight,
-} from "lucide-react";
+import { Atom, Handshake, Lightbulb, BookOpen, ArrowRight } from "lucide-react";
 
 export function HomePage() {
   const navigate = useNavigate();

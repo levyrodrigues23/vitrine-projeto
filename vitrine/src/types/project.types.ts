@@ -7,11 +7,11 @@
 }
 
 export const ProjectCategory = {
-  Inovacao: "Inovacao",
-  Extensao: "Extensao",
-  Cientifico: "Cientifico",
-  Tecnico: "Tecnico",
-  Tcc: "Tcc",
+  Inovacao: "Inovação",
+  Extensao: "Extensão",
+  Cientifico: "Científico",
+  Tecnico: "Técnico",
+  Tcc: "TCC",
   Ensino: "Ensino",
   Pesquisa: "Pesquisa",
 } as const;
@@ -27,5 +27,9 @@ export interface Project {
   imageUrl?: string;
   link?: string;
   keywords?: string[];
+  area?: string;
+  responsible?: string;
+  year?: number;
+  status?: string;
   worksDone?: WorkDone[];
 }

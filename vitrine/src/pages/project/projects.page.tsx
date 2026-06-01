@@ -13,7 +13,8 @@ export function ProjectsPage() {
         title="Projetos"
         subtitle="Conheça os projetos do campus organizados por pesquisa, extensão e inovação."
       />
-      <Section title="Como os projetos são organizados">
+      
+      <Section title="Como os projetos são organizados?" align="center">
         <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
           <Text className="pt-3 pl-3" as="h2" variant="body-lg">
             O <strong>Portal de Egressos</strong> tem o objetivo de mostrar as
@@ -37,7 +38,7 @@ export function ProjectsPage() {
         </div>
       </Section>
       <div className="flex flex-col gap-28 my-24 px-8 items-center">
-        {/* PESQUISA */}
+      
         <div
           data-aos="fade-up"
           className="flex flex-col items-center text-center gap-6"
@@ -59,7 +60,7 @@ export function ProjectsPage() {
           </div>
         </div>
 
-        {/* EXTENSÃO */}
+        
         <div
           data-aos="fade-up"
           className="flex flex-col items-center text-center gap-6"
@@ -81,7 +82,7 @@ export function ProjectsPage() {
           </div>
         </div>
 
-        {/* INOVAÇÃO */}
+        
         <div
           data-aos="fade-up"
           className="flex flex-col items-center text-center gap-6"

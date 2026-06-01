@@ -8,12 +8,20 @@ import { EmpreendedorismoPage } from "../pages/empreendedorismo/empreendedorismo
 import { LoginPage } from "../pages/login/login.page";
 import { MinicursosPage } from "../pages/minicursos/minicursos.page";
 import { NotFoundPage } from "../pages/notfound/not-found.page";
+import { AdicionarArtigoPage } from "../pages/gerenciador/adicionar-artigo.page";
+import { AdicionarEgressoPage } from "../pages/gerenciador/adicionar-egresso.page";
+import { AdicionarProjetoPage } from "../pages/gerenciador/adicionar-projeto.page";
+import { AdicionarStartupPage } from "../pages/gerenciador/adicionar-startup.page";
+import { AdicionarProducaoTecnicaPage } from "../pages/gerenciador/adicionar-producao-tecnica.page";
+import { GerenciadorPage } from "../pages/gerenciador/gerenciador.page";
 import { PortalEgressosPage } from "../pages/portal-egressos/portal-egressos.page";
 import { EgressosPage } from "../pages/portal-egressos/egressos.page";
 import { NoticiasEgressosPage } from "../pages/portal-egressos/noticias-egressos.page";
 import { ProducaoTecnicaPage } from "../pages/producao-tecnica/producao-tecnica.page";
 import { ProfessoresPage } from "../pages/professores/professores.page";
 import Layout from "../components/layout/main-layout/layout";
+import { ProtectedRoute } from "../components/layout/protected-route";
+
 import { ProjectDetailPage } from "../pages/project/project-detail.page";
 import { ProjectListPage } from "../pages/project/project-list.page";
 import { ProjectsPage } from "../pages/project/projects.page";
@@ -114,11 +122,47 @@ export const router = createBrowserRouter([
         path: "projetos/:id",
         element: <ProjectDetailPage />,
       },
+      {
+        path: "admin",
+        element: <ProtectedRoute allowedRoles={["admin"]} />,
+        children: [
+          {
+            index: true,
+            element: <AdminPage />,
+          },
+        ],
+      },
+      {
+        path: "gerenciador",
+        element: <ProtectedRoute allowedRoles={["admin", "gerenciador"]} />,
+        children: [
+          {
+            index: true,
+            element: <GerenciadorPage />,
+          },
+          {
+            path: "egressos",
+            element: <AdicionarEgressoPage />,
+          },
+          {
+            path: "projetos",
+            element: <AdicionarProjetoPage />,
+          },
+          {
+            path: "artigos",
+            element: <AdicionarArtigoPage />,
+          },
+          {
+            path: "startups",
+            element: <AdicionarStartupPage />,
+          },
+          {
+            path: "producao-tecnica",
+            element: <AdicionarProducaoTecnicaPage />,
+          },
+        ],
+      },
     ],
-  },
-  {
-    path: "/admin",
-    element: <AdminPage />,
   },
   {
     path: "/login",

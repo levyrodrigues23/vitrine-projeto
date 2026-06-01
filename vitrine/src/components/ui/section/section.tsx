@@ -31,7 +31,7 @@ Section({
       className={`mx-auto w-full max-w-6xl px-6 pb-12 space-y-4 ${alignmentClass} ${className ?? ""}`}
       {...props}
     >
-      <Text as="h2" variant="title-3" className="my-13">
+      <Text as="h2" variant="title-2" className="my-13">
         {title}
       </Text>
       {description ? (

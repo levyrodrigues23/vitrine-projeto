@@ -35,10 +35,10 @@ export function ProfessoresPage() {
 
   const getFilteredTeachers = () => {
     if (!selectedArea) return MOCK_TEACHERS;
-    
+
     const area = MOCK_AREAS.find((a) => a.id === selectedArea);
     if (!area) return MOCK_TEACHERS;
-    
+
     return MOCK_TEACHERS.filter((teacher) => teacher.area === area.name);
   };
 
@@ -55,28 +55,10 @@ export function ProfessoresPage() {
         subtitle="Corpo docente, áreas de atuação e contatos institucionais."
       />
 
-       <Section title="Corpo docente">
-        <div className="grid grid-cols-1 gap-8 transition-all duration-300 md:grid-cols-2 lg:grid-cols-3">
-          {filteredTeachers.length > 0 ? (
-            filteredTeachers.map((teacher) => (
-              <TeacherCard
-                key={teacher.id}
-                name={teacher.name}
-                role={teacher.role || "Professor"}
-                imageUrl={teacher.imageUrl || ""}
-                githubUrl={teacher.githubUrl}
-                lattesUrl={teacher.lattesUrl}
-              />
-            ))
-          ) : (
-            <div className="col-span-full py-12 text-center text-gray-base">
-              <p className="text-lg font-medium">Nenhum professor encontrado nesta área</p>
-            </div>
-          )}
-        </div>
-      </Section>
-
-      <Section title="Áreas de atuação" description="Explore as principais áreas de pesquisa e ensino">
+      <Section
+        title="Áreas de atuação"
+        description="Explore as principais áreas de pesquisa e ensino"
+      >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {MOCK_AREAS.map((area) => (
             <AreaCard
@@ -102,6 +84,28 @@ export function ProfessoresPage() {
         )}
       </Section>
 
+      <Section title="Corpo docente">
+        <div className="grid grid-cols-1 gap-8 transition-all duration-300 md:grid-cols-2 lg:grid-cols-3">
+          {filteredTeachers.length > 0 ? (
+            filteredTeachers.map((teacher) => (
+              <TeacherCard
+                key={teacher.id}
+                name={teacher.name}
+                role={teacher.role || "Professor"}
+                imageUrl={teacher.imageUrl || ""}
+                githubUrl={teacher.githubUrl}
+                lattesUrl={teacher.lattesUrl}
+              />
+            ))
+          ) : (
+            <div className="col-span-full py-12 text-center text-gray-base">
+              <p className="text-lg font-medium">
+                Nenhum professor encontrado nesta área
+              </p>
+            </div>
+          )}
+        </div>
+      </Section>
     </>
   );
 }

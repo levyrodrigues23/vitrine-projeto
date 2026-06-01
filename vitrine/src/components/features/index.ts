@@ -6,3 +6,5 @@ export { TeacherCard } from "./teacher-card/teacher-card";
 export type { TeacherCardProps } from "./teacher-card/teacher-card";
 export { AreaCard } from "./area-card/area-card";
 export type { AreaCardProps } from "./area-card/area-card";
+export { ProjectFilter } from "./project-filter/project-filter";
+export type { ProjectFilterProps } from "./project-filter/project-filter.types";
