@@ -131,25 +131,6 @@ export function HomePage() {
           ))}
         </div>
       </Section>
-
-      <Section
-        title="Corpo Docente"
-        description="Conheça os professores que lideram nossos projetos e pesquisas."
-        align="center"
-      >
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {MOCK_TEACHERS.map((teacher) => (
-            <TeacherCard
-              key={teacher.id}
-              name={teacher.name}
-              role={teacher.role || "Professor"}
-              imageUrl={teacher.imageUrl || ""}
-              githubUrl={teacher.githubUrl}
-              lattesUrl={teacher.lattesUrl}
-            />
-          ))}
-        </div>
-      </Section>
     </>
   );
 }

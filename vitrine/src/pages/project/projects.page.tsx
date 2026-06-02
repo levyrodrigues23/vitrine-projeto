@@ -1,19 +1,49 @@
 import { NavLink } from "react-router";
+import { useEffect, useMemo } from "react";
 import PageHero from "../../components/layout/page-hero/page-hero";
 import { Card, Section, Text, buttonVariants } from "../../components/ui";
 import ProjectIcon from "../../assets/icons/projetos-icon.svg";
 import Pesquisa from "../../assets/icons/pesquisa-nobg (1).svg";
 import Extensao from "../../assets/icons/extensao-nobg (1).svg";
 import Inovacao from "../../assets/icons/inovacao-nobg (1).svg";
+import { useProjects } from "../../hooks/useProjects";
+import { ProjectCard, ProjectFilter } from "../../components/features";
+import { useProjectStore } from "../../store/useProjectStore";
 
 export function ProjectsPage() {
+  const { projects, loading, error } = useProjects();
+  const activeCategory = useProjectStore((state) => state.activeCategory);
+  const searchQuery = useProjectStore((state) => state.searchQuery);
+  const setActiveCategory = useProjectStore((state) => state.setActiveCategory);
+
+  useEffect(() => {
+    setActiveCategory("all");
+  }, [setActiveCategory]);
+
+  const filtered = useMemo(() => {
+    const list =
+      activeCategory === "all"
+        ? projects
+        : projects.filter((project) => project.category === activeCategory);
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return list;
+    return list.filter(
+      (project) =>
+        project.title.toLowerCase().includes(query) ||
+        project.description.toLowerCase().includes(query) ||
+        project.keywords?.some((keyword) =>
+          keyword.toLowerCase().includes(query),
+        ),
+    );
+  }, [activeCategory, projects, searchQuery]);
+
   return (
     <>
       <PageHero
         title="Projetos"
         subtitle="Conheça os projetos do campus organizados por pesquisa, extensão e inovação."
       />
-      
+
       <Section title="Como os projetos são organizados?" align="center">
         <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
           <Text className="pt-3 pl-3" as="h2" variant="body-lg">
@@ -38,7 +68,6 @@ export function ProjectsPage() {
         </div>
       </Section>
       <div className="flex flex-col gap-28 my-24 px-8 items-center">
-      
         <div
           data-aos="fade-up"
           className="flex flex-col items-center text-center gap-6"
@@ -60,7 +89,6 @@ export function ProjectsPage() {
           </div>
         </div>
 
-        
         <div
           data-aos="fade-up"
           className="flex flex-col items-center text-center gap-6"
@@ -82,7 +110,6 @@ export function ProjectsPage() {
           </div>
         </div>
 
-        
         <div
           data-aos="fade-up"
           className="flex flex-col items-center text-center gap-6"
@@ -104,7 +131,11 @@ export function ProjectsPage() {
           </div>
         </div>
       </div>
-      <Section title="Experimente explorar por categoria!" showSeparator={false} align="center" >
+      <Section
+        title="Experimente explorar por categoria!"
+        showSeparator={false}
+        align="center"
+      >
         <div className="grid gap-6 md:grid-cols-3">
           <Card className=" flex flex-col p-6 space-y-4 text-center md:text-left">
             <Text as="h3" variant="body-lg-bold">
@@ -149,6 +180,40 @@ export function ProjectsPage() {
             </NavLink>
           </Card>
         </div>
+      </Section>
+      <Section
+        title="Todos os projetos"
+        description="Veja aqui todos os projetos"
+        align="center"
+      >
+        <ProjectFilter className="pt-4" />
+
+        {loading ? (
+          <p className="text-center text-gray-base">Carregando projetos...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">
+            Erro ao carregar os projetos.
+          </p>
+        ) : filtered.length === 0 ? (
+          <p className="text-center text-gray-base">
+            Nenhum projeto encontrado com esses critérios.
+          </p>
+        ) : (
+          <ul className="grid list-none gap-6 p-0 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((projeto) => (
+              <li key={projeto.id} className="min-h-80">
+                <ProjectCard
+                  to={`/projetos/${projeto.id}`}
+                  title={projeto.title}
+                  description={projeto.description}
+                  category={projeto.category}
+                  imageUrl={projeto.imageUrl}
+                  area={projeto.area}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </Section>
     </>
   );
