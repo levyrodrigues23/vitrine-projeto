@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using VitrineAPI.Database;
+using VitrineAPI.Features.Projects.Endpoints;
+using VitrineAPI.Features.Projetos.Endpoints;
 
 namespace VitrineAPI
 {
@@ -13,6 +15,10 @@ namespace VitrineAPI
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<CreateProjectHandler>();
+            builder.Services.AddScoped<GetProjectsHandler>();
+            builder.Services.AddScoped<GetProjectByIdHandler>();
 
             var app = builder.Build();
 
