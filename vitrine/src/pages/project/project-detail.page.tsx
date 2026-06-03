@@ -5,6 +5,10 @@ import { WorksDone } from "../../components/features/trabalhos-feitos/trabalhos-
 import Separator from "../../components/layout/separator/separator";
 import { TeacherCard } from "../../components/features";
 import { useProject } from "../../hooks/useProject";
+import { useDeleteProject } from "../../hooks/useDeleteProject";
+import { useAuthStore } from "../../store/useAuthStore";
+import { Button } from "../../components/ui";
+import { useNavigate } from "react-router";
 
 const objectives = [
   {
@@ -35,7 +39,21 @@ const objectives = [
 
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { project, loading, error } = useProject(id);
+  const { execute: deleteProject, loading: isDeleting } = useDeleteProject();
+  const user = useAuthStore((state) => state.user);
+
+  const handleDelete = async () => {
+    if (!id || !window.confirm("Tem certeza que deseja excluir este projeto?")) return;
+    
+    const result = await deleteProject(id);
+    if (result.success) {
+      navigate("/projetos");
+    } else {
+      alert(result.error);
+    }
+  };
 
   if (loading) {
     return <p className="text-center text-gray-base">Carregando...</p>;
@@ -74,15 +92,6 @@ export function ProjectDetailPage() {
             <Badge variant="secondary" className="ml-0 px-3 py-1 text-xs">
               {project.category}
             </Badge>
-            {project.keywords?.map((keyword) => (
-              <Badge
-                key={keyword}
-                variant="outline"
-                className="ml-0 border-white/60 px-3 py-1 text-xs text-white"
-              >
-                {keyword}
-              </Badge>
-            ))}
           </div>
           <Text as="h1" variant="title-2" className="max-w-3xl text-white">
             {project.title}
@@ -90,6 +99,25 @@ export function ProjectDetailPage() {
           <Text as="p" variant="body-lg" className="max-w-2xl text-white/80">
             {project.description}
           </Text>
+
+          {user && (user.role === "admin" || project.authorId === user.id) && (
+            <div className="mt-6 flex gap-4">
+              <Button
+                variant="primary"
+                onClick={() => navigate(`/gerenciador/projetos/${project.id}/editar`)}
+              >
+                Editar Projeto
+              </Button>
+              <Button
+                variant="tertiary"
+                className="bg-red text-white hover:bg-red/90"
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
+                {isDeleting ? "Excluindo..." : "Excluir Projeto"}
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -137,10 +165,10 @@ export function ProjectDetailPage() {
 
         <section className="space-y-6" data-aos="fade-up">
           <Text as="h2" variant="title-3" className="text-black">
-            | Professores envolvidos
+            | Professor Responsável
           </Text>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {MOCK_TEACHERS.map((teacher) => (
+            {MOCK_TEACHERS.slice(0, 2).map((teacher) => (
               <TeacherCard
                 key={teacher.id}
                 name={teacher.name}

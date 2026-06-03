@@ -149,6 +149,10 @@ export const router = createBrowserRouter([
             element: <AdicionarProjetoPage />,
           },
           {
+            path: "projetos/:id/editar",
+            element: <AdicionarProjetoPage />,
+          },
+          {
             path: "artigos",
             element: <AdicionarArtigoPage />,
           },

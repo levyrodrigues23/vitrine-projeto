@@ -8,16 +8,15 @@ export const MOCK_PROJECTS: Project[] = [
     description: "Plataforma web para gerenciamento de cursos, alunos e notas",
     category: ProjectCategory.Pesquisa,
     imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
-    keywords: ["Sistema", "Gestão", "Acadêmica"],
     worksDone: [
-  {
-    title: "Sistema X",
-    description: "Descricao...",
-    category: ProjectCategory.Cientifico,
-    imageUrl: "...",
-    keywords: ["IA", "Dados"],
-  },
-],
+      {
+        id: "wd1",
+        title: "Sistema X",
+        description: "Descricao...",
+        category: ProjectCategory.Pesquisa,
+        imageUrl: "...",
+      },
+    ],
   },
   {
     id: "2",
@@ -26,14 +25,13 @@ export const MOCK_PROJECTS: Project[] = [
     category: ProjectCategory.Inovacao,
     imageUrl:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop",
-    keywords: ["App", "Mobile", "Eventos"],
     worksDone: [
       {
+        id: "wd2",
         title: "Trabalho 1",
         description: "Descrição do trabalho 1",
-        category: ProjectCategory.Cientifico,
+        category: ProjectCategory.Pesquisa,
         imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
-        keywords: ["IA", "Dados"],
       },
     ],
   },
@@ -46,11 +44,11 @@ export const MOCK_PROJECTS: Project[] = [
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop",
     worksDone: [
       {
+        id: "wd3",
         title: "Trabalho 2",
         description: "Descrição do trabalho 2",
-        category: ProjectCategory.Cientifico,
+        category: ProjectCategory.Pesquisa,
         imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
-        keywords: ["IA", "Dados"],
       },
     ],
   },
@@ -58,16 +56,16 @@ export const MOCK_PROJECTS: Project[] = [
     id: "4",
     title: "Chatbot IA",
     description: "Assistente virtual com inteligência artificial para atendimento",
-    category: ProjectCategory.Cientifico,
+    category: ProjectCategory.Pesquisa,
     imageUrl:
       "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&h=300&fit=crop",
     worksDone: [
       {
+        id: "wd4",
         title: "Trabalho 3",
         description: "Descrição do trabalho 3",
-        category: ProjectCategory.Cientifico,
+        category: ProjectCategory.Pesquisa,
         imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
-        keywords: ["IA", "Dados"],
       },
     ],
   },
@@ -75,16 +73,16 @@ export const MOCK_PROJECTS: Project[] = [
     id: "5",
     title: "Plataforma E-learning",
     description: "Ambiente virtual para cursos online e educação a distância",
-    category: ProjectCategory.Ensino,
+    category: ProjectCategory.Extensao,
     imageUrl:
       "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=300&fit=crop",
     worksDone: [
       {
+        id: "wd5",
         title: "Trabalho 4",
         description: "Descrição do trabalho 4",
-        category: ProjectCategory.Cientifico,
+        category: ProjectCategory.Pesquisa,
         imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
-        keywords: ["IA", "Dados"],
       },
     ],
   },
@@ -92,16 +90,16 @@ export const MOCK_PROJECTS: Project[] = [
     id: "6",
     title: "API REST de Biblioteca",
     description: "Serviço de backend para gerenciamento de acervo bibliográfico",
-    category: ProjectCategory.Tecnico,
+    category: ProjectCategory.Inovacao,
     imageUrl:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop",
     worksDone: [
       {
+        id: "wd6",
         title: "Trabalho 5",
         description: "Descrição do trabalho 5",
-        category: ProjectCategory.Cientifico,
+        category: ProjectCategory.Pesquisa,
         imageUrl: "https://images.unsplash.com/photo-1516534775068-bb57e39f0bca?w=500&h=300&fit=crop",
-        keywords: ["IA", "Dados"],
       },
     ],
   },

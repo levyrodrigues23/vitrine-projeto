@@ -1,8 +1,8 @@
 import Hero from "../../components/layout/hero-section/hero";
 import { useNavigate } from "react-router";
 import { Section, Card, Text } from "../../components/ui";
-import { ProjectCard, TeacherCard } from "../../components/features";
-import { MOCK_PROJECTS, MOCK_TEACHERS } from "../../constants/mock-data";
+import { ProjectCard} from "../../components/features";
+import { useProjects } from "../../hooks/useProjects";
 import banner1 from "../../assets/images/teste1.jpg";
 import banner2 from "../../assets/images/teste2.jpg";
 import { NavLink } from "react-router";
@@ -11,12 +11,15 @@ import { Atom, Handshake, Lightbulb, BookOpen, ArrowRight } from "lucide-react";
 export function HomePage() {
   const navigate = useNavigate();
 
+  const { projects, loading, error } = useProjects();
+
   const handleSearchSubmit = (q: string) => {
     const url = `/projetos?busca=${encodeURIComponent(q)}`;
     navigate(url);
   };
-  const featuredProjects = MOCK_PROJECTS.slice(0, 3);
-  const moreProjects = MOCK_PROJECTS.slice(3, 6);
+  
+  const featuredProjects = projects.slice(0, 3);
+  const moreProjects = projects.slice(3, 6);
 
   const categories = [
     {
@@ -70,18 +73,24 @@ export function HomePage() {
           </NavLink>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featuredProjects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              to={`/projetos/${project.id}`}
-              title={project.title}
-              description={project.description}
-              category={project.category}
-              imageUrl={project.imageUrl}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-gray-base">Carregando projetos em destaque...</p>
+        ) : error ? (
+          <p className="text-red-500">Erro ao carregar os projetos.</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {featuredProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                to={`/projetos/${project.id}`}
+                title={project.title}
+                description={project.description}
+                category={project.category}
+                imageUrl={project.imageUrl}
+              />
+            ))}
+          </div>
+        )}
       </Section>
 
       <Section
@@ -118,18 +127,24 @@ export function HomePage() {
         title="Mais Projetos"
         description="Outros registros que também merecem atenção e mostram a variedade da vitrine."
       >
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {moreProjects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              to={`/projetos/${project.id}`}
-              title={project.title}
-              description={project.description}
-              category={project.category}
-              imageUrl={project.imageUrl}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-gray-base">Carregando mais projetos...</p>
+        ) : error ? (
+          <p className="text-red-500">Erro ao carregar os projetos.</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {moreProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                to={`/projetos/${project.id}`}
+                title={project.title}
+                description={project.description}
+                category={project.category}
+                imageUrl={project.imageUrl}
+              />
+            ))}
+          </div>
+        )}
       </Section>
     </>
   );

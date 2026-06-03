@@ -14,13 +14,12 @@ export const ProjectCategory = {
 
 export type ProjectCategory =
   (typeof ProjectCategory)[keyof typeof ProjectCategory];
-
 export interface Project {
   id: string;
   title: string;
   description: string;
   category: ProjectCategory;
   imageUrl?: string;
-  responsible: string;
+  authorId?: string;
   worksDone?: WorkDone[];
 }

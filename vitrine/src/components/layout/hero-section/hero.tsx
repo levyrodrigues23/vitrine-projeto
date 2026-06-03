@@ -6,7 +6,6 @@ import TypeIt from "typeit-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Fuse from "fuse.js";
 import { useNavigate } from "react-router";
-import { MOCK_PROJECTS } from "../../../constants/mock-data";
 import type { Project } from "../../../types/project.types";
 
 interface HeroProps {
@@ -24,6 +23,7 @@ interface HeroProps {
   searchValue?: string;
   onSearchChange?: (value: string) => void;
   onSearchSubmit?: (value: string) => void;
+  searchItems?: Project[];
 }
 
 export default function Hero({
@@ -41,6 +41,7 @@ export default function Hero({
   searchValue,
   onSearchChange,
   onSearchSubmit,
+  searchItems = [],
 }: HeroProps) {
   const iconComponent = iconSvg ?? HomeIcon;
   const resolvedIconSize = iconSize ?? "xl3";
@@ -59,11 +60,11 @@ export default function Hero({
   // Fuse.js instance
   const fuse = useMemo(() => {
     const options: Fuse.IFuseOptions<Project> = {
-      keys: ["title", "description", "keywords"],
+      keys: ["title", "description"],
       threshold: 0.4,
     };
-    return new Fuse(MOCK_PROJECTS, options);
-  }, []);
+    return new Fuse(searchItems, options);
+  }, [searchItems]);
 
   const [suggestions, setSuggestions] = useState<Project[]>([]);
   const debounceRef = useRef<number | null>(null);

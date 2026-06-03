@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createProject,
   uploadProjectImage,
+  type CreateProjectPayload,
 } from "../services/projects.service";
 import { queryKeys } from "../services/query-keys";
 import type { Project } from "../types/project.types";
@@ -18,7 +19,7 @@ export function useCreateProject() {
       payload,
       imageFile,
     }: {
-      payload: Project;
+      payload: CreateProjectPayload;
       imageFile?: File;
     }) => {
       let imageUrl = payload.imageUrl;
@@ -39,7 +40,7 @@ export function useCreateProject() {
   });
 
   const execute = async (
-    payload: Project,
+    payload: CreateProjectPayload,
     imageFile?: File,
   ): Promise<CreateProjectResult> => {
     try {

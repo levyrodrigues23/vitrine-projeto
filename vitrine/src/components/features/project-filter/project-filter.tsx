@@ -1,4 +1,4 @@
-﻿import { NavLink } from "react-router";
+import { NavLink } from "react-router";
 import { BlockHelp, Input, Text, buttonVariants } from "../../ui";
 import { ProjectCategory } from "../../../types/project.types";
 import {
@@ -28,7 +28,7 @@ export function ProjectFilter({ className }: ProjectFilterProps) {
         </Text>
         <BlockHelp
           topicLabel="catálogo e filtros"
-          explanation="Use as categorias para ver só pesquisa, extensão ou inovação. A busca filtra por título, descrição ou palavras-chave dos projetos."
+          explanation="Use as categorias para ver só pesquisa, extensão ou inovação. A busca filtra por título ou descrição dos projetos."
         />
       </div>
 
@@ -62,7 +62,7 @@ export function ProjectFilter({ className }: ProjectFilterProps) {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Digite algo"
-          aria-label="Buscar projetos por nome ou palavra-chave"
+          aria-label="Buscar projetos por nome ou descrição"
           className="h-11 bg-white"
         />
       </label>
