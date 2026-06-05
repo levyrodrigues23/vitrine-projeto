@@ -1,10 +1,4 @@
-﻿export interface WorkDone {
-  id: string;
-  title: string;
-  description: string;
-  category: ProjectCategory;
-  imageUrl?: string;
-}
+﻿import type { WorkDone } from "./workDone.types";
 
 export const ProjectCategory = {
   Inovacao: "Inovação",

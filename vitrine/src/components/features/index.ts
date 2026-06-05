@@ -8,3 +8,5 @@ export { AreaCard } from "./area-card/area-card";
 export type { AreaCardProps } from "./area-card/area-card";
 export { ProjectFilter } from "./project-filter/project-filter";
 export type { ProjectFilterProps } from "./project-filter/project-filter.types";
+export { ProjectCategoryNavCard } from "./project-category-nav-card/project-category-nav-card";
+export type { ProjectCategoryNavCardProps } from "./project-category-nav-card/project-category-nav-card";

@@ -45,6 +45,8 @@ export function FormChoiceGrid({
   onChange,
   error,
 }: FormChoiceGridProps) {
+  const errorId = error ? `${name}-choice-error` : undefined;
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
@@ -58,7 +60,12 @@ export function FormChoiceGrid({
         ) : null}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div
+        className="grid gap-4 md:grid-cols-3"
+        role="radiogroup"
+        aria-label={title}
+        aria-describedby={errorId}
+      >
         {choices.map((choice) => {
           const selected = choice.value === value;
 
@@ -71,6 +78,7 @@ export function FormChoiceGrid({
                 checked={selected}
                 onChange={() => onChange(choice.value)}
                 className="sr-only"
+                aria-invalid={Boolean(error)}
               />
               <Card
                 variant="interactive"
@@ -96,7 +104,11 @@ export function FormChoiceGrid({
           );
         })}
       </div>
-      {error ? <p className="text-xs font-semibold text-red">{error}</p> : null}
+      {error ? (
+        <p id={errorId} className="text-xs font-semibold text-red">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }

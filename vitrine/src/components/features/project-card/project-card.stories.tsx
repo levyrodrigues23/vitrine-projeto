@@ -23,7 +23,6 @@ export default meta;
 
 type Story = StoryObj<typeof ProjectCard>;
 
-// ── COM IMAGEM ──────────────────────────────────────────────────
 
 export const Default: Story = {
   args: {
@@ -61,7 +60,6 @@ export const LongDescription: Story = {
   },
 };
 
-// ── SEM IMAGEM ──────────────────────────────────────────────────
 
 export const WithoutImage: Story = {
   name: "Sem imagem (sem ícone)",
@@ -113,7 +111,7 @@ export const Linkable: Story = {
   },
 };
 
-// ── EDGE CASES ──────────────────────────────────────────────────
+
 
 export const TitleOnly: Story = {
   name: "Edge: só título e categoria",
@@ -135,7 +133,7 @@ export const LongTitleNoImage: Story = {
   },
 };
 
-// ── GRADE DE COMPARAÇÃO ─────────────────────────────────────────
+
 
 export const GridComparison: Story = {
   name: "Grade: com vs sem imagem",

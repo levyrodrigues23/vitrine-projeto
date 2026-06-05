@@ -1,17 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteProject } from "../services/projects.service";
-import { queryKeys } from "../services/query-keys";
+import { deleteMinicourse } from "../../services/minicourse.service";
+import { queryKeys } from "../../services/query-keys";
 
-export function useDeleteProject() {
+export function useDeleteMinicourse() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (id: string) => deleteProject(id),
+    mutationFn: (id: string) => deleteMinicourse(id),
     onSuccess: async (_, id) => {
-      // Invalidate the projects list to refresh the UI everywhere
-      await queryClient.invalidateQueries({ queryKey: queryKeys.projects });
-      // Also remove the specific project detail from cache
-      queryClient.removeQueries({ queryKey: queryKeys.projectDetail(id) });
+      await queryClient.invalidateQueries({ queryKey: queryKeys.minicourses });
+      queryClient.removeQueries({ queryKey: queryKeys.minicourseDetail(id) });
     },
   });
 
@@ -21,7 +19,7 @@ export function useDeleteProject() {
       return { success: true };
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Erro ao excluir projeto";
+        err instanceof Error ? err.message : "Erro ao excluir minicurso";
       return { success: false, error: errorMessage };
     }
   };

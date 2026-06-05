@@ -39,7 +39,7 @@ export function ProjectCard({
           <div className="relative h-48 w-full overflow-hidden">
             <img
               src={imageUrl}
-              alt={title}
+              alt={`Imagem de destaque do projeto ${title}`}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div
@@ -99,7 +99,11 @@ export function ProjectCard({
 
   if (to) {
     return (
-      <Link to={to} className="block h-full no-underline">
+      <Link
+        to={to}
+        className="block h-full no-underline"
+        aria-label={`Abrir detalhes do projeto ${title}`}
+      >
         {card}
       </Link>
     );

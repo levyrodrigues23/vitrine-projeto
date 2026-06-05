@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getProjectById } from "../services/projects.service";
-import { queryKeys } from "../services/query-keys";
+import { getProjectById } from "../../services/projects.service";
+import { queryKeys } from "../../services/query-keys";
 
 export function useProject(id?: string) {
   const queryKey = id

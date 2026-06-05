@@ -1,52 +1,28 @@
+import { useMemo } from "react";
 import Hero from "../../components/layout/hero-section/hero";
-import { useNavigate } from "react-router";
 import { Section, Card, Text } from "../../components/ui";
-import { ProjectCard} from "../../components/features";
-import { useProjects } from "../../hooks/useProjects";
+import { ProjectCard } from "../../components/features";
+import { useProjects } from "../../hooks/project";
+import { PROJECT_CATEGORIES } from "../../constants/project-categories";
+import {
+  countProjectsByCategory,
+  formatCategoryProjectCount,
+} from "../../utils/project-utils";
 import banner1 from "../../assets/images/teste1.jpg";
 import banner2 from "../../assets/images/teste2.jpg";
 import { NavLink } from "react-router";
-import { Atom, Handshake, Lightbulb, BookOpen, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export function HomePage() {
-  const navigate = useNavigate();
-
   const { projects, loading, error } = useProjects();
 
-  const handleSearchSubmit = (q: string) => {
-    const url = `/projetos?busca=${encodeURIComponent(q)}`;
-    navigate(url);
-  };
-  
   const featuredProjects = projects.slice(0, 3);
   const moreProjects = projects.slice(3, 6);
 
-  const categories = [
-    {
-      label: "Pesquisa",
-      icon: Atom,
-      count: "24 projetos",
-      to: "/projetos/pesquisa",
-    },
-    {
-      label: "Extensão",
-      icon: Handshake,
-      count: "18 projetos",
-      to: "/projetos/extensao",
-    },
-    {
-      label: "Inovação",
-      icon: Lightbulb,
-      count: "12 projetos",
-      to: "/projetos/inovacao",
-    },
-    {
-      label: "Ensino",
-      icon: BookOpen,
-      count: "15 projetos",
-      to: "/projetos",
-    },
-  ];
+  const categoryCounts = useMemo(
+    () => countProjectsByCategory(projects),
+    [projects],
+  );
 
   return (
     <>
@@ -56,7 +32,7 @@ export function HomePage() {
         subtitle="Pesquisa, inovação e extensão do Campus Itapajé em um só lugar."
         images={[banner1, banner2]}
         showSearch
-        onSearchSubmit={handleSearchSubmit}
+        searchItems={projects}
       />
 
       <Section
@@ -98,26 +74,28 @@ export function HomePage() {
         description="Acesse os projetos por área de interesse e encontre mais rápido o que você procura."
         align="center"
       >
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {categories.map((category) => {
-            const Icon = category.icon;
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {PROJECT_CATEGORIES.map((meta) => {
+            const Icon = meta.icon;
+            const count = error ? 0 : (categoryCounts[meta.category] ?? 0);
 
             return (
-              <NavLink key={category.label} to={category.to} className="block">
-                <Card className="group flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-gray-base/15 bg-white p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue/10 text-blue-dark transition group-hover:scale-105">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <Text as="h3" variant="body-lg-bold">
-                      {category.label}
-                    </Text>
-                    <Text variant="body-md" className="text-gray-base">
-                      {category.count}
-                    </Text>
-                  </div>
-                </Card>
-              </NavLink>
+              <Card
+                key={meta.label}
+                className="flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-gray-base/15 bg-white p-6 text-center shadow-sm"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue/10 text-blue-dark">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <div>
+                  <Text as="h3" variant="body-lg-bold">
+                    {meta.label}
+                  </Text>
+                  <Text variant="body-md" className="text-gray-base">
+                    {formatCategoryProjectCount(count, meta.label)}
+                  </Text>
+                </div>
+              </Card>
             );
           })}
         </div>

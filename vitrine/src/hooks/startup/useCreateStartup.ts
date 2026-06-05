@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  createProject,
-  uploadProjectImage,
-  type CreateProjectPayload,
-} from "../services/projects.service";
-import { queryKeys } from "../services/query-keys";
-import type { Project } from "../types/project.types";
+  createStartup,
+  uploadStartupImage,
+  type CreateStartupPayload,
+} from "../../services/startup.service";
+import { queryKeys } from "../../services/query-keys";
+import type { Startup } from "../../types/startup.types";
 
-type CreateProjectResult =
-  | { success: true; data: Project }
+type CreateStartupResult =
+  | { success: true; data: Startup }
   | { success: false; error: string };
 
-export function useCreateProject() {
+export function useCreateStartup() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -19,36 +19,36 @@ export function useCreateProject() {
       payload,
       imageFile,
     }: {
-      payload: CreateProjectPayload;
+      payload: CreateStartupPayload;
       imageFile?: File;
     }) => {
       let imageUrl = payload.imageUrl;
 
       if (imageFile) {
-        imageUrl = await uploadProjectImage(imageFile);
+        imageUrl = await uploadStartupImage(imageFile);
       }
 
-      return createProject({
+      return createStartup({
         ...payload,
         imageUrl,
       });
     },
-    onSuccess: async (project) => {
-      await queryClient.invalidateQueries({ queryKey: queryKeys.projects });
-      queryClient.setQueryData(queryKeys.projectDetail(project.id), project);
+    onSuccess: async (startup) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.startups });
+      queryClient.setQueryData(queryKeys.startupDetail(startup.id), startup);
     },
   });
 
   const execute = async (
-    payload: CreateProjectPayload,
+    payload: CreateStartupPayload,
     imageFile?: File,
-  ): Promise<CreateProjectResult> => {
+  ): Promise<CreateStartupResult> => {
     try {
       const data = await mutation.mutateAsync({ payload, imageFile });
       return { success: true, data };
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Erro ao criar projeto";
+        err instanceof Error ? err.message : "Erro ao criar startup";
       return { success: false, error: errorMessage };
     }
   };

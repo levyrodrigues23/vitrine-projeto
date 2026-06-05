@@ -2,35 +2,25 @@ import PageHero from "../../components/layout/page-hero/page-hero";
 import {  Section, Text } from "../../components/ui";
 import Startup from "../../assets/icons/startups.svg";
 import { ProjectCard } from "../../components/features";
+import { useNavigate } from "react-router";
+import { useStartups } from "../../hooks/startup";
 
 
 export function StartupsPage() {
-  const startups = [
-    {
-      title: "Projeto Atlas",
-      description:
-        "Plataforma para mapear oportunidades e conectar estudantes.",
-        category: "inteligencia artificial",
-        area: "tecnologia",
-        icon: Startup,
-       
-    },
-    {
-      title: "AgroData",
-      description:
-        "Solucao para apoio a produtores com analise de dados locais.",
-        category: "analise de dados",
-        area: "agricultura",
-        icon: Startup,
-    },
-    {
-      title: "Saude Conecta",
-      description: "Aplicativo de suporte a campanhas de saude comunitaria.",
-      category: "saude",
-      area: "saude",
-      icon: Startup,
-    },
-  ];
+  const navigate = useNavigate();
+
+  const {startups, loading, error} = useStartups();
+
+  const handleSearchSubmit = (q: string) => {
+      const url = `/startup?busca=${encodeURIComponent}`
+      navigate(url)
+  }
+
+  
+
+
+
+  
 
   return (
     <>

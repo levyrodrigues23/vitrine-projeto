@@ -1,51 +1,97 @@
-import { useEffect, useMemo } from "react";
-import { useLocation } from "react-router";
+import { useEffect, useMemo, useState } from "react";
+import { NavLink, useLocation } from "react-router";
 import PageHero from "../../components/layout/page-hero/page-hero";
+import { Input, Section, Text } from "../../components/ui";
 import { ProjectCard } from "../../components/features";
 import { ProjectCategory } from "../../types/project.types";
-import { useProjects } from "../../hooks/useProjects";
+import { useProjects } from "../../hooks/project";
+import {
+  CATEGORY_EXPLANATION,
+  PROJECT_CATEGORIES,
+} from "../../constants/project-categories";
+import { filterProjects } from "../../utils/project-utils";
 
-function categoryFromPath(pathname: string): "all" | ProjectCategory {
+function categoryFromPath(pathname: string): ProjectCategory | null {
   if (pathname.endsWith("/pesquisa")) return ProjectCategory.Pesquisa;
   if (pathname.endsWith("/extensao")) return ProjectCategory.Extensao;
   if (pathname.endsWith("/inovacao")) return ProjectCategory.Inovacao;
-  return "all";
+  return null;
 }
-
-const CATEGORY_EXPLANATION: Record<ProjectCategory, string> = {
-  [ProjectCategory.Pesquisa]:
-    "A pesquisa no campus é focada em produzir conhecimento científico e tecnológico aplicável às necessidades da região, promovendo inovação e a formação de pesquisadores de excelência.",
-  [ProjectCategory.Extensao]:
-    "Nossos projetos de extensão conectam o conhecimento acadêmico com a comunidade, promovendo ações que geram impacto social, cultural e econômico direto na vida das pessoas.",
-  [ProjectCategory.Inovacao]:
-    "O pilar de inovação busca criar soluções criativas e tecnológicas para problemas reais, fomentando o empreendedorismo e parcerias com o setor produtivo local.",
-};
 
 export function ProjectListPage() {
   const { pathname } = useLocation();
   const activeCategory = categoryFromPath(pathname);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const { projects, loading, error } = useProjects();
 
+  const categoryMeta = PROJECT_CATEGORIES.find(
+    (meta) => meta.category === activeCategory,
+  );
+
   const filtered = useMemo(() => {
-    if (activeCategory === "all") return projects;
-    return projects.filter((p) => p.category === activeCategory);
-  }, [projects, activeCategory]);
+    if (!activeCategory) return [];
+    return filterProjects(projects, activeCategory, searchQuery);
+  }, [projects, activeCategory, searchQuery]);
+
+  if (!activeCategory || !categoryMeta) {
+    return (
+      <Section title="Categoria não encontrada" align="center">
+        <NavLink to="/projetos" className="font-semibold text-blue-dark">
+          ← Voltar para todos os projetos
+        </NavLink>
+      </Section>
+    );
+  }
+
+  const CategoryIcon = categoryMeta.icon;
 
   return (
     <>
       <PageHero
         title={`Projetos de ${activeCategory}`}
-        subtitle={
-          activeCategory !== "all" 
-            ? CATEGORY_EXPLANATION[activeCategory] 
-            : "Conheça nossos projetos."
-        }
+        subtitle={CATEGORY_EXPLANATION[activeCategory]}
       />
-      <section
-        className="mx-auto w-full max-w-6xl px-6 pb-16 pt-10"
-        aria-label={`Catálogo de projetos de ${activeCategory}`}
-      >
+
+      <Section align="center">
+        <NavLink
+          to="/projetos"
+          className="mb-6 inline-flex text-sm font-semibold text-blue-dark hover:underline"
+        >
+          ← Voltar para todos os projetos
+        </NavLink>
+
+        <div className="mb-10 flex flex-col items-center gap-4 rounded-2xl border border-gray-base/15 bg-white p-6 text-center shadow-sm md:flex-row md:text-left">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue/10 text-blue-dark">
+            <CategoryIcon className="h-7 w-7" />
+          </div>
+          <div>
+            <Text as="h2" variant="body-lg-bold">
+              O que é um projeto de {activeCategory.toLowerCase()}?
+            </Text>
+            <Text variant="body-md" className="mt-2 text-gray-base">
+              {categoryMeta.description}
+            </Text>
+          </div>
+        </div>
+
+        <label className="mx-auto mb-10 block w-full max-w-xl">
+          <span className="mb-2 block text-left text-sm font-semibold text-gray-base-dark">
+            Buscar nesta categoria
+          </span>
+          <Input
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Digite algo"
+            aria-label={`Buscar projetos de ${activeCategory}`}
+            className="h-11 bg-white"
+          />
+        </label>
 
         {loading ? (
           <p className="text-center text-gray-base">Carregando...</p>
@@ -70,7 +116,7 @@ export function ProjectListPage() {
             ))}
           </ul>
         )}
-      </section>
+      </Section>
     </>
   );
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>titulo</title>
+    <style>
+        .container {
+            background: pink;
+            width: 500px;
+            border: 2px solid black;
+            border-radius: 10px;
+            transition: pink 4s ease;
+        }
+
+        .container:hover{
+            background-color: #d43f5d;
+            cursor: pointer;
+            
+        }
+
+        .nome {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            transition: pink 4s ease;
+        }
+
+        .nome:hover{
+            color: white;
+            
+        }
+        
+.novo-container{
+    display: none;
+}
+
+    </style>
+    <script>
+        const div = document.querySelector('.container')
+        const div_aparecer = document.querySelector('.novo-container')
+
+        div.addEventListener('click', () =>{
+     
+            const novaDiv = document.createElement('div');
+  
+  // 2. Adiciona conteúdo e estilização (opcional)
+  novaDiv.textContent = "Fui criada dinamicamente do zero!";
+  novaDiv.style.backgroundColor = "#e0e0e0";
+  novaDiv.style.padding = "10px";
+  novaDiv.style.marginTop = "10px";
+  
+  // 3. Coloca a nova div dentro do container na tela
+  container.appendChild(novaDiv);
+    })
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="nome">Júlia  é muito linda</h1>
+    </div>
+    <div class="novo-container">
+        <h1>meu amorzinho é linda pequenininha toda lindinha!</h1>
+    </div>
+</body>
+
+</html>

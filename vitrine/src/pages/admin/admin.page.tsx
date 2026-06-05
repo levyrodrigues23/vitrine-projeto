@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import { Card, Text, buttonVariants } from "../../components/ui";
 import { useAuthStore } from "../../store/useAuthStore";
-import { useProjects } from "../../hooks/useProjects";
+import { useProjects } from "../../hooks/project";
 
 
 

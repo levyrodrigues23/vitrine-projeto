@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  updateProject,
-  uploadProjectImage,
-} from "../services/projects.service";
-import { queryKeys } from "../services/query-keys";
-import type { Project } from "../types/project.types";
+  updateStartup,
+  uploadStartupImage,
+} from "../../services/startup.service";
+import { queryKeys } from "../../services/query-keys";
+import type { Startup } from "../../types/startup.types";
 
-type UpdateProjectPayload = Partial<Project>;
+type UpdateStartupPayload = Partial<Startup>;
 
-export function useUpdateProject() {
+export function useUpdateStartup() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -18,29 +18,29 @@ export function useUpdateProject() {
       imageFile,
     }: {
       id: string;
-      payload: UpdateProjectPayload;
+      payload: UpdateStartupPayload;
       imageFile?: File;
     }) => {
-      let imageUrl = payload.imageUrl;
+      let imageUrl = (payload as { imageUrl?: string }).imageUrl;
 
       if (imageFile) {
-        imageUrl = await uploadProjectImage(imageFile);
+        imageUrl = await uploadStartupImage(imageFile);
       }
 
-      return updateProject(id, {
+      return updateStartup(id, {
         ...payload,
         ...(imageUrl && { imageUrl }),
       });
     },
-    onSuccess: async (project) => {
-      await queryClient.invalidateQueries({ queryKey: queryKeys.projects });
-      queryClient.setQueryData(queryKeys.projectDetail(project.id), project);
+    onSuccess: async (startup) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.startups });
+      queryClient.setQueryData(queryKeys.startupDetail(startup.id), startup);
     },
   });
 
   const execute = async (
     id: string,
-    payload: UpdateProjectPayload,
+    payload: UpdateStartupPayload,
     imageFile?: File,
   ) => {
     try {
@@ -48,7 +48,7 @@ export function useUpdateProject() {
       return { success: true, data };
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Erro ao atualizar projeto";
+        err instanceof Error ? err.message : "Erro ao atualizar startup";
       return { success: false, error: errorMessage };
     }
   };

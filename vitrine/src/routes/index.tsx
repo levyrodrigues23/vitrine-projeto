@@ -143,7 +143,7 @@ export const router = createBrowserRouter([
           {
             path: "egressos",
             element: <AdicionarEgressoPage />,
-          },
+          },  
           {
             path: "projetos",
             element: <AdicionarProjetoPage />,

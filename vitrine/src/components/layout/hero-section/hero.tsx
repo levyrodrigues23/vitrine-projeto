@@ -49,7 +49,7 @@ export default function Hero({
 
   const navigate = useNavigate();
 
-  // controlled vs uncontrolled input
+  
   const [internalValue, setInternalValue] = useState<string>(searchValue ?? "");
   useEffect(() => {
     if (searchValue !== undefined) setInternalValue(searchValue);
@@ -57,7 +57,7 @@ export default function Hero({
 
   const inputValue = searchValue !== undefined ? searchValue : internalValue;
 
-  // Fuse.js instance
+  
   const fuse = useMemo(() => {
     const options: Fuse.IFuseOptions<Project> = {
       keys: ["title", "description"],
@@ -69,16 +69,16 @@ export default function Hero({
   const [suggestions, setSuggestions] = useState<Project[]>([]);
   const debounceRef = useRef<number | null>(null);
 
-  const runSearch = (q: string) => {
+  const getSearchResults = (q: string, limit = 6): Project[] => {
     const trimmed = q.trim();
-    if (!trimmed) {
-      setSuggestions([]);
-      return;
-    }
-    const results = (
-      fuse.search(trimmed, { limit: 6 }) as Fuse.FuseResult<Project>[]
+    if (!trimmed) return [];
+    return (
+      fuse.search(trimmed, { limit }) as Fuse.FuseResult<Project>[]
     ).map((r) => r.item);
-    setSuggestions(results);
+  };
+
+  const runSearch = (q: string) => {
+    setSuggestions(getSearchResults(q));
   };
 
   const handleChange = (v: string) => {
@@ -94,7 +94,23 @@ export default function Hero({
 
   const handleSelect = (id: string) => {
     setSuggestions([]);
+    if (searchValue === undefined) setInternalValue("");
     navigate(`/projetos/${id}`);
+  };
+
+  const handleSubmit = (rawValue: string) => {
+    const trimmed = rawValue.trim();
+    if (!trimmed) return;
+
+    if (searchItems.length > 0) {
+      const [bestMatch] = getSearchResults(trimmed, 1);
+      if (bestMatch) {
+        handleSelect(bestMatch.id);
+        return;
+      }
+    }
+
+    onSearchSubmit?.(trimmed);
   };
 
   const shouldAnimate = animatedWords.length > 0;
@@ -178,15 +194,15 @@ export default function Hero({
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  onSearchSubmit?.(
+                  const value =
                     inputValue ??
-                      (
-                        e.currentTarget.elements.namedItem(
-                          "search",
-                        ) as HTMLInputElement
-                      )?.value ??
-                      "",
-                  );
+                    (
+                      e.currentTarget.elements.namedItem(
+                        "search",
+                      ) as HTMLInputElement
+                    )?.value ??
+                    "";
+                  handleSubmit(value);
                 }}
               >
                 <Input

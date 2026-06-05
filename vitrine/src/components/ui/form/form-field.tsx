@@ -1,4 +1,10 @@
-import type { ReactNode } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  useId,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 
 import { Card } from "../card/card";
 import Text from "../text/text";
@@ -23,15 +29,36 @@ export function FormField({
   children,
   className,
 }: FormFieldProps) {
+  const generatedId = useId();
+  const inputId = `field-${generatedId}`;
+  const hintId = hint ? `${inputId}-hint` : undefined;
+  const errorId = error ? `${inputId}-error` : undefined;
+  const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
+  const child = isValidElement(children)
+    ? (children as ReactElement<Record<string, unknown>>)
+    : null;
+  const enhancedChildren = child
+    ? cloneElement(child, {
+        id: child.props.id ?? inputId,
+        "aria-describedby": describedBy,
+        "aria-invalid": Boolean(error),
+        "aria-required": required,
+      })
+    : children;
+
   return (
-    <label className={`block space-y-2 ${className ?? ""}`}>
+    <label
+      htmlFor={inputId}
+      className={`block space-y-2 ${className ?? ""}`}
+    >
       <span className="flex items-center gap-2 text-sm font-semibold text-black">
         {label}
         {required ? <span className="text-red">*</span> : null}
       </span>
-      {children}
+      {enhancedChildren}
       {hint ? (
         <Text
+          id={hintId}
           as="span"
           variant="body-sm-bold"
           className="block text-xs text-gray-base"
@@ -41,6 +68,7 @@ export function FormField({
       ) : null}
       {error ? (
         <Text
+          id={errorId}
           as="span"
           variant="body-sm-bold"
           className="block text-xs text-red"

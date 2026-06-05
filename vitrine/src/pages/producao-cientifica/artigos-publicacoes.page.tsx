@@ -51,7 +51,7 @@ export default function ArtigosPublicacoesPage() {
           ))}
         </div>
       </Section>
-      <Section title="Voltar" showSeparator={false}>
+      <Section showSeparator={false}>
         <NavLink
           to="/producao-cientifica"
           className={buttonVariants({ variant: "quaternary", size: "md" })}

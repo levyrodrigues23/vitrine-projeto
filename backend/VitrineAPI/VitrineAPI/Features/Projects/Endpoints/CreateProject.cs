@@ -9,7 +9,7 @@ namespace VitrineAPI.Features.Projects.Endpoints
         string Title,
         ProjectCategory Category,
         string Description,
-        string ImageUrl
+        string? ImageUrl
     );
 
     public record CreateProjectResponse(
@@ -29,7 +29,7 @@ namespace VitrineAPI.Features.Projects.Endpoints
                 Title = request.Title,
                 Category = request.Category,
                 Description = request.Description,
-                ImageUrl = request.ImageUrl
+                ImageUrl = request.ImageUrl ?? string.Empty
             };
 
             await db.AddAsync(project);

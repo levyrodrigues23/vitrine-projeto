@@ -1,24 +1,15 @@
-export type Artigo = {
-  id: string;
-  title: string;
-  authors: string[];
-  venue: string;
-  year: number;
-  type: "periodico" | "capitulo" | "preprint";
-  doi?: string;
-  pdfUrl?: string;
-  keywords?: string[];
-  projectId?: string;
-};
+import type { Congress } from "./congress.types";
+import type { Teacher } from "./teachers.types";
 
-export type Congresso = {
+export interface Artigo {
   id: string;
-  event: string;
-  location: string;
-  date: string;
-  paperTitle: string;
-  status: "aceito" | "apresentado";
-  link?: string;
-  keywords?: string[];
-  projectId?: string;
-};
+  titulo: string;
+  ano_de_publicacao: Date;
+  descricao: string;
+  keywords?: string;
+  autores: string;
+  base: string;
+  professor: Teacher;
+  id_congresso: Congress;
+}
+

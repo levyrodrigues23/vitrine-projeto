@@ -58,7 +58,7 @@ export default function ProducaoCientificaPage() {
               Ver artigos e publicacoes
             </NavLink>
           </Card>
-          <Card className=" flex flex-col p-6 space-y-4 text-center md:text-left">
+          <Card className=" flex flex-col p-6 md:justify-between space-y-4 text-center md:text-left">
             <Text as="h3" variant="body-lg-bold">
               Congressos e Simposios
             </Text>
