@@ -31,6 +31,7 @@ import CongressosSimposiosPage from "../pages/producao-cientifica/congressos-sim
 import { StartupsPage } from "../pages/empreendedorismo/startups.page";
 import { EditaisPage } from "../pages/empreendedorismo/editais.page";
 import { EmpresaJrPage } from "../pages/empreendedorismo/empresa-jr.page";
+import { AdicionarProfessorPage } from "../pages/gerenciador/adicionar-professor";
 
 export const router = createBrowserRouter([
   {
@@ -164,6 +165,10 @@ export const router = createBrowserRouter([
             path: "producao-tecnica",
             element: <AdicionarProducaoTecnicaPage />,
           },
+          {
+            path: "professores",
+            element: <AdicionarProfessorPage />,
+          }
         ],
       },
     ],

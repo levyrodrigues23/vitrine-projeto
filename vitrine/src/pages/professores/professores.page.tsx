@@ -2,7 +2,7 @@ import { useState } from "react";
 import PageHero from "../../components/layout/page-hero/page-hero";
 import { Section } from "../../components/ui";
 import { TeacherCard, AreaCard } from "../../components/features";
-import { MOCK_TEACHERS, MOCK_AREAS } from "../../constants/mock-data";
+import { useTeachers } from "../../hooks/teacher";
 import {
   Code2,
   BarChart3,
@@ -14,6 +14,7 @@ import {
   Network,
   Building2,
 } from "lucide-react";
+import { MOCK_AREAS } from "../../constants/mock-data";
 
 const getIcon = (iconName: string) => {
   const icons: Record<string, any> = {
@@ -27,19 +28,24 @@ const getIcon = (iconName: string) => {
     Network,
     Building2,
   };
+
   return icons[iconName] || Code2;
 };
 
 export function ProfessoresPage() {
+  const { teachers, loading, error } = useTeachers();
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
 
   const getFilteredTeachers = () => {
-    if (!selectedArea) return MOCK_TEACHERS;
+    if (!selectedArea) return teachers;
 
     const area = MOCK_AREAS.find((a) => a.id === selectedArea);
-    if (!area) return MOCK_TEACHERS;
 
-    return MOCK_TEACHERS.filter((teacher) => teacher.area === area.name);
+    if (!area) return teachers;
+
+    return teachers.filter(
+      (teacher) => teacher.area === area.name
+    );
   };
 
   const filteredTeachers = getFilteredTeachers();
@@ -85,26 +91,35 @@ export function ProfessoresPage() {
       </Section>
 
       <Section title="Corpo docente">
-        <div className="grid grid-cols-1 gap-8 transition-all duration-300 md:grid-cols-2 lg:grid-cols-3">
-          {filteredTeachers.length > 0 ? (
-            filteredTeachers.map((teacher) => (
-              <TeacherCard
-                key={teacher.id}
-                name={teacher.name}
-                role={teacher.role || "Professor"}
-                imageUrl={teacher.imageUrl || ""}
-                githubUrl={teacher.githubUrl}
-                lattesUrl={teacher.lattesUrl}
-              />
-            ))
-          ) : (
-            <div className="col-span-full py-12 text-center text-gray-base">
-              <p className="text-lg font-medium">
-                Nenhum professor encontrado nesta área
-              </p>
-            </div>
-          )}
-        </div>
+        {loading ? (
+          <p className="text-center text-gray-base">
+            Carregando professores...
+          </p>
+        ) : error ? (
+          <p className="text-center text-red-500">
+            {error}
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 gap-8 transition-all duration-300 md:grid-cols-2 lg:grid-cols-3">
+            {filteredTeachers.length > 0 ? (
+              filteredTeachers.map((teacher) => (
+                <TeacherCard
+                  key={teacher.id}
+                  name={teacher.name}
+                  grau={teacher.grau}
+                  imageUrl={undefined}
+                  lattes={teacher.lattes}
+                />
+              ))
+            ) : (
+              <div className="col-span-full py-12 text-center text-gray-base">
+                <p className="text-lg font-medium">
+                  Nenhum professor encontrado nesta área
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </Section>
     </>
   );

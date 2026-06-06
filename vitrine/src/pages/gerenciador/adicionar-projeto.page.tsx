@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Navigate, useNavigate, useParams } from "react-router";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import {
-  useCreateProject,
-  useDeleteProject,
-  useProject,
-  useUpdateProject,
-} from "../../hooks/project";
-import { buildReviewEmailUrl } from "../../lib/review-email";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useCreateProject } from "../../hooks/project/useCreateProject";
 import type { Project } from "../../types/project.types";
 
 import {
@@ -20,17 +13,19 @@ import {
   FormField,
   FormPage,
   FormSectionCard,
+  FormSelect,
   FormTextarea,
   Input,
 } from "../../components/ui";
+import { workDoneSchema } from "../../schemas/project.schema";
 
 const projectSchema = z.object({
   category: z.enum(["inovação", "extensão", "pesquisa"]),
   title: z.string().min(3, "Informe um título com pelo menos 3 caracteres."),
-  description: z
-    .string()
-    .min(20, "Descreva melhor o projeto para a página individual."),
+  responsible: z.string().min(3, "Informe o responsável pelo projeto."),
+  description: z.string().min(20, "Descreva melhor o projeto."),
   imageFile: z.custom<FileList>().optional(),
+  worksDone: z.array(workDoneSchema).optional(),
 });
 
 type ProjectFormValues = z.infer<typeof projectSchema>;
@@ -38,167 +33,77 @@ type ProjectFormValues = z.infer<typeof projectSchema>;
 const defaultValues: ProjectFormValues = {
   category: "inovação",
   title: "",
+  responsible: "",
   description: "",
+  worksDone: [],
   imageFile: undefined,
 };
 
 const CATEGORY_MAP: Record<ProjectFormValues["category"], Project["category"]> =
-  {
-    inovação: "Inovação",
-    extensão: "Extensão",
-    pesquisa: "Pesquisa",
-  };
+{
+  inovação: "Inovação",
+  extensão: "Extensão",
+  pesquisa: "Pesquisa",
+};
 
 export function AdicionarProjetoPage() {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const user = useAuthStore((state) => state.user);
-
   const [submitted, setSubmitted] = useState<ProjectFormValues | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
-
-  const { execute: createExecute, loading: isCreating } = useCreateProject();
-  const { execute: updateExecute, loading: isUpdating } = useUpdateProject();
-  const { execute: deleteExecute, loading: isDeleting } = useDeleteProject();
-  const { project, loading: isFetching } = useProject(id);
-
-  const isLoading = isCreating || isUpdating || isFetching || isDeleting;
-  const isManagerReview = user?.role === "gerenciador";
+  const { execute, loading } = useCreateProject();
 
   const {
     control,
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues,
   });
 
-  useEffect(() => {
-    if (!project) return;
-
-    reset({
-      category:
-        project.category === "Inovação"
-          ? "inovação"
-          : project.category === "Extensão"
-            ? "extensão"
-            : "pesquisa",
-      title: project.title,
-      description: project.description || "",
-      imageFile: undefined,
-    });
-  }, [project, reset]);
-
-  const handleDelete = async () => {
-    if (!id || !window.confirm("Tem certeza que deseja excluir este projeto?")) {
-      return;
-    }
-
-    const result = await deleteExecute(id);
-    if (result.success) {
-      navigate("/projetos");
-      return;
-    }
-
-    setSubmitError(result.error ?? "Erro ao excluir projeto");
-  };
-
   const onSubmit = async (values: ProjectFormValues) => {
     setSubmitError(null);
 
-    const projectData = {
+    const project: Project = {
+      id: crypto.randomUUID(),
       title: values.title,
       description: values.description,
       category: CATEGORY_MAP[values.category],
-      authorId: user?.id,
+      responsible: values.responsible.trim(),
+      worksDone: values.worksDone?.map((workDone) => ({
+        id: crypto.randomUUID(),
+        title: workDone.title,
+        description: workDone.description,
+        category: workDone.category,
+        imageUrl: workDone.imageUrl,
+      })),
     };
 
-    if (isManagerReview) {
-      const emailUrl = buildReviewEmailUrl({
-        contentType: "projeto",
-        action: id ? "update" : "create",
-        manager: user,
-        payload: {
-          id,
-          ...projectData,
-          imageFileName: values.imageFile?.[0]?.name ?? null,
-        },
-      });
-
-      setSubmitted(values);
-      window.location.href = emailUrl;
-      return;
-    }
-
-    const result = id
-      ? await updateExecute(id, projectData, values.imageFile?.[0])
-      : await createExecute(projectData, values.imageFile?.[0]);
+    const result = await execute(project, values.imageFile?.[0]);
 
     if (!result.success) {
-      setSubmitError(result.error ?? "Erro ao salvar projeto");
+      setSubmitError((result as { error: string } | undefined)?.error ?? "Erro ao salvar projeto");
       return;
     }
 
     setSubmitted(values);
-
-    if (id) {
-      navigate(`/projetos/${id}`);
-    }
   };
-
-  if (isFetching) {
-    return (
-      <p className="p-10 text-center text-gray-base" role="status">
-        Carregando dados do projeto...
-      </p>
-    );
-  }
-
-  if (id && project && user) {
-    if (user.role !== "admin" && project.authorId !== user.id) {
-      return <Navigate to="/gerenciador" replace />;
-    }
-  }
 
   return (
     <FormPage
-      title={id ? "Editar projeto" : "Adicionar projeto"}
-      subtitle={
-        isManagerReview
-          ? "Preencha o formulário para enviar um payload de revisão aos administradores."
-          : "Preencha as informações para publicar ou atualizar o projeto na vitrine."
-      }
+      title="Adicionar projeto"
+      subtitle="Fluxo visual para registrar projetos com escolha explícita entre inovação, extensão e pesquisa."
     >
-      <form
-        className="space-y-6"
-        onSubmit={handleSubmit(onSubmit)}
-        aria-label={id ? "Formulário de edição de projeto" : "Formulário de novo projeto"}
-      >
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         {submitError ? (
-          <div
-            className="rounded-2xl border border-red/20 bg-red/5 p-4 text-sm text-red"
-            role="alert"
-          >
+          <div className="rounded-2xl border border-red/20 bg-red/5 p-4 text-sm text-red">
             {submitError}
-          </div>
-        ) : null}
-
-        {isManagerReview ? (
-          <div
-            className="rounded-2xl border border-blue/20 bg-blue/5 p-4 text-sm text-gray-base"
-            role="status"
-          >
-            Como gerenciador, seu envio será aberto em um e-mail para os admins
-            revisarem e aprovarem antes da publicação.
           </div>
         ) : null}
 
         <FormSectionCard
           title="Classificação do projeto"
-          description="A seleção define a trilha usada nos filtros e na listagem pública."
+          description="A seleção abaixo define a trilha de cadastro e facilita o uso futuro em filtros."
         >
           <Controller
             control={control}
@@ -242,32 +147,51 @@ export function AdicionarProjetoPage() {
 
         <FormSectionCard
           title="Informações do projeto"
-          description="O card usa uma prévia desse texto; a página individual mostra a descrição completa."
+          description="Campos base para título, contexto e resumo do projeto."
         >
-          <FormField
-            label="Título do projeto"
-            required
-            error={errors.title?.message}
-          >
-            <Input
-              {...register("title")}
-              placeholder="Ex.: Plataforma de monitoramento de cultivos"
-              className={
-                errors.title ? "border-red/60 focus-visible:ring-red/30" : ""
-              }
-            />
-          </FormField>
+          <div className="grid gap-5 md:grid-cols-2">
+            <FormField
+              label="Título do projeto"
+              required
+              error={errors.title?.message}
+            >
+              <Input
+                {...register("title")}
+                placeholder="Ex.: Plataforma de Monitoramento de Cultivos"
+                className={
+                  errors.title ? "border-red/60 focus-visible:ring-red/30" : ""
+                }
+              />
+            </FormField>
 
+          </div>
+
+          <div className="mt-5 grid gap-5 md:grid-cols-2">
+
+            <FormField
+              label="Responsável / Orientador"
+              error={errors.responsible?.message}
+            >
+              <Input
+                {...register("responsible")}
+                placeholder="Nome do professor ou equipe"
+                className={
+                  errors.responsible
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
+            </FormField>
+          </div>
+                
           <FormField
-            label="Descrição completa"
-            required
+            label="Resumo do projeto"
             className="mt-5"
-            hint="Escreva para a página do projeto; a listagem pública exibirá somente as primeiras linhas."
             error={errors.description?.message}
           >
             <FormTextarea
               {...register("description")}
-              placeholder="Explique objetivo, contexto, público-alvo, estágio atual e resultados esperados."
+              placeholder="Explique objetivo, contexto, público-alvo e estágio atual."
               className={
                 errors.description
                   ? "border-red/60 focus-visible:ring-red/30"
@@ -275,36 +199,66 @@ export function AdicionarProjetoPage() {
               }
             />
           </FormField>
-        </FormSectionCard>
+       
+          </FormSectionCard>
 
         <FormSectionCard
-          title="Imagem de destaque"
-          description="Imagem exibida no card e no topo da página individual."
+          title="Detalhes operacionais"
+          description="Campos de apoio para a apresentação visual e futura integração com o contexto."
         >
-          <FormField label="Arquivo de imagem" error={errors.imageFile?.message}>
-            <Input
-              {...register("imageFile")}
-              type="file"
-              accept="image/*"
-              className={
-                errors.imageFile
-                  ? "border-red/60 focus-visible:ring-red/30"
-                  : ""
-              }
-            />
-          </FormField>
+          <div className="grid gap-5 md:grid-cols-3">
+
+
+            <FormField
+              label="Imagem de destaque"
+              error={errors.imageFile?.message}
+            >
+              <Input
+                {...register("imageFile")}
+                type="file"
+                placeholder="Selecione uma imagem"
+                className={
+                  errors.imageFile
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
+            </FormField>
+          </div>
+          
+        </FormSectionCard>
+        <FormSectionCard
+          title="Trabalhos realizados no projeto"
+          description="Campos de apoio para a apresentação visual e futura integração com o contexto."
+        >
+          <div className="grid gap-5 md:grid-cols-3">
+
+
+            <FormField
+              label="Adicione os trabalhos realizados no projeto"
+              error={errors.worksDone?.message}
+            >
+              <Input
+                {...register("worksDone")}
+                type="file"
+                placeholder="Selecione os trabalhos realizados no projeto"
+                className={
+                  errors.worksDone
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
+            </FormField>
+          </div>
+          
         </FormSectionCard>
 
         {submitted ? (
           <FormSectionCard
             title="Último envio"
-            description={
-              isManagerReview
-                ? "Payload preparado para revisão por e-mail."
-                : "Resumo do payload salvo depois da validação."
-            }
+            description="Resumo do payload que o formulário gerou depois da validação."
           >
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
                   Título
@@ -321,42 +275,38 @@ export function AdicionarProjetoPage() {
                   {submitted.category}
                 </p>
               </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
+                  Status
+                </p>
+
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
+                  Ano
+                </p>
+
+              </div>
             </div>
           </FormSectionCard>
         ) : null}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-          {id && user?.role === "admin" ? (
-            <Button
-              type="button"
-              variant="tertiary"
-              className="px-6 py-3"
-              disabled={isSubmitting || isLoading}
-              onClick={handleDelete}
-            >
-              Excluir projeto
-            </Button>
-          ) : null}
           <Button
-            type="button"
+            type="submit"
             variant="quaternary"
             className="px-6 py-3"
-            disabled={isSubmitting || isLoading}
-            onClick={() => navigate(id ? `/projetos/${id}` : "/gerenciador")}
+            disabled={isSubmitting || loading}
           >
-            Cancelar
+            Salvar rascunho
           </Button>
           <Button
             type="submit"
             variant="primary"
             className="px-6 py-3"
-            disabled={isSubmitting || isLoading}
+            disabled={isSubmitting || loading}
           >
-            {isManagerReview
-              ? "Enviar para revisão"
-              : id
-                ? "Salvar alterações"
-                : "Publicar projeto"}
+            Publicar projeto
           </Button>
         </div>
       </form>

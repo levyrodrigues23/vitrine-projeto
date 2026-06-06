@@ -15,4 +15,5 @@ export interface Teacher {
   lattes: string; 
   area: string;
   grau: Grau;
+  imageUrl?: string;
 }

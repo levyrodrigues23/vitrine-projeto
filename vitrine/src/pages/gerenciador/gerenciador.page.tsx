@@ -44,13 +44,21 @@ const actions = [
     color: "bg-blue-dark/8 border-blue-dark/15 hover:border-blue-dark/30",
     badge: "from-blue-dark/20 to-blue-dark/5",
   },
+  {
+    title: "Professor",
+    description: "Professores e pesquisadores.",
+    to: "/gerenciador/professores",
+    icon: "👨‍🏫",
+    color: "bg-white border-gray-200 hover:border-gray-300",
+    badge: "from-purple-base/20 to-purple-base/5",
+  }
 ];
 
 export function GerenciadorPage() {
   const user = useAuthStore((state) => state.user);
   const { projects, loading } = useProjects();
   
-  const userProjects = projects.filter((p) => p.authorId === user?.id);
+  const userProjects = projects.filter((p) => p.responsible === user?.id);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-10 md:py-14">

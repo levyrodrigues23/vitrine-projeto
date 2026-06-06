@@ -14,6 +14,6 @@ export interface Project {
   description: string;
   category: ProjectCategory;
   imageUrl?: string;
-  authorId?: string;
+  responsible?: string;
   worksDone?: WorkDone[];
 }
