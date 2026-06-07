@@ -1,25 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VitrineAPI.Database;
-using VitrineAPI.Database.Models.Enums;
+using VitrineAPI.Features.Projects.Shared;
 
 namespace VitrineAPI.Features.Projetos.Endpoints
 {
-    public record GetProjectByIdResponse(
-        Guid Id,
-        string Title,
-        ProjectCategory Category,
-        string Description,
-        string ImageUrl
-    );
-
     public class GetProjectByIdHandler(AppDbContext db)
     {
-        public async Task<GetProjectByIdResponse?> Handle(Guid id)
+        public async Task<ProjectsResponse?> Handle(Guid id)
         {
             return await db.Projects
                 .Where(p => p.Id == id)
-                .Select(p => new GetProjectByIdResponse(
+                .Select(p => new ProjectsResponse(
                     p.Id,
                     p.Title,
                     p.Category,

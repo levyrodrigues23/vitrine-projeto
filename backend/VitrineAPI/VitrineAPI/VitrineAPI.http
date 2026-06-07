@@ -1,1 +1,26 @@
 @VitrineAPI_HostAddress = http://localhost:5026
+
+POST http://localhost:5026/api/projects
+content-type: application/json
+{
+}
+
+###
+
+GET http://localhost:5026/api/projects
+
+###
+
+GET http://localhost:5026/api/projects/7912dc69-bdb7-44c0-b8c9-38b14d89348a
+
+
+###
+
+PUT http://localhost:5026/api/projects/1f18623d-fd72-4283-aa6e-138d14dab6cf
+content-type: application/json
+{
+}
+
+###
+
+DELETE http://localhost:5026/api/projects/1f18623d-fd72-4283-aa6e-138d14dab6cf

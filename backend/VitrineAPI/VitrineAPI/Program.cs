@@ -19,6 +19,8 @@ namespace VitrineAPI
             builder.Services.AddScoped<CreateProjectHandler>();
             builder.Services.AddScoped<GetProjectsHandler>();
             builder.Services.AddScoped<GetProjectByIdHandler>();
+            builder.Services.AddScoped<UpdateProjectHandler>();
+            builder.Services.AddScoped<DeleteProjectHandler>();
 
             var app = builder.Build();
 
