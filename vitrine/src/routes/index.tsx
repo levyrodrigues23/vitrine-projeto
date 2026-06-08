@@ -17,7 +17,6 @@ import { GerenciadorPage } from "../pages/gerenciador/gerenciador.page";
 import { PortalEgressosPage } from "../pages/portal-egressos/portal-egressos.page";
 import { EgressosPage } from "../pages/portal-egressos/egressos.page";
 import { NoticiasEgressosPage } from "../pages/portal-egressos/noticias-egressos.page";
-import { ProducaoTecnicaPage } from "../pages/producao-tecnica/producao-tecnica.page";
 import { ProfessoresPage } from "../pages/professores/professores.page";
 import Layout from "../components/layout/main-layout/layout";
 import { ProtectedRoute } from "../components/layout/protected-route";
@@ -32,6 +31,7 @@ import { StartupsPage } from "../pages/empreendedorismo/startups.page";
 import { EditaisPage } from "../pages/empreendedorismo/editais.page";
 import { EmpresaJrPage } from "../pages/empreendedorismo/empresa-jr.page";
 import { AdicionarProfessorPage } from "../pages/gerenciador/adicionar-professor";
+import { ProducaoTecnicaPage } from "../pages/producao-tecnica/producao-tecnica.page";
 
 export const router = createBrowserRouter([
   {
