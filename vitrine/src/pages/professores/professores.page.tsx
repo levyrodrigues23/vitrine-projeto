@@ -64,6 +64,7 @@ export function ProfessoresPage() {
       <Section
         title="Áreas de atuação"
         description="Explore as principais áreas de pesquisa e ensino"
+        align="center"
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {MOCK_AREAS.map((area) => (
@@ -90,7 +91,7 @@ export function ProfessoresPage() {
         )}
       </Section>
 
-      <Section title="Corpo docente">
+      <Section title="Corpo docente" align="center">
         {loading ? (
           <p className="text-center text-gray-base">
             Carregando professores...

@@ -1,4 +1,4 @@
-﻿export { BlockHelp, type BlockHelpProps } from "./block-help/block-help";
+export { BlockHelp, type BlockHelpProps } from "./block-help/block-help";
 export { Badge, badgeVariants, type BadgeProps } from "./badge/badge";
 export { Button, buttonVariants, type ButtonProps } from "./button/button";
 export {

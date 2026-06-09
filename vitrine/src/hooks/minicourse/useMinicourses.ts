@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { listMinicourses } from "../../services/minicourse.service";
 import { queryKeys } from "../../services/query-keys";
+import { listMinicourses } from "../../services/minicourse.service";
 
 export function useMinicourses() {
   const query = useQuery({

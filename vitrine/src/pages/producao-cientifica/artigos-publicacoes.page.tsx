@@ -7,18 +7,34 @@ import { useArtigos } from "../../hooks/paper/useArtigos";
 export default function ArtigosPublicacoesPage() {
   const { papers, loading, error } = useArtigos();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedYear, setSelectedYear] = useState("all");
+
+  const availableYears = useMemo(() => {
+    const years = papers
+      .map((p) => p.ano_de_publicacao ? new Date(p.ano_de_publicacao).getFullYear() : null)
+      .filter((y): y is number => y !== null);
+    return [...new Set(years)].sort((a, b) => b - a);
+  }, [papers]);
 
   const filtered = useMemo(() => {
-    if (!searchQuery.trim()) return papers;
-    const q = searchQuery.toLowerCase();
-    return papers.filter(
-      (paper) =>
+    return papers.filter((paper) => {
+      const matchesYear =
+        selectedYear === "all" ||
+        (paper.ano_de_publicacao &&
+          new Date(paper.ano_de_publicacao).getFullYear() === Number(selectedYear));
+
+      if (!matchesYear) return false;
+
+      if (!searchQuery.trim()) return true;
+      const q = searchQuery.toLowerCase();
+      return (
         paper.titulo.toLowerCase().includes(q) ||
         paper.descricao?.toLowerCase().includes(q) ||
         paper.autores?.toLowerCase().includes(q) ||
-        paper.keywords?.toLowerCase().includes(q),
-    );
-  }, [papers, searchQuery]);
+        paper.keywords?.toLowerCase().includes(q)
+      );
+    });
+  }, [papers, searchQuery, selectedYear]);
 
   return (
     <>
@@ -27,20 +43,41 @@ export default function ArtigosPublicacoesPage() {
         subtitle="Trabalhos aceitos e publicados por estudantes e servidores do campus."
       />
 
-      <Section title="Publicações recentes">
-        <label className="mb-8 block w-full max-w-xl">
-          <span className="mb-2 block text-left text-sm font-semibold text-gray-base-dark">
-            Buscar artigo
-          </span>
-          <Input
-            type="search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Título, autor, palavra-chave..."
-            aria-label="Buscar artigo por título, autor ou palavra-chave"
-            className="h-11 bg-white"
-          />
-        </label>
+      <Section title="Publicações recentes" align="center">
+        <div className="mb-8 mx-auto flex w-full max-w-4xl flex-col gap-4 sm:flex-row sm:items-end">
+          <label className="flex-1">
+            <span className="mb-2 block text-left text-sm font-semibold text-gray-base-dark">
+              Buscar artigo
+            </span>
+            <Input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Título, autor, palavra-chave..."
+              aria-label="Buscar artigo por título, autor ou palavra-chave"
+              className="h-11 bg-white"
+            />
+          </label>
+
+          <label className="sm:w-48">
+            <span className="mb-2 block text-left text-sm font-semibold text-gray-base-dark">
+              Ano de publicação
+            </span>
+            <select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+              aria-label="Filtrar artigos por ano de publicação"
+              className="h-11 w-full rounded-lg border border-gray-base/30 bg-white px-3 text-sm text-gray-base-dark outline-none focus:border-blue-dark focus:ring-2 focus:ring-blue/20"
+            >
+              <option value="all">Todos os anos</option>
+              {availableYears.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
 
         {loading ? (
           <p className="text-center text-gray-base">Carregando artigos...</p>
@@ -55,7 +92,7 @@ export default function ArtigosPublicacoesPage() {
             {filtered.map((paper) => (
               <Card
                 key={paper.id}
-                className="space-y-3 p-6 text-center md:text-left"
+                className="flex flex-col items-center p-6 space-y-3 text-center md:items-start md:text-left"
               >
                 <Text as="h3" variant="body-lg-bold">
                   {paper.titulo}
@@ -82,7 +119,7 @@ export default function ArtigosPublicacoesPage() {
         )}
       </Section>
 
-      <Section showSeparator={false}>
+      <Section showSeparator={false} align="center">
         <NavLink
           to="/producao-cientifica"
           className={buttonVariants({ variant: "quaternary", size: "md" })}

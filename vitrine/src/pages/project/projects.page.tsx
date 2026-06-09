@@ -25,8 +25,9 @@ export function ProjectsPage() {
   const setSearchQuery = useProjectStore((state) => state.setSearchQuery);
 
   useEffect(() => {
-    setActiveCategory("all");
-  }, [setActiveCategory]);
+    setActiveCategory("all"); 
+    setSearchQuery("");
+  }, [setActiveCategory, setSearchQuery]);
 
   useEffect(() => {
     const busca = searchParams.get("busca");
@@ -69,8 +70,12 @@ export function ProjectsPage() {
       </Section>
 
       <Section title="Como os projetos são organizados?" align="center">
-        <div className="flex flex-col rounded-2xl bg-white p-4 text-shadow-olive-200 shadow-2xl md:flex-row">
-          <Text className="pt-3 pl-3" as="h2" variant="body-lg">
+        <div className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-2xl md:flex-row md:items-start md:p-8">
+          <Text
+            className="text-center md:text-left"
+            as="h2"
+            variant="body-lg"
+          >
             Os projetos do campus são classificados em três eixos:{" "}
             <strong>pesquisa</strong>, <strong>extensão</strong> e{" "}
             <strong>inovação</strong>. Cada eixo representa uma forma diferente
@@ -80,8 +85,8 @@ export function ProjectsPage() {
 
           <img
             src={ProjectIcon}
-            alt="Ícone representando projetos acadêmicos do campus."
-            className="h-100 w-100 md:ml-6 md:h-72 md:w-72"
+            alt="Ilustração representando a organização dos projetos acadêmicos"
+            className="mt-8 w-56 object-contain md:ml-8 md:mt-0 md:w-72"
           />
         </div>
       </Section>

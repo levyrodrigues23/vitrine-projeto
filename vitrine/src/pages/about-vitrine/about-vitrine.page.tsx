@@ -10,7 +10,7 @@ export function AboutVitrinePage() {
       icon: "🔬",
       title: "Inovação",
       description:
-        "Desenvolvemos soluções criativas e baseadas em evidências científicas para os desafios da regiao.",
+        "Desenvolvemos soluções criativas e baseadas em evidências científicas para os desafios da região.",
     },
     {
       icon: "🤝",
@@ -32,35 +32,38 @@ export function AboutVitrinePage() {
         subtitle="Conheça o propósito deste portal e como o campus organiza a visibilidade dos projetos."
       />
       <Section 
-      align="center"
-      title="| O que é a Vitrine de Projetos?">
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-          <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
-            <Text className="pt-3 pl-3" as="h2" variant="body-lg">
-              A <strong>Vitrine de Projetos</strong> é o espaco oficial do
-              Campus Itapaje para reunir, organizar e divulgar as iniciativas de
-              pesquisa, inovacao e extensao. Aqui voce encontra projetos
-              desenvolvidos por alunos e professores, com foco em impacto local,
-              solucoes aplicadas e formacao pratica. O objetivo e dar
-              visibilidade ao que e produzido no campus e facilitar o acesso da
-              comunidade academica e externa aos resultados, contatos e
-              oportunidades geradas por esses trabalhos.
-              <br />
-              <br />A vitrine funciona como um catalogo digital, onde cada
-              projeto e registrado com titulo, resumo, area, equipe e
-              resultados. Assim, fica mais facil pesquisar por tema, descobrir
-              projetos relacionados e acompanhar o que esta em andamento. O
-              conteudo e atualizado pelos responsaveis, garantindo informacoes
-              atuais e organizadas.
-            </Text>
+        align="center"
+        title="O que é a Vitrine de Projetos?"
+      >
+        <div className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-2xl md:flex-row md:items-start md:p-8">
+          <Text
+            className="text-center md:text-left"
+            as="h2"
+            variant="body-lg"
+          >
+            A <strong>Vitrine de Projetos</strong> é o espaço oficial do
+            Campus Itapajé para reunir, organizar e divulgar as iniciativas de
+            pesquisa, inovação e extensão. Aqui você encontra projetos
+            desenvolvidos por alunos e professores, com foco em impacto local,
+            soluções aplicadas e formação prática. O objetivo é dar
+            visibilidade ao que é produzido no campus e facilitar o acesso da
+            comunidade acadêmica e externa aos resultados, contatos e
+            oportunidades geradas por esses trabalhos.
+            <br />
+            <br />A vitrine funciona como um catálogo digital, onde cada
+            projeto é registrado com título, resumo, área, equipe e
+            resultados. Assim, fica mais fácil pesquisar por tema, descobrir
+            projetos relacionados e acompanhar o que está em andamento. O
+            conteúdo é atualizado pelos responsáveis, garantindo informações
+            atuais e organizadas.
+          </Text>
 
-            <img
-              src={ArticlePerson}
-              alt="Icone de pessoa lendo um artigo"
-              className=" w-100 h-100 md:w-64 md:h-64 md:ml-6 "
-            />
-          </div>
-        </Text>
+          <img
+            src={ArticlePerson}
+            alt="Ilustração de pessoa analisando artigos"
+            className="mt-8 w-56 object-contain md:ml-8 md:mt-0 md:w-72"
+          />
+        </div>
       </Section>
 
       <Section title="Nossos valores" showSeparator={true} align="center">
@@ -68,9 +71,9 @@ export function AboutVitrinePage() {
           {valores.map((valor) => (
             <Card
               key={valor.title}
-              className="p-6 space-y-3 text-center md:text-left"
+              className="flex flex-col items-center p-6 space-y-3 text-center md:items-start md:text-left"
             >
-              <div className="flex items-center justify-center gap-3 md:justify-start">
+              <div className="flex flex-col items-center gap-3 md:flex-row md:justify-start">
                 <span className="text-2xl" aria-hidden>
                   {valor.icon}
                 </span>
