@@ -13,4 +13,6 @@ export const queryKeys = {
   egressDetail: (id: string) => ["egress", id] as const,
   juniorCompany: ["junior-company"] as const,
   juniorCompanyDetail: (id: string) => ["junior-company", id] as const,
+  congresses: ["congresses"] as const,
+  congressDetail: (id: string) => ["congresses", id] as const,
 };

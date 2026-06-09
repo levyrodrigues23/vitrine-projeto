@@ -69,7 +69,7 @@ export default function ProducaoCientificaPage() {
             </div>
             <NavLink
               to="/producao-cientifica/congressos-simposios"
-              className={buttonVariants({ variant: "secondary", size: "md" })}
+              className={buttonVariants({ variant: "primary", size: "md" })}
             >
               Ver congressos e simpósios
             </NavLink>

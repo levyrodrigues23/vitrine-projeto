@@ -1,25 +1,10 @@
 import { NavLink } from "react-router";
 import PageHero from "../../components/layout/page-hero/page-hero";
 import { Card, Section, Text, buttonVariants } from "../../components/ui";
+import { useCongresses } from "../../hooks/congress/useCongresses";
 
 export default function CongressosSimposiosPage() {
-  const events = [
-    {
-      title: "Congresso de Computação Aplicada",
-      place: "Fortaleza - CE",
-      year: "2024",
-    },
-    {
-      title: "Simpósio de Educação e Tecnologia",
-      place: "Sobral - CE",
-      year: "2023",
-    },
-    {
-      title: "Seminário de Inovação Acadêmica",
-      place: "Itapajé - CE",
-      year: "2023",
-    },
-  ];
+const {congresses, loading, error} = useCongresses();
 
   return (
     <>
