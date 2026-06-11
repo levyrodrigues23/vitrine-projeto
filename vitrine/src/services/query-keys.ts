@@ -1,5 +1,18 @@
 export const queryKeys = {
   projects: ["projects"] as const,
   projectDetail: (id: string) => ["projects", id] as const,
-
+  teachers: ["teachers"] as const,
+  teacherDetail: (id: string) => ["teachers", id] as const,
+  startups: ["startups"] as const,
+  startupDetail: (id: string) => ["startups", id] as const,
+  papers: ["papers"] as const,
+  paperDetail: (id: string) => ["papers", id] as const,
+  minicourses: ["minicourses"] as const,
+  minicourseDetail: (id: string) => ["minicourses", id] as const,
+  egress: ["egress"] as const,
+  egressDetail: (id: string) => ["egress", id] as const,
+  juniorCompany: ["junior-company"] as const,
+  juniorCompanyDetail: (id: string) => ["junior-company", id] as const,
+  congresses: ["congresses"] as const,
+  congressDetail: (id: string) => ["congresses", id] as const,
 };

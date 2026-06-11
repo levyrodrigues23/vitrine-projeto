@@ -59,9 +59,13 @@ const artifacts = [
         title="Produção técnica"
         subtitle="Artefatos, softwares e ferramentas desenvolvidos em disciplinas integradoras, projetos e TCCs."
       />
-      <Section title="| O que é produção técnica">
-        <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
-          <Text className="pt-3 pl-3" as="h2" variant="body-lg">
+      <Section title="O que é a produção técnica?" align="center">
+        <div className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-2xl md:flex-row md:items-start md:p-8">
+          <Text
+            className="text-center md:text-left"
+            as="h2"
+            variant="body-lg"
+          >
             A <strong>produção técnica</strong> se refere aos artefatos,
             ferramentas, softwares e outros resultados práticos gerados a partir
             de projetos, disciplinas integradoras, TCCs e outras atividades
@@ -69,62 +73,63 @@ const artifacts = [
             conhecimento adquirido pelos estudantes e professores em soluções
             concretas para desafios reais.
             <br />
-            <br />A produção técnica é fundamental para demonstrar o impacto
-            prático das atividades acadêmicas, contribuindo para a formação de
+            <br />
+            A produção técnica é fundamental para demonstrar o impacto prático
+            das atividades acadêmicas, contribuindo para a formação de
             profissionais capacitados e para o desenvolvimento de soluções
             inovadoras que beneficiam a comunidade e o mercado.
           </Text>
 
           <img
             src={Technical}
-            alt="Icone de pessoa lendo um artigo"
-            className=" w-100 h-100 md:w-72 md:h-72 md:ml-6 "
+            alt="Ilustração representando a produção de software e ferramentas técnicas"
+            className="mt-8 w-56 object-contain md:ml-8 md:mt-0 md:w-72"
           />
         </div>
       </Section>
       <Section
         title="Como são produzidas?"
         description="A produção técnica do campus surge de diferentes contextos acadêmicos."
+        align="center"
       >
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {valores.map((valor) => (
             <Card
-            key={valor.title}
-            className="p-6 space-y-3 text-center md:text-left "
+              key={valor.title}
+              className="flex flex-col items-center p-6 space-y-3 text-center md:items-start md:text-left"
             >
-               <Text as="h3" variant="title-3" className="text-green-dark">
+              <Text as="h3" variant="title-3" className="text-green-dark">
                 {valor.title}
               </Text>
-               <Text as="h3" variant="body-lg-bold">
+              <Text as="h3" variant="body-lg-bold">
                 {valor.categoria}
               </Text>
               <Text variant="body-md" className="text-gray-base">
                 {valor.description}
               </Text>
             </Card>
-          ))} 
+          ))}
         </div>
       </Section>
-      
-        
-      <Section title="Artefatos e ferramentas" showSeparator={false}>
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-          Abaixo é possível visualizar alguns exemplos de artefatos, projetos e
-          ferramentas desenvolvidas por estudantes e professores da comunidade
-          acadêmica
-        </Text>
+
+      <Section
+        title="Artefatos e ferramentas"
+        description="Abaixo é possível visualizar alguns exemplos de artefatos, projetos e ferramentas desenvolvidas por estudantes e professores da comunidade acadêmica."
+        showSeparator={false}
+        align="center"
+      >
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-  {artifacts.map((artifact) => (
-    <ProjectCard
-      key={artifact.title}
-      title={artifact.title}
-      description={artifact.description}
-      category={artifact.category}
-      imageUrl={artifact.imageUrl}
-      area={artifact.area}
-    />
-  ))}
-</div>
+          {artifacts.map((artifact) => (
+            <ProjectCard
+              key={artifact.title}
+              title={artifact.title}
+              description={artifact.description}
+              category={artifact.category}
+              imageUrl={artifact.imageUrl}
+              area={artifact.area}
+            />
+          ))}
+        </div>
       </Section>
     </>
   );

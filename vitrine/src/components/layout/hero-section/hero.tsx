@@ -6,7 +6,6 @@ import TypeIt from "typeit-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Fuse from "fuse.js";
 import { useNavigate } from "react-router";
-import { MOCK_PROJECTS } from "../../../constants/mock-data";
 import type { Project } from "../../../types/project.types";
 
 interface HeroProps {
@@ -24,6 +23,7 @@ interface HeroProps {
   searchValue?: string;
   onSearchChange?: (value: string) => void;
   onSearchSubmit?: (value: string) => void;
+  searchItems?: Project[];
 }
 
 export default function Hero({
@@ -41,6 +41,7 @@ export default function Hero({
   searchValue,
   onSearchChange,
   onSearchSubmit,
+  searchItems = [],
 }: HeroProps) {
   const iconComponent = iconSvg ?? HomeIcon;
   const resolvedIconSize = iconSize ?? "xl3";
@@ -48,7 +49,6 @@ export default function Hero({
 
   const navigate = useNavigate();
 
-  // controlled vs uncontrolled input
   const [internalValue, setInternalValue] = useState<string>(searchValue ?? "");
   useEffect(() => {
     if (searchValue !== undefined) setInternalValue(searchValue);
@@ -56,28 +56,24 @@ export default function Hero({
 
   const inputValue = searchValue !== undefined ? searchValue : internalValue;
 
-  // Fuse.js instance
+  
   const fuse = useMemo(() => {
     const options: Fuse.IFuseOptions<Project> = {
-      keys: ["title", "description", "keywords"],
+      keys: ["title", "description"],
       threshold: 0.4,
     };
-    return new Fuse(MOCK_PROJECTS, options);
-  }, []);
+    return new Fuse(searchItems, options);
+  }, [searchItems]);
 
   const [suggestions, setSuggestions] = useState<Project[]>([]);
   const debounceRef = useRef<number | null>(null);
 
-  const runSearch = (q: string) => {
+  const getSearchResults = (q: string, limit = 6): Project[] => {
     const trimmed = q.trim();
-    if (!trimmed) {
-      setSuggestions([]);
-      return;
-    }
-    const results = (
-      fuse.search(trimmed, { limit: 6 }) as Fuse.FuseResult<Project>[]
+    if (!trimmed) return [];
+    return (
+      fuse.search(trimmed, { limit }) as Fuse.FuseResult<Project>[]
     ).map((r) => r.item);
-    setSuggestions(results);
   };
 
   const handleChange = (v: string) => {
@@ -85,15 +81,32 @@ export default function Hero({
     onSearchChange?.(v);
 
     if (debounceRef.current) window.clearTimeout(debounceRef.current);
-    // debounce 250ms
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore - setTimeout returns number in browser
-    debounceRef.current = window.setTimeout(() => runSearch(v), 250);
+    debounceRef.current = window.setTimeout(() => setSuggestions(getSearchResults(v)), 250);
   };
 
   const handleSelect = (id: string) => {
     setSuggestions([]);
+    if (searchValue === undefined) setInternalValue("");
     navigate(`/projetos/${id}`);
+  };
+
+  const handleSubmit = (rawValue: string) => {
+    const trimmed = rawValue.trim();
+    if (!trimmed) return;
+
+    if (searchItems.length > 0) {
+      const [bestMatch] = getSearchResults(trimmed, 1);
+      if (bestMatch) {
+        handleSelect(bestMatch.id);
+        return;
+      }
+    }
+
+    if (onSearchSubmit) {
+      onSearchSubmit(trimmed);
+    } else {
+      navigate(`/projetos?busca=${encodeURIComponent(trimmed)}`);
+    }
   };
 
   const shouldAnimate = animatedWords.length > 0;
@@ -177,15 +190,7 @@ export default function Hero({
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  onSearchSubmit?.(
-                    inputValue ??
-                      (
-                        e.currentTarget.elements.namedItem(
-                          "search",
-                        ) as HTMLInputElement
-                      )?.value ??
-                      "",
-                  );
+                  handleSubmit(inputValue);
                 }}
               >
                 <Input
@@ -197,6 +202,7 @@ export default function Hero({
                   className="w-full max-w-md bg-white/90 shadow-sm backdrop-blur border-gray-base/20"
                   aria-autocomplete="list"
                   aria-controls="hero-suggestions"
+                  autoComplete="off"
                 />
               </form>
 
@@ -210,7 +216,6 @@ export default function Hero({
                       key={s.id}
                       className="cursor-pointer px-4 py-2 hover:bg-gray-100"
                       onMouseDown={(e) => {
-                        // prevent blur before click
                         e.preventDefault();
                         handleSelect(s.id);
                       }}

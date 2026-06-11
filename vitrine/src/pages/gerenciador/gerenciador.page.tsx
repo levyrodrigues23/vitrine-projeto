@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import { Card, Text, buttonVariants } from "../../components/ui";
 import { useAuthStore } from "../../store/useAuthStore";
+import { useProjects } from "../../hooks/project";
 
 const actions = [
   {
@@ -43,10 +44,21 @@ const actions = [
     color: "bg-blue-dark/8 border-blue-dark/15 hover:border-blue-dark/30",
     badge: "from-blue-dark/20 to-blue-dark/5",
   },
+  {
+    title: "Professor",
+    description: "Professores e pesquisadores.",
+    to: "/gerenciador/professores",
+    icon: "👨‍🏫",
+    color: "bg-white border-gray-200 hover:border-gray-300",
+    badge: "from-purple-base/20 to-purple-base/5",
+  }
 ];
 
 export function GerenciadorPage() {
   const user = useAuthStore((state) => state.user);
+  const { projects, loading } = useProjects();
+  
+  const userProjects = projects.filter((p) => p.responsible === user?.id);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-10 md:py-14">
@@ -95,6 +107,49 @@ export function GerenciadorPage() {
             </NavLink>
           </Card>
         ))}
+      </div>
+
+      <div className="mt-12 space-y-4">
+        <Text as="h2" variant="title-3" className="text-black">
+          Meus Projetos Publicados
+        </Text>
+        {loading ? (
+          <Text variant="body-sm">Carregando projetos...</Text>
+        ) : userProjects.length === 0 ? (
+          <Text variant="body-sm" className="text-gray-500">
+            Nenhum projeto encontrado no seu usuário.
+          </Text>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2">
+            {userProjects.map((project) => (
+              <Card
+                key={project.id}
+                className="flex items-center justify-between border p-4"
+              >
+                <div>
+                  <Text variant="body-md-bold">{project.title}</Text>
+                  <Text variant="body-sm" className="text-gray-500">
+                    {project.category}
+                  </Text>
+                </div>
+                <div className="flex gap-4">
+                  <NavLink
+                    to={`/projetos/${project.id}`}
+                    className="text-sm font-medium text-gray-600 hover:underline"
+                  >
+                    Ver
+                  </NavLink>
+                  <NavLink
+                    to={`/gerenciador/projetos/${project.id}/editar`}
+                    className="text-sm font-medium text-blue hover:underline"
+                  >
+                    Editar
+                  </NavLink>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

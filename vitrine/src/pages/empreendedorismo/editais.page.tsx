@@ -4,16 +4,16 @@ import { Card, Section, Text } from "../../components/ui";
 export function EditaisPage() {
   const calls = [
     {
-      title: "Edital de Inovacao 2026",
+      title: "Edital de Inovação 2026",
       description: "Apoio financeiro para projetos com impacto local.",
     },
     {
-      title: "Programa de Pre-Aceleracao",
-      description: "Mentorias e suporte para validar modelos de negocio.",
+      title: "Programa de Pré-Aceleração",
+      description: "Mentorias e suporte para validar modelos de negócio.",
     },
     {
       title: "Desafio Campus Aberto",
-      description: "Oportunidades para solucao de problemas da comunidade.",
+      description: "Oportunidades para solução de problemas da comunidade.",
     },
   ];
 
@@ -23,22 +23,22 @@ export function EditaisPage() {
         title="Editais e Oportunidades"
         subtitle="Chamadas e oportunidades de fomento para projetos do campus."
       />
-      <Section title="Sobre os editais">
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-          Aqui voce encontra editais, chamadas e oportunidades de fomento para
-          projetos de empreendedorismo. Acompanhe prazos, requisitos e linhas de
-          apoio disponiveis.
-        </Text>
-      </Section>
-      <Section title="Oportunidades em destaque" showSeparator={false}>
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-          Selecao de oportunidades abertas para equipes do campus.
-        </Text>
+      <Section
+        title="Sobre os editais"
+        description="Aqui você encontra editais, chamadas e oportunidades de fomento para projetos de empreendedorismo. Acompanhe prazos, requisitos e linhas de apoio disponíveis."
+        align="center"
+      />
+      <Section
+        title="Oportunidades em destaque"
+        description="Seleção de oportunidades abertas para equipes do campus."
+        showSeparator={false}
+        align="center"
+      >
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {calls.map((call) => (
             <Card
               key={call.title}
-              className="p-6 space-y-3 text-center md:text-left"
+              className="flex flex-col items-center p-6 space-y-3 text-center md:items-start md:text-left"
             >
               <Text as="h3" variant="body-lg-bold">
                 {call.title}

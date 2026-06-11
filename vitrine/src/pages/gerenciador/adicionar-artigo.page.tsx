@@ -1,45 +1,48 @@
+
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import type { Artigo } from "../../types/papers.types";
 
 import {
   Button,
   FormField,
   FormPage,
   FormSectionCard,
-  FormSelect,
   FormTextarea,
   Input,
 } from "../../components/ui";
+import { useCreateArtigo } from "../../hooks/paper";
 
 const articleSchema = z.object({
-  title: z.string().min(3, "Informe o título do artigo."),
-  year: z.coerce.number().int().min(2000, "Ano inválido."),
-  authors: z.string().min(3, "Informe os autores."),
-  publicationType: z.enum(["artigo", "congresso", "capitulo", "coletanea"]),
-  venue: z.string().min(3, "Informe o periódico ou evento."),
-  link: z.string().url("Informe uma URL válida.").or(z.literal("")),
-  summary: z.string().min(20, "Descreva melhor o resumo."),
-  researchLine: z.string().min(3, "Informe a linha de pesquisa."),
+  titulo: z.string().min(3, "Informe o título do artigo."),
+  ano_de_publicacao: z.coerce.number().int().min(2000, "Ano inválido."),
+  descricao: z.string().min(20, "Descreva melhor o resumo."),
   keywords: z.string().min(3, "Adicione palavras-chave."),
+  autores: z.string().min(3, "Informe os autores."),
+  base: z
+    .string()
+    .min(3, "Descreva a base onde ele foi publicado. Ex: Scopus, IEEE"),
+  professor: z.string().min(3, "Informe o professor responsável."),
+  congresso: z.string().min(3, "Informe o congresso responsável."),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
 
 const defaultValues: ArticleFormValues = {
-  title: "",
-  year: new Date().getFullYear(),
-  authors: "",
-  publicationType: "artigo",
-  venue: "",
-  link: "",
-  summary: "",
-  researchLine: "",
+  titulo: "",
+  ano_de_publicacao: new Date().getFullYear(),
+  descricao: "",
   keywords: "",
+  autores: "",
+  base: "",
+  professor: "",
+  congresso: "",
 };
 
 export function AdicionarArtigoPage() {
+  const {execute, loading} = useCreateArtigo();
   const [submitted, setSubmitted] = useState<ArticleFormValues | null>(null);
 
   const {
@@ -51,7 +54,22 @@ export function AdicionarArtigoPage() {
     defaultValues,
   });
 
-  const onSubmit = (values: ArticleFormValues) => setSubmitted(values);
+  const onSubmit = (values: ArticleFormValues) => {
+    setSubmitted(values);
+
+    const paper: Artigo = {
+      titulo: values.titulo,
+      ano_de_publicacao: values.ano_de_publicacao,
+      descricao: values.descricao,
+      keywords: values.keywords,
+      autores: values.autores,
+      base: values.base,
+      professor: values.professor,
+      congresso: values.congresso,
+    }
+
+   
+  };
 
   return (
     <FormPage
@@ -61,152 +79,159 @@ export function AdicionarArtigoPage() {
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <FormSectionCard
           title="Dados da publicação"
-          description="Preencha primeiro os dados que identificam o artigo em catálogo."
+          description="Informações principais do artigo científico."
         >
           <div className="grid gap-5 md:grid-cols-2">
             <FormField
               label="Título do artigo"
               required
-              error={errors.title?.message}
+              error={errors.titulo?.message}
             >
               <Input
-                {...register("title")}
+                {...register("titulo")}
                 placeholder="Ex.: Tecnologias para inclusão e acessibilidade"
                 className={
-                  errors.title ? "border-red/60 focus-visible:ring-red/30" : ""
-                }
-              />
-            </FormField>
-            <FormField label="Ano" required error={errors.year?.message}>
-              <Input
-                {...register("year")}
-                type="number"
-                placeholder="2024"
-                className={
-                  errors.year ? "border-red/60 focus-visible:ring-red/30" : ""
-                }
-              />
-            </FormField>
-            <FormField label="Autores" required error={errors.authors?.message}>
-              <Input
-                {...register("authors")}
-                placeholder="Equipe de Pesquisa, nome 2, nome 3"
-                className={
-                  errors.authors
+                  errors.titulo
                     ? "border-red/60 focus-visible:ring-red/30"
                     : ""
                 }
               />
             </FormField>
+
             <FormField
-              label="Tipo de publicação"
+              label="Ano de publicação"
               required
-              error={errors.publicationType?.message}
+              error={errors.ano_de_publicacao?.message}
             >
-              <FormSelect
-                {...register("publicationType")}
+              <Input
+                {...register("ano_de_publicacao", {
+                  valueAsNumber: true,
+                })}
+                type="number"
+                placeholder="2025"
                 className={
-                  errors.publicationType
+                  errors.ano_de_publicacao
                     ? "border-red/60 focus-visible:ring-red/30"
                     : ""
                 }
-              >
-                <option value="artigo">Artigo</option>
-                <option value="congresso">Congresso / Simpósio</option>
-                <option value="capitulo">Capítulo de livro</option>
-                <option value="coletanea">Coletânea</option>
-              </FormSelect>
+              />
+            </FormField>
+
+            <FormField
+              label="Autores"
+              required
+              error={errors.autores?.message}
+            >
+              <Input
+                {...register("autores")}
+                placeholder="Autor 1, Autor 2, Autor 3"
+                className={
+                  errors.autores
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
+            </FormField>
+
+            <FormField
+              label="Professor responsável"
+              required
+              error={errors.professor?.message}
+            >
+              <Input
+                {...register("professor")}
+                placeholder="Nome do professor responsável"
+                className={
+                  errors.professor
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
             </FormField>
           </div>
         </FormSectionCard>
 
         <FormSectionCard
-          title="Informações complementares"
-          description="Dados que ajudam na exibição do card e na navegação futura."
+          title="Publicação"
+          description="Informações sobre onde o artigo foi publicado."
         >
           <div className="grid gap-5 md:grid-cols-2">
             <FormField
-              label="Periódico / Evento"
+              label="Congresso"
               required
-              error={errors.venue?.message}
+              error={errors.congresso?.message}
             >
               <Input
-                {...register("venue")}
-                placeholder="Nome da revista, evento ou coletânea"
+                {...register("congresso")}
+                placeholder="Ex.: SBSI, SBES, WebMedia..."
                 className={
-                  errors.venue ? "border-red/60 focus-visible:ring-red/30" : ""
+                  errors.congresso
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
                 }
               />
             </FormField>
-            <FormField label="Link de acesso" error={errors.link?.message}>
+
+            <FormField
+              label="Base de publicação"
+              required
+              error={errors.base?.message}
+            >
               <Input
-                {...register("link")}
-                placeholder="https://..."
+                {...register("base")}
+                placeholder="IEEE, Scopus, ACM, Springer..."
                 className={
-                  errors.link ? "border-red/60 focus-visible:ring-red/30" : ""
+                  errors.base
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
                 }
               />
             </FormField>
           </div>
+        </FormSectionCard>
 
+        <FormSectionCard
+          title="Descrição"
+          description="Resumo e palavras-chave do artigo."
+        >
           <FormField
-            label="Resumo curto"
+            label="Resumo"
             required
-            className="mt-5"
-            error={errors.summary?.message}
+            error={errors.descricao?.message}
           >
             <FormTextarea
-              {...register("summary")}
-              placeholder="Descreva a pesquisa e o principal resultado em poucas linhas."
+              {...register("descricao")}
+              placeholder="Descreva os objetivos, metodologia e resultados do artigo."
               className={
-                errors.summary ? "border-red/60 focus-visible:ring-red/30" : ""
+                errors.descricao
+                  ? "border-red/60 focus-visible:ring-red/30"
+                  : ""
+              }
+            />
+          </FormField>
+
+          <FormField
+            label="Palavras-chave"
+            required
+            className="mt-5"
+            error={errors.keywords?.message}
+          >
+            <Input
+              {...register("keywords")}
+              placeholder="IA, Educação, Inclusão Digital..."
+              className={
+                errors.keywords
+                  ? "border-red/60 focus-visible:ring-red/30"
+                  : ""
               }
             />
           </FormField>
         </FormSectionCard>
 
-        <FormSectionCard
-          title="Catalogação visual"
-          description="Bloco de apoio para organizar a publicação por linhas e palavras-chave."
-        >
-          <div className="grid gap-5 md:grid-cols-2">
-            <FormField
-              label="Linha de pesquisa"
-              required
-              error={errors.researchLine?.message}
-            >
-              <Input
-                {...register("researchLine")}
-                placeholder="Ex.: Sistemas inteligentes"
-                className={
-                  errors.researchLine
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
-            <FormField
-              label="Palavras-chave"
-              required
-              error={errors.keywords?.message}
-            >
-              <Input
-                {...register("keywords")}
-                placeholder="educação, IA, inclusão"
-                className={
-                  errors.keywords
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
-          </div>
-        </FormSectionCard>
-
-        {submitted ? (
+        {submitted && (
           <FormSectionCard
             title="Último envio"
-            description="Resumo do payload que o formulário gerou depois da validação."
+            description="Resumo dos dados enviados."
           >
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <div>
@@ -214,36 +239,39 @@ export function AdicionarArtigoPage() {
                   Título
                 </p>
                 <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.title}
+                  {submitted.titulo}
                 </p>
               </div>
+
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
                   Autores
                 </p>
                 <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.authors}
+                  {submitted.autores}
                 </p>
               </div>
+
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Tipo
+                  Congresso
                 </p>
                 <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.publicationType}
+                  {submitted.congresso}
                 </p>
               </div>
+
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
                   Ano
                 </p>
                 <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.year}
+                  {submitted.ano_de_publicacao}
                 </p>
               </div>
             </div>
           </FormSectionCard>
-        ) : null}
+        )}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <Button
@@ -254,6 +282,7 @@ export function AdicionarArtigoPage() {
           >
             Salvar rascunho
           </Button>
+
           <Button
             type="submit"
             variant="primary"
@@ -267,3 +296,4 @@ export function AdicionarArtigoPage() {
     </FormPage>
   );
 }
+

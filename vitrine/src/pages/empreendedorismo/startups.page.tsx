@@ -2,83 +2,74 @@ import PageHero from "../../components/layout/page-hero/page-hero";
 import {  Section, Text } from "../../components/ui";
 import Startup from "../../assets/icons/startups.svg";
 import { ProjectCard } from "../../components/features";
+import { useNavigate } from "react-router";
+import { useStartups } from "../../hooks/startup";
 
 
 export function StartupsPage() {
-  const startups = [
-    {
-      title: "Projeto Atlas",
-      description:
-        "Plataforma para mapear oportunidades e conectar estudantes.",
-        category: "inteligencia artificial",
-        area: "tecnologia",
-        icon: Startup,
-       
-    },
-    {
-      title: "AgroData",
-      description:
-        "Solucao para apoio a produtores com analise de dados locais.",
-        category: "analise de dados",
-        area: "agricultura",
-        icon: Startup,
-    },
-    {
-      title: "Saude Conecta",
-      description: "Aplicativo de suporte a campanhas de saude comunitaria.",
-      category: "saude",
-      area: "saude",
-      icon: Startup,
-    },
-  ];
+  const navigate = useNavigate();
+
+  const {startups, loading, error} = useStartups();
+
+  const handleSearchSubmit = (q: string) => {
+      const url = `/startup?busca=${encodeURIComponent}`
+      navigate(url)
+  }
+
+  
+
+
+
+  
 
   return (
     <>
       <PageHero
         title="Startups do Campus"
-        subtitle="Projetos em fase de validacao e iniciativas com potencial de negocio."
+        subtitle="Projetos em fase de validação e iniciativas com potencial de negócio."
       />
       <Section title="O que é uma startup?" align="center">
-    <div className="flex md:flex-row flex-col bg-white p-4 items-center rounded-2xl text-shadow-olive-200 shadow-2xl">
-          <Text className="pt-3 pl-3" as="h2" variant="body-lg">
-            As <strong>startups</strong> do campus sao iniciativas em fase de
-            validacao, onde estudantes e docentes transformam ideias em solucoes
-            com potencial de impacto. Esses projetos exploram desafios locais e buscam criar negocios sustentaveis, conectando a universidade ao ecossistema de inovacao. A vitrine destaca essas iniciativas, mostrando o processo de desenvolvimento e as historias por tras das ideias em evolucao.
+        <div className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-2xl md:flex-row md:items-start md:p-8">
+          <Text
+            className="text-center md:text-left"
+            as="h2"
+            variant="body-lg"
+          >
+            As <strong>startups</strong> do campus são iniciativas em fase de
+            validação, onde estudantes e docentes transformam ideias em soluções
+            com potencial de impacto. Esses projetos exploram desafios locais e buscam criar negócios sustentáveis, conectando a universidade ao ecossistema de inovação. A vitrine destaca essas iniciativas, mostrando o processo de desenvolvimento e as histórias por trás das ideias em evolução.
           </Text>
 
           <img
-
             src={Startup}
-            alt="Icone de marcador representando oportunidades de empreendedorismo"
-            className=" object-cover w-100 h-100 md:w-72 md:h-72 md:ml-6 "
+            alt="Ilustração representando as startups"
+            className="mt-8 w-56 object-contain md:ml-8 md:mt-0 md:w-72"
           />
         </div>
       </Section>
-      <div className="flex flex-row justify-center mx-16 my-20 mb-40">
-        <div className="flex flex-col space-y-7">
-        <Text variant="title-2"> Startups que expandem </Text>
-        <Text variant="body-lg" className="max-w-2xl">
-          Startups que foram criadas com um propósito principal de expandir, crescer e trazer impacto para a sociedade
-        </Text>
+      <div className="flex flex-col items-center justify-center mx-8 my-20 md:mx-16 md:flex-row md:justify-between text-center md:text-left">
+        <div className="flex flex-col space-y-4 max-w-xl">
+          <Text variant="title-2"> Startups que expandem </Text>
+          <Text variant="body-lg" className="text-gray-base">
+            Startups que foram criadas com um propósito principal de expandir, crescer e trazer impacto para a sociedade.
+          </Text>
         </div>
-          <img
-
-            src={Startup}
-            alt="Icone de marcador representando oportunidades de empreendedorismo"
-            className=" object-cover w-100 h-100 md:w-72 md:h-72 md:ml-40 "
-          />
+        <img
+          src={Startup}
+          alt="Ilustração de foguete ou startup expandindo"
+          className="mt-10 w-48 object-contain md:ml-12 md:mt-0 md:w-64"
+        />
       </div>
       <Section title="Startups em andamento" showSeparator={false} align="center">
-    
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {startups.map((startup) => (
-            <div>
-           <ProjectCard
-              title={startup.title}
-              description={startup.description}
-              category={startup.category}
-              imageUrl={startup.icon}
-            />
+            <div key={startup.title} className="flex flex-col items-center">
+              <ProjectCard
+                title={startup.title}
+                description={startup.description}
+                category={startup.category}
+                imageUrl={startup.icon}
+              />
              </div>
            ))}
         </div>

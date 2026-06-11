@@ -1,15 +1,16 @@
-import { AxiosError } from "axios";
 import { api } from "./api";
-import type { Project } from "../types/project.types";
+import type { Teacher } from "../types/teachers.types";
+import { AxiosError } from "axios";
 
-export async function listProjects(): Promise<Project[]> {
-  const response = await api.get<Project[]>("/teachers");
+export async function listTeachers(): Promise<Teacher[]> {
+  const response = await api.get<Teacher[]>("/teachers");
   return response.data;
 }
 
-export async function getProjectById(id: string): Promise<Project | null> {
+
+export async function getTeacherById(id: string): Promise<Teacher | null> {
   try {
-    const response = await api.get<Project>(`/projects/${id}`);
+    const response = await api.get<Teacher>(`/teachers/${id}`);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError && error.response?.status === 404) {
@@ -19,31 +20,17 @@ export async function getProjectById(id: string): Promise<Project | null> {
   }
 }
 
-export async function uploadProjectImage(file: File): Promise<string> {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  const response = await api.post<{ url: string }>(
-    "/uploads/projects-image",
-    formData,
-  );
-
-  return response.data.url;
-}
-
-export async function createProject(payload: Project): Promise<Project> {
-  const response = await api.post<Project>("/projects", payload);
+export async function createTeacher(payload: Teacher) : Promise<Teacher>{
+  const response = await api.post<Teacher>("/teachers", payload);
   return response.data;
 }
 
-export async function updateProject(
-  id: string,
-  payload: Partial<Project>,
-): Promise<Project> {
-  const response = await api.put<Project>(`/projects/${id}`, payload);
+export async function updateTeacher(id: string, payload: Partial<Teacher>) : Promise<Teacher> {
+  const response = await api.put<Teacher>(`/teachers/${id}`, payload);
   return response.data;
 }
 
-export async function deleteProject(id: string): Promise<void> {
-  await api.delete(`/projects/${id}`);
+
+export async function deleteTeacher(id: string): Promise<void> {
+  await api.delete(`/teachers/${id}`);
 }

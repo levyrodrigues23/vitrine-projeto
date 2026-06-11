@@ -8,11 +8,15 @@ export default function ProducaoCientificaPage() {
     <>
       <PageHero
         title="Produção científica"
-        subtitle="Conheça os registros e resultados das pesquisas desenvolvidas no Campus Itapaje."
+        subtitle="Conheça os registros e resultados das pesquisas desenvolvidas no Campus Itapajé."
       />
-      <Section title="| O que é a produção científica?">
-        <div className="flex md:flex-row flex-col bg-white p-4 rounded-2xl text-shadow-olive-200 shadow-2xl">
-          <Text className="pt-3 pl-3" as="h2" variant="body-lg">
+      <Section title="O que é a produção científica?" align="center">
+        <div className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-2xl md:flex-row md:items-start md:p-8">
+          <Text
+            className="text-center md:text-left"
+            as="h2"
+            variant="body-lg"
+          >
             Uma <strong>produção científica</strong> é o resultado de um
             processo de pesquisa, onde são gerados novos conhecimentos,
             descobertas ou soluções para problemas específicos. Ela pode se
@@ -28,25 +32,21 @@ export default function ProducaoCientificaPage() {
 
           <img
             src={Paper}
-            alt="Icone de pessoa lendo um artigo"
-            className=" w-100 h-100 md:w-64 md:h-64 md:ml-6 "
+            alt="Ilustração de pessoa lendo um artigo"
+            className="mt-8 w-56 object-contain md:ml-8 md:mt-0 md:w-72"
           />
         </div>
-        <Text
-          as="h2"
-          variant="body-lg"
-          className="text-center md:text-left"
-        ></Text>
       </Section>
-      <Section title="Acessar categorias" showSeparator={false}>
-        <Text as="h2" variant="body-lg" className="text-center md:text-left">
-          Escolha uma das áreas abaixo para ver os registros completos da
-          produção cientifica do campus.
-        </Text>
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card className=" flex flex-col  p-6 space-y-4 text-center md:text-left">
+      <Section
+        title="Acessar categorias"
+        description="Escolha uma das áreas abaixo para ver os registros completos da produção científica do campus."
+        showSeparator={false}
+        align="center"
+      >
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <Card className="flex flex-col items-center p-6 space-y-4 text-center md:items-start md:text-left">
             <Text as="h3" variant="body-lg-bold">
-              Artigos e Publicacoes
+              Artigos e Publicações
             </Text>
             <Text variant="body-md" className="text-gray-base">
               Trabalhos aceitos e publicados por alunos e servidores do campus.
@@ -55,21 +55,23 @@ export default function ProducaoCientificaPage() {
               to="/producao-cientifica/artigos-publicacoes"
               className={buttonVariants({ variant: "primary", size: "md" })}
             >
-              Ver artigos e publicacoes
+              Ver artigos e publicações
             </NavLink>
           </Card>
-          <Card className=" flex flex-col p-6 space-y-4 text-center md:text-left">
-            <Text as="h3" variant="body-lg-bold">
-              Congressos e Simposios
-            </Text>
-            <Text variant="body-md" className="text-gray-base">
-              Registros de participacoes em congressos, simposios e eventos.
-            </Text>
+          <Card className="flex flex-col items-center p-6 space-y-4 text-center md:items-start md:text-left md:justify-between">
+            <div className="space-y-4">
+              <Text as="h3" variant="body-lg-bold">
+                Congressos e Simpósios
+              </Text>
+              <Text variant="body-md" className="text-gray-base">
+                Registros de participações em congressos, simpósios e eventos.
+              </Text>
+            </div>
             <NavLink
               to="/producao-cientifica/congressos-simposios"
-              className={buttonVariants({ variant: "secondary", size: "md" })}
+              className={buttonVariants({ variant: "primary", size: "md" })}
             >
-              Ver congressos e simposios
+              Ver congressos e simpósios
             </NavLink>
           </Card>
         </div>

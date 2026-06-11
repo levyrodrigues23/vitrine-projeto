@@ -8,6 +8,7 @@ import {
 import { Footer } from "../footer/footer";
 import MainContent from "../main-content/main-content";
 import MenuResponsive from "../menu-responsive/menu-responsive";
+import { VLibrasWidget } from "../vlibras-widget/vlibras-widget";
 
 export default function MainLayout() {
   const location = useLocation();
@@ -35,6 +36,7 @@ export default function MainLayout() {
         <Outlet />
       </MainContent>
       <Footer />
+      <VLibrasWidget />
     </div>
   );
 }

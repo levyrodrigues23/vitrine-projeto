@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { useCreateProject } from "../../hooks/useCreateProject";
+import { useCreateProject } from "../../hooks/project/useCreateProject";
 import type { Project } from "../../types/project.types";
 
 import {
@@ -13,21 +13,18 @@ import {
   FormField,
   FormPage,
   FormSectionCard,
-  FormSelect,
   FormTextarea,
   Input,
 } from "../../components/ui";
+import { workDoneSchema } from "../../schemas/project.schema";
 
 const projectSchema = z.object({
   category: z.enum(["inovação", "extensão", "pesquisa"]),
   title: z.string().min(3, "Informe um título com pelo menos 3 caracteres."),
-  area: z.enum(["sistemas", "software", "redes", "outro"]),
-  keywords: z.string().min(3, "Inclua ao menos uma palavra-chave."),
   responsible: z.string().min(3, "Informe o responsável pelo projeto."),
   description: z.string().min(20, "Descreva melhor o projeto."),
-  year: z.coerce.number().int("Ano inválido.").min(2000, "Ano muito antigo."),
-  status: z.enum(["andamento", "concluido", "validacao"]),
   imageFile: z.custom<FileList>().optional(),
+  worksDone: z.array(workDoneSchema).optional(),
 });
 
 type ProjectFormValues = z.infer<typeof projectSchema>;
@@ -35,21 +32,18 @@ type ProjectFormValues = z.infer<typeof projectSchema>;
 const defaultValues: ProjectFormValues = {
   category: "inovação",
   title: "",
-  area: "sistemas",
-  keywords: "",
   responsible: "",
   description: "",
-  year: new Date().getFullYear(),
-  status: "andamento",
+  worksDone: [],
   imageFile: undefined,
 };
 
 const CATEGORY_MAP: Record<ProjectFormValues["category"], Project["category"]> =
-  {
-    inovação: "Inovação",
-    extensão: "Extensão",
-    pesquisa: "Pesquisa",
-  };
+{
+  inovação: "Inovação",
+  extensão: "Extensão",
+  pesquisa: "Pesquisa",
+};
 
 export function AdicionarProjetoPage() {
   const [submitted, setSubmitted] = useState<ProjectFormValues | null>(null);
@@ -74,20 +68,20 @@ export function AdicionarProjetoPage() {
       title: values.title,
       description: values.description,
       category: CATEGORY_MAP[values.category],
-      area: values.area,
-      keywords: values.keywords
-        .split(",")
-        .map((item) => item.trim())
-        .filter(Boolean),
       responsible: values.responsible.trim(),
-      year: values.year,
-      status: values.status,
+      worksDone: values.worksDone?.map((workDone) => ({
+        id: crypto.randomUUID(),
+        title: workDone.title,
+        description: workDone.description,
+        category: workDone.category,
+        imageUrl: workDone.imageUrl,
+      })),
     };
 
     const result = await execute(project, values.imageFile?.[0]);
 
     if (!result.success) {
-      setSubmitError(result.error);
+      setSubmitError((result as { error: string } | undefined)?.error ?? "Erro ao salvar projeto");
       return;
     }
 
@@ -168,41 +162,11 @@ export function AdicionarProjetoPage() {
                 }
               />
             </FormField>
-            <FormField
-              label="Área principal"
-              required
-              error={errors.area?.message}
-            >
-              <FormSelect
-                {...register("area")}
-                className={
-                  errors.area ? "border-red/60 focus-visible:ring-red/30" : ""
-                }
-              >
-                <option value="sistemas">Sistemas de Informação</option>
-                <option value="software">Engenharia de Software</option>
-                <option value="redes">Redes de Computadores</option>
-                <option value="outro">Outro</option>
-              </FormSelect>
-            </FormField>
+
           </div>
 
           <div className="mt-5 grid gap-5 md:grid-cols-2">
-            <FormField
-              label="Palavras-chave"
-              hint="Separe por vírgula para facilitar filtros posteriores."
-              error={errors.keywords?.message}
-            >
-              <Input
-                {...register("keywords")}
-                placeholder="IA, agricultura, automação"
-                className={
-                  errors.keywords
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
+
             <FormField
               label="Responsável / Orientador"
               error={errors.responsible?.message}
@@ -218,7 +182,7 @@ export function AdicionarProjetoPage() {
               />
             </FormField>
           </div>
-
+                
           <FormField
             label="Resumo do projeto"
             className="mt-5"
@@ -234,35 +198,16 @@ export function AdicionarProjetoPage() {
               }
             />
           </FormField>
-        </FormSectionCard>
+       
+          </FormSectionCard>
 
         <FormSectionCard
           title="Detalhes operacionais"
           description="Campos de apoio para a apresentação visual e futura integração com o contexto."
         >
           <div className="grid gap-5 md:grid-cols-3">
-            <FormField label="Ano de início" error={errors.year?.message}>
-              <Input
-                {...register("year")}
-                type="number"
-                placeholder="2025"
-                className={
-                  errors.year ? "border-red/60 focus-visible:ring-red/30" : ""
-                }
-              />
-            </FormField>
-            <FormField label="Status" error={errors.status?.message}>
-              <FormSelect
-                {...register("status")}
-                className={
-                  errors.status ? "border-red/60 focus-visible:ring-red/30" : ""
-                }
-              >
-                <option value="andamento">Em andamento</option>
-                <option value="concluido">Concluído</option>
-                <option value="validacao">Em validação</option>
-              </FormSelect>
-            </FormField>
+
+
             <FormField
               label="Imagem de destaque"
               error={errors.imageFile?.message}
@@ -279,6 +224,32 @@ export function AdicionarProjetoPage() {
               />
             </FormField>
           </div>
+          
+        </FormSectionCard>
+        <FormSectionCard
+          title="Trabalhos realizados no projeto"
+          description="Campos de apoio para a apresentação visual e futura integração com o contexto."
+        >
+          <div className="grid gap-5 md:grid-cols-3">
+
+
+            <FormField
+              label="Adicione os trabalhos realizados no projeto"
+              error={errors.worksDone?.message}
+            >
+              <Input
+                {...register("worksDone")}
+                type="file"
+                placeholder="Selecione os trabalhos realizados no projeto"
+                className={
+                  errors.worksDone
+                    ? "border-red/60 focus-visible:ring-red/30"
+                    : ""
+                }
+              />
+            </FormField>
+          </div>
+          
         </FormSectionCard>
 
         {submitted ? (
@@ -307,17 +278,13 @@ export function AdicionarProjetoPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
                   Status
                 </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.status}
-                </p>
+
               </div>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
                   Ano
                 </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.year}
-                </p>
+
               </div>
             </div>
           </FormSectionCard>

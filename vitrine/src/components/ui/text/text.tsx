@@ -23,9 +23,10 @@ export const textVariants = cva("font-sans", {
   },
 });
 
-interface TextProps extends VariantProps<typeof textVariants> {
+interface TextProps
+  extends VariantProps<typeof textVariants>,
+    React.HTMLAttributes<HTMLElement> {
   as?: keyof React.JSX.IntrinsicElements;
-  className?: string;
   children?: React.ReactNode;
 }
 
