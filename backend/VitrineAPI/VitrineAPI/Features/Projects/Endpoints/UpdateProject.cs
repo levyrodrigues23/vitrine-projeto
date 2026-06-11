@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VitrineAPI.Database;
-using VitrineAPI.Database.Models.Enums;
 using VitrineAPI.Features.Projects.Shared;
 
 namespace VitrineAPI.Features.Projects.Endpoints
@@ -12,7 +11,7 @@ namespace VitrineAPI.Features.Projects.Endpoints
             var project = await db.Projects.FindAsync(id);
             if (project is null) return null;
             project.Title = request.Title;
-            project.Category = (ProjectCategory)(request.Category == null ? throw new ArgumentException("Category is required") : request.Category);
+            project.Category = request.Category;
             project.Description = request.Description;
             project.ImageUrl = request.ImageUrl;
             await db.SaveChangesAsync();
