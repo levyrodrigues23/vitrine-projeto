@@ -2,7 +2,7 @@ import { useState } from "react";
 import PageHero from "../../components/layout/page-hero/page-hero";
 import { Section } from "../../components/ui";
 import { TeacherCard, AreaCard } from "../../components/features";
-import { useTeachers } from "../../hooks/teacher";
+import { useTeachers, useTeacherAreas } from "../../hooks/teacher";
 import {
   Code2,
   BarChart3,
@@ -14,7 +14,6 @@ import {
   Network,
   Building2,
 } from "lucide-react";
-import { MOCK_AREAS } from "../../constants/mock-data";
 
 const getIcon = (iconName: string) => {
   const icons: Record<string, any> = {
@@ -34,12 +33,13 @@ const getIcon = (iconName: string) => {
 
 export function ProfessoresPage() {
   const { teachers, loading, error } = useTeachers();
+  const { areas, loading: areasLoading } = useTeacherAreas();
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
 
   const getFilteredTeachers = () => {
     if (!selectedArea) return teachers;
 
-    const area = MOCK_AREAS.find((a) => a.id === selectedArea);
+    const area = areas.find((a) => a.id === selectedArea);
 
     if (!area) return teachers;
 
@@ -61,36 +61,7 @@ export function ProfessoresPage() {
         subtitle="Corpo docente, áreas de atuação e contatos institucionais."
       />
 
-      <Section
-        title="Áreas de atuação"
-        description="Explore as principais áreas de pesquisa e ensino"
-      >
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {MOCK_AREAS.map((area) => (
-            <AreaCard
-              key={area.id}
-              name={area.name}
-              description={area.description}
-              icon={getIcon(area.icon)}
-              isSelected={selectedArea === area.id}
-              onClick={() => handleAreaToggle(area.id)}
-            />
-          ))}
-        </div>
-
-        {selectedArea && (
-          <div className="mt-6 flex justify-center">
-            <button
-              onClick={() => setSelectedArea(null)}
-              className="rounded-lg border border-blue-dark bg-white px-6 py-2 font-semibold text-blue-dark transition hover:bg-blue-dark hover:text-white"
-            >
-              Ver todos
-            </button>
-          </div>
-        )}
-      </Section>
-
-      <Section title="Corpo docente">
+      <Section title="Corpo docente" align="center">
         {loading ? (
           <p className="text-center text-gray-base">
             Carregando professores...
@@ -121,6 +92,47 @@ export function ProfessoresPage() {
           </div>
         )}
       </Section>
+      
+      <Section
+        title="Áreas de atuação"
+        description="Explore as principais áreas de pesquisa e ensino"
+        align="center"
+      >
+        {areasLoading ? (
+          <p className="text-center text-gray-base">
+            Carregando áreas de atuação...
+          </p>
+        ) : areas.length > 0 ? (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {areas.map((area) => (
+              <AreaCard
+                key={area.id}
+                name={area.name}
+                description={area.description}
+                icon={getIcon(area.icon)}
+                isSelected={selectedArea === area.id}
+                onClick={() => handleAreaToggle(area.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-base">
+            Nenhuma área de atuação disponível no momento
+          </p>
+        )}
+
+        {selectedArea && areas.length > 0 && (
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => setSelectedArea(null)}
+              className="rounded-lg border border-blue-dark bg-white px-6 py-2 font-semibold text-blue-dark transition hover:bg-blue-dark hover:text-white"
+            >
+              Ver todos
+            </button>
+          </div>
+        )}
+      </Section>
+
     </>
   );
 }

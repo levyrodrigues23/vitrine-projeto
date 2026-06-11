@@ -4,13 +4,8 @@ import type { Artigo } from "../types/papers.types";
 
 
 export async function listArtigos(): Promise<Artigo[]> {
-    try {
-        const response = await api.get<Artigo[]>("/papers");
-        return response.data;
-    } catch (error) {
-        console.log(error)
-    }
-
+  const response = await api.get<Artigo[]>("/papers");
+  return response.data;
 }
 
 export async function createArtigo(payload: Artigo): Promise<Artigo> {

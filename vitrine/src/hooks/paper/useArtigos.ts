@@ -9,7 +9,7 @@ export function useArtigos() {
   });
 
   return {
-    artigos: query.data ?? [],
+    papers: query.data ?? [],
     loading: query.isLoading,
     error: query.error instanceof Error ? query.error.message : null,
     refresh: query.refetch,

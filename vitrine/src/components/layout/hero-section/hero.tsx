@@ -49,7 +49,6 @@ export default function Hero({
 
   const navigate = useNavigate();
 
-  
   const [internalValue, setInternalValue] = useState<string>(searchValue ?? "");
   useEffect(() => {
     if (searchValue !== undefined) setInternalValue(searchValue);
@@ -77,19 +76,12 @@ export default function Hero({
     ).map((r) => r.item);
   };
 
-  const runSearch = (q: string) => {
-    setSuggestions(getSearchResults(q));
-  };
-
   const handleChange = (v: string) => {
     if (searchValue === undefined) setInternalValue(v);
     onSearchChange?.(v);
 
     if (debounceRef.current) window.clearTimeout(debounceRef.current);
-    // debounce 250ms
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore - setTimeout returns number in browser
-    debounceRef.current = window.setTimeout(() => runSearch(v), 250);
+    debounceRef.current = window.setTimeout(() => setSuggestions(getSearchResults(v)), 250);
   };
 
   const handleSelect = (id: string) => {
@@ -110,7 +102,11 @@ export default function Hero({
       }
     }
 
-    onSearchSubmit?.(trimmed);
+    if (onSearchSubmit) {
+      onSearchSubmit(trimmed);
+    } else {
+      navigate(`/projetos?busca=${encodeURIComponent(trimmed)}`);
+    }
   };
 
   const shouldAnimate = animatedWords.length > 0;
@@ -194,15 +190,7 @@ export default function Hero({
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  const value =
-                    inputValue ??
-                    (
-                      e.currentTarget.elements.namedItem(
-                        "search",
-                      ) as HTMLInputElement
-                    )?.value ??
-                    "";
-                  handleSubmit(value);
+                  handleSubmit(inputValue);
                 }}
               >
                 <Input
@@ -214,6 +202,7 @@ export default function Hero({
                   className="w-full max-w-md bg-white/90 shadow-sm backdrop-blur border-gray-base/20"
                   aria-autocomplete="list"
                   aria-controls="hero-suggestions"
+                  autoComplete="off"
                 />
               </form>
 
@@ -227,7 +216,6 @@ export default function Hero({
                       key={s.id}
                       className="cursor-pointer px-4 py-2 hover:bg-gray-100"
                       onMouseDown={(e) => {
-                        // prevent blur before click
                         e.preventDefault();
                         handleSelect(s.id);
                       }}

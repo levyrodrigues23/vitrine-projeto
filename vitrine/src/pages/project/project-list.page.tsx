@@ -57,27 +57,28 @@ export function ProjectListPage() {
         subtitle={CATEGORY_EXPLANATION[activeCategory]}
       />
 
-      <Section align="center">
+      <Section title={`O que é um projeto de ${activeCategory.toLowerCase()}?`} align="center">
+        <div className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-2xl md:flex-row md:items-center md:justify-between md:p-8">
+          <Text
+            className="text-center md:flex-1 md:text-left"
+            as="h2"
+            variant="body-lg"
+          >
+            {categoryMeta.description}
+          </Text>
+          <div className="mt-8 flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-blue/10 text-blue-dark md:ml-8 md:mt-0">
+            <CategoryIcon className="h-16 w-16" />
+          </div>
+        </div>
+      </Section>
+
+      <Section title="Projetos da categoria" showSeparator={false} align="center">
         <NavLink
           to="/projetos"
-          className="mb-6 inline-flex text-sm font-semibold text-blue-dark hover:underline"
+          className="mb-8 inline-flex text-sm font-semibold text-blue-dark hover:underline"
         >
           ← Voltar para todos os projetos
         </NavLink>
-
-        <div className="mb-10 flex flex-col items-center gap-4 rounded-2xl border border-gray-base/15 bg-white p-6 text-center shadow-sm md:flex-row md:text-left">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue/10 text-blue-dark">
-            <CategoryIcon className="h-7 w-7" />
-          </div>
-          <div>
-            <Text as="h2" variant="body-lg-bold">
-              O que é um projeto de {activeCategory.toLowerCase()}?
-            </Text>
-            <Text variant="body-md" className="mt-2 text-gray-base">
-              {categoryMeta.description}
-            </Text>
-          </div>
-        </div>
 
         <label className="mx-auto mb-10 block w-full max-w-xl">
           <span className="mb-2 block text-left text-sm font-semibold text-gray-base-dark">
@@ -87,7 +88,7 @@ export function ProjectListPage() {
             type="search"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Digite algo"
+            placeholder={`Buscar em ${activeCategory}...`}
             aria-label={`Buscar projetos de ${activeCategory}`}
             className="h-11 bg-white"
           />

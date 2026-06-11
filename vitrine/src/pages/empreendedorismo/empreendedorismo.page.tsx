@@ -11,27 +11,30 @@ export function EmpreendedorismoPage() {
     <>
       <PageHero
         title="Empreendedorismo"
-        subtitle="Startups, editais, fomento e iniciativas que conectam ideias ao ecossistema de inovacao."
+        subtitle="Startups, editais, fomento e iniciativas que conectam ideias ao ecossistema de inovação."
       />
-      <Section title="O que é Empreendedorismo?">
-        <div className="flex md:flex-row flex-col bg-white p-4 items-center rounded-2xl text-shadow-olive-200 shadow-2xl">
-          <Text className="pt-3 pl-3" as="h2" variant="body-lg">
-            O <strong>empreendedorismo</strong> transforma ideias em solucoes e
-            negocios sustentaveis, conectando conhecimento academico a desafios
-            reais do territorio. No campus, isso acontece por meio de
+      <Section title="O que é Empreendedorismo?" align="center">
+        <div className="flex flex-col items-center rounded-2xl bg-white p-6 shadow-2xl md:flex-row md:items-start md:p-8">
+          <Text
+            className="text-center md:text-left"
+            as="h2"
+            variant="body-lg"
+          >
+            O <strong>empreendedorismo</strong> transforma ideias em soluções e
+            negócios sustentáveis, conectando conhecimento acadêmico a desafios
+            reais do território. No campus, isso acontece por meio de
             iniciativas, startups, desafios e programas de fomento que
-            impulsionam a inovacao.
+            impulsionam a inovação.
             <br />
-            <br />A partir desse movimento, estudantes desenvolvem competencias
-            como criatividade, validacao de mercado e trabalho em equipe,
+            <br />A partir desse movimento, estudantes desenvolvem competências
+            como criatividade, validação de mercado e trabalho em equipe,
             aproximando a universidade da comunidade e do ecossistema local.
           </Text>
 
           <img
-
             src={Emprenderorismo}
-            alt="Icone de marcador representando oportunidades de empreendedorismo"
-            className=" object-cover w-100 h-100 md:w-72 md:h-72 md:ml-6 "
+            alt="Ilustração de oportunidades de empreendedorismo"
+            className="mt-8 w-56 rounded-lg object-cover md:ml-8 md:mt-0 md:w-72"
           />
         </div>
       </Section>
@@ -53,7 +56,7 @@ export function EmpreendedorismoPage() {
             </Text>
 
             <Text variant="body-md" className="text-gray-base leading-relaxed">
-              Ideias em fase de validacao e projetos em evolucao.
+              Ideias em fase de validação e projetos em evolução.
             </Text>
           </div>
         </div>
@@ -97,20 +100,22 @@ export function EmpreendedorismoPage() {
             </Text>
 
             <Text variant="body-md" className="text-gray-base leading-relaxed">
-              Projetos de consultoria e experiencias praticas.
+              Projetos de consultoria e experiências práticas.
             </Text>
           </div>
         </div>
       </div>
       <Section title="Experimente explorar por categoria!" showSeparator={false} align="center">
         <div className="grid gap-6 md:grid-cols-3">
-          <Card className="flex flex-col p-6 space-y-4 text-center md:text-left">
-            <Text as="h3" variant="body-lg-bold">
-              Startups do Campus
-            </Text>
-            <Text variant="body-md" className="text-gray-base">
-              Ideias em fase de validacao e projetos em evolucao.
-            </Text>
+          <Card className="flex flex-col items-center p-6 space-y-4 text-center md:items-start md:text-left md:justify-between">
+            <div className="space-y-4 flex flex-col items-center md:items-start">
+              <Text as="h3" variant="body-lg-bold">
+                Startups do Campus
+              </Text>
+              <Text variant="body-md" className="text-gray-base">
+                Ideias em fase de validação e projetos em evolução.
+              </Text>
+            </div>
             <NavLink
               to="/empreendedorismo/startups"
               className={buttonVariants({ variant: "primary", size: "md" })}
@@ -118,13 +123,15 @@ export function EmpreendedorismoPage() {
               Ver startups
             </NavLink>
           </Card>
-          <Card className="flex flex-col p-6 space-y-4 text-center md:text-left">
-            <Text as="h3" variant="body-lg-bold">
-              Editais e Oportunidades
-            </Text>
-            <Text variant="body-md" className="text-gray-base">
-              Chamadas, fomento e oportunidades para novos projetos.
-            </Text>
+          <Card className="flex flex-col items-center p-6 space-y-4 text-center md:items-start md:text-left md:justify-between">
+            <div className="space-y-4 flex flex-col items-center md:items-start">
+              <Text as="h3" variant="body-lg-bold">
+                Editais e Oportunidades
+              </Text>
+              <Text variant="body-md" className="text-gray-base">
+                Chamadas, fomento e oportunidades para novos projetos.
+              </Text>
+            </div>
             <NavLink
               to="/empreendedorismo/editais"
               className={buttonVariants({ variant: "secondary", size: "md" })}
@@ -132,13 +139,15 @@ export function EmpreendedorismoPage() {
               Ver editais
             </NavLink>
           </Card>
-          <Card className="flex flex-col p-6 space-y-4 text-center md:text-left">
-            <Text as="h3" variant="body-lg-bold">
-              Empresa Jr
-            </Text>
-            <Text variant="body-md" className="text-gray-base">
-              Projetos de consultoria e experiencias praticas.
-            </Text>
+          <Card className="flex flex-col items-center p-6 space-y-4 text-center md:items-start md:text-left md:justify-between">
+            <div className="space-y-4 flex flex-col items-center md:items-start">
+              <Text as="h3" variant="body-lg-bold">
+                Empresa Jr
+              </Text>
+              <Text variant="body-md" className="text-gray-base">
+                Projetos de consultoria e experiências práticas.
+              </Text>
+            </div>
             <NavLink
               to="/empreendedorismo/empresa-jr"
               className={buttonVariants({ variant: "quaternary", size: "md" })}
