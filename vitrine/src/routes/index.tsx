@@ -26,7 +26,7 @@ import { ProjectListPage } from "../pages/project/project-list.page";
 import { ProjectsPage } from "../pages/project/projects.page";
 import ProducaoCientificaPage from "../pages/producao-cientifica/producao-cientifica.page";
 import ArtigosPublicacoesPage from "../pages/producao-cientifica/artigos-publicacoes.page";
-import CongressosSimposiosPage from "../pages/producao-cientifica/congressos-simposios.page";
+import CongressesSimposiosPage from "../pages/producao-cientifica/congresses-simposios.page.tsx";
 import { StartupsPage } from "../pages/empreendedorismo/startups.page";
 import { EditaisPage } from "../pages/empreendedorismo/editais.page";
 import { EmpresaJrPage } from "../pages/empreendedorismo/empresa-jr.page";
@@ -93,7 +93,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "producao-cientifica/congressos-simposios",
-        element: <CongressosSimposiosPage />,
+        element: <CongressesSimposiosPage />,
       },
       {
         path: "producao-tecnica",
