@@ -1,26 +1,116 @@
-@VitrineAPI_HostAddress = http://localhost:5026
+@baseUrl = http://localhost:5026
+@projectId = 00000000-0000-0000-0000-000000000000
 
-POST http://localhost:5026/api/projects
-content-type: application/json
+### Criar projeto válido
+POST {{baseUrl}}/api/projects
+Content-Type: application/json
+
 {
+  "title": "Projeto de Extensão UFC",
+  "category": "Extensão",
+  "description": "Descrição do projeto de extensão da universidade",
+  "imageUrl": "https://example.com/image.jpg"
 }
 
 ###
 
-GET http://localhost:5026/api/projects
+### Criar projeto — título vazio
+POST {{baseUrl}}/api/projects
+Content-Type: application/json
 
-###
-
-GET http://localhost:5026/api/projects/7912dc69-bdb7-44c0-b8c9-38b14d89348a
-
-
-###
-
-PUT http://localhost:5026/api/projects/1f18623d-fd72-4283-aa6e-138d14dab6cf
-content-type: application/json
 {
+  "title": "",
+  "category": "Pesquisa",
+  "description": "Descrição válida",
+  "imageUrl": "https://example.com/image.jpg"
 }
 
 ###
 
-DELETE http://localhost:5026/api/projects/1f18623d-fd72-4283-aa6e-138d14dab6cf
+### Criar projeto — categoria inválida
+POST {{baseUrl}}/api/projects
+Content-Type: application/json
+
+{
+  "title": "Projeto Teste",
+  "category": "CategoriaInexistente",
+  "description": "Descrição válida",
+  "imageUrl": "https://example.com/image.jpg"
+}
+
+###
+
+### Criar projeto — múltiplos campos inválidos
+POST {{baseUrl}}/api/projects
+Content-Type: application/json
+
+{
+  "title": "",
+  "category": "Inovação",
+  "description": "",
+  "imageUrl": ""
+}
+
+###
+
+### Listar todos os projetos
+GET {{baseUrl}}/api/projects
+
+###
+
+### Buscar projeto por ID — substitua pelo ID retornado no POST
+GET {{baseUrl}}/api/projects/{{projectId}}
+
+###
+
+### Buscar projeto — ID inexistente
+GET {{baseUrl}}/api/projects/00000000-0000-0000-0000-000000000001
+
+###
+
+### Atualizar projeto — substitua pelo ID retornado no POST
+PUT {{baseUrl}}/api/projects/{{projectId}}
+Content-Type: application/json
+
+{
+  "title": "Projeto Atualizado",
+  "category": "Pesquisa",
+  "description": "Descrição atualizada do projeto",
+  "imageUrl": "https://example.com/new-image.jpg"
+}
+
+###
+
+### Atualizar projeto — título muito longo (mais de 50 caracteres)
+PUT {{baseUrl}}/api/projects/{{projectId}}
+Content-Type: application/json
+
+{
+  "title": "Este título é extremamente longo e vai ultrapassar o limite de cinquenta caracteres permitidos",
+  "category": "Inovação",
+  "description": "Descrição válida",
+  "imageUrl": "https://example.com/image.jpg"
+}
+
+###
+
+### Atualizar projeto — ID inexistente
+PUT {{baseUrl}}/api/projects/00000000-0000-0000-0000-000000000001
+Content-Type: application/json
+
+{
+  "title": "Projeto Teste",
+  "category": "Extensão",
+  "description": "Descrição válida",
+  "imageUrl": "https://example.com/image.jpg"
+}
+
+###
+
+### Deletar projeto — substitua pelo ID retornado no POST
+DELETE {{baseUrl}}/api/projects/{{projectId}}
+
+###
+
+### Deletar projeto — ID inexistente
+DELETE {{baseUrl}}/api/projects/00000000-0000-0000-0000-000000000001

@@ -42,7 +42,12 @@ namespace VitrineAPI
                 app.MapOpenApi();
             }
 
-            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseAuthorization();
 
