@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VitrineAPI.Database;
 using VitrineAPI.Database.Models;
+using VitrineAPI.Database.Models.Enums;
 using VitrineAPI.Features.Projects.Shared;
 
 namespace VitrineAPI.Features.Projects.Endpoints
@@ -12,7 +14,7 @@ namespace VitrineAPI.Features.Projects.Endpoints
             var project = new Project
             {
                 Title = request.Title,
-                Category = request.Category,
+                Category = Enum.Parse<ProjectCategory>(request.Category!),
                 Description = request.Description,
                 ImageUrl = request.ImageUrl
             };
@@ -35,8 +37,12 @@ namespace VitrineAPI.Features.Projects.Endpoints
     public class CreateProjectController(CreateProjectHandler handler) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> Create(ProjectRequest request)
+        public async Task<IActionResult> Create(ProjectRequest request, IValidator<ProjectRequest> validator)
         {
+            var validation = await validator.ValidateAsync(request);
+            if (!validation.IsValid)
+                return BadRequest(validation.ToDictionary());
+
             var result = await handler.Handle(request);
             return Created($"/api/projects/{result.Id}", result);
         }

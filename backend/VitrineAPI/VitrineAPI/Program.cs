@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using VitrineAPI.Database;
 using VitrineAPI.Features.Projects.Endpoints;
@@ -20,6 +21,8 @@ namespace VitrineAPI
             builder.Services.AddScoped<GetProjectByIdHandler>();
             builder.Services.AddScoped<UpdateProjectHandler>();
             builder.Services.AddScoped<DeleteProjectHandler>();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
             builder.Services.AddCors(options =>
             {
