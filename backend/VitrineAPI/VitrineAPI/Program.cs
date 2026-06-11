@@ -21,6 +21,16 @@ namespace VitrineAPI
             builder.Services.AddScoped<UpdateProjectHandler>();
             builder.Services.AddScoped<DeleteProjectHandler>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("FrontEnd", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -33,6 +43,7 @@ namespace VitrineAPI
 
             app.UseAuthorization();
 
+            app.UseCors("FrontEnd");
 
             app.MapControllers();
 
