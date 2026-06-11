@@ -19,9 +19,6 @@ namespace VitrineAPI.Features.Projects.Shared
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required")
                 .MaximumLength(300).WithMessage("Description must be at most 300 characters");
-
-            RuleFor(x => x.ImageUrl)
-                .NotEmpty().WithMessage("ImageUrl is required");
         }
     }
 }
