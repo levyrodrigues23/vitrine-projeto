@@ -88,11 +88,13 @@ export function AboutVitrinePage() {
           ))}
         </div>
       </Section>
+            <div></div>
       <Section
         align="center"
         title="Conheça nossos projetos"
         description="Explore a variedade de projetos desenvolvidos e descubra como a universidade está transformando conhecimento em impacto real."
         showSeparator={false}
+        className="flex flex-col space-y-12 justify-center items-center"
       >
       <Button
        onClick={() => navigate("/projetos")} 
