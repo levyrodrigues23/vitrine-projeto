@@ -1,8 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using VitrineAPI.Database;
 using VitrineAPI.Features.Projects.Endpoints;
-using VitrineAPI.Features.Projetos.Endpoints;
 
 namespace VitrineAPI
 {
@@ -47,7 +47,17 @@ namespace VitrineAPI
             builder.Services.AddScoped<UpdateProjectHandler>();
             builder.Services.AddScoped<DeleteProjectHandler>();
 
-            Directory.CreateDirectory(Path.Combine(builder.Environment.ContentRootPath, "wwwroot"));
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("FrontEnd", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
@@ -57,7 +67,12 @@ namespace VitrineAPI
                 app.MapOpenApi();
             }
 
-            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseCors(FrontendCorsPolicy);
 
@@ -65,6 +80,7 @@ namespace VitrineAPI
 
             app.UseAuthorization();
 
+            app.UseCors("FrontEnd");
 
             app.MapControllers();
 
