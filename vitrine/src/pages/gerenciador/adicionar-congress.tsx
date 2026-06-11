@@ -1,296 +1,146 @@
 // eu provavelmente terei que relacionar artigos para cada congresso, então preciso pensar na melhor forma de fazer isso. 
 
 
-import { useState } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import type { Artigo } from "../../types/papers.types";
+
 
 import {
   Button,
   FormField,
   FormPage,
   FormSectionCard,
-  FormTextarea,
+
   Input,
 } from "../../components/ui";
-import { useCreateArtigo } from "../../hooks/paper";
+import {useCreateCongress} from "../../hooks/congress/useCreateCongress.ts";
+import type {CreateCongress} from "../../types/congress.types.ts";
 
 const congressSchema = z.object({
   title: z.string().min(3, "Informe o título do congresso."),
   data: z.coerce.date(),
-  descricao: z.string().min(20, "Descreva melhor o resumo."),
-  url: z.string().min(3, "Informe o link do site do congresso"),
-  local: z.string().min(3,  "Informe o local onde ocorre/ocorreu o congresso."),
-  tipo: z.enum(["externo", "interno"]), 
-
+  description: z.string().min(20, "Descreva melhor o resumo."),
+  url: z.string().min(3, "Informe o link do site do congresso."),
+  local: z.string().min(3, "Informe o local onde ocorre/ocorreu o congresso."),
+  tipo: z.enum(["andamento", "finalizado", "a ser publicado"]),
 });
 
-type congressFormValues = z.infer<typeof congressSchema>;
+type CongressFormValues = z.infer<typeof congressSchema>;
 
-const defaultValues: congressFormValues = {
-    title: "",
-    data: new Date(),
-    descricao: "",
-    url: "",
-    local: "",
-    tipo: "",
+const defaultValues: CongressFormValues = {
+  title: "",
+  data: new Date(),
+  description: "",
+  url: "",
+  local: "",
+  tipo: "andamento",
 };
 
-export function AdicionarArtigoPage() {
-  const {execute, loading} = useCreateArtigo();
-  const [submitted, setSubmitted] = useState<ArticleFormValues | null>(null);
+export function AdicionarCongressoPage() {
+  const {execute, loading} = useCreateCongress();
+
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ArticleFormValues>({
-    resolver: zodResolver(articleSchema),
+  } = useForm<CongressFormValues>({
+    resolver: zodResolver(congressSchema),
     defaultValues,
   });
 
-  const onSubmit = (values: ArticleFormValues) => {
-    setSubmitted(values);
+  const onSubmit = (values:CongressFormValues) => {
 
-    const paper: Artigo = {
-      titulo: values.titulo,
-      ano_de_publicacao: values.ano_de_publicacao,
-      descricao: values.descricao,
-      keywords: values.keywords,
-      autores: values.autores,
-      base: values.base,
-      professor: values.professor,
-      congresso: values.congresso,
-    }
 
-   
-  };
+    const congress: CreateCongress = {
+      title: values.title,
+      data: values.data.toISOString(),
+      description: values.description,
+      url: values.url,
+      local: values.local,
+      tipo: values.tipo,
+    };
+
+    execute(congress);
+  }
 
   return (
-    <FormPage
-      title="Adicionar artigo"
-      subtitle="Cadastro de publicações científicas com autoria, veículo e vínculo com linhas de pesquisa."
-    >
-      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        <FormSectionCard
-          title="Dados da publicação"
-          description="Informações principais do artigo científico."
-        >
-          <div className="grid gap-5 md:grid-cols-2">
-            <FormField
-              label="Título do artigo"
-              required
-              error={errors.titulo?.message}
-            >
-              <Input
-                {...register("titulo")}
-                placeholder="Ex.: Tecnologias para inclusão e acessibilidade"
-                className={
-                  errors.titulo
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
+      <FormPage
+          title="Adicionar congresso"
+          subtitle="Cadastro de congressos e simpósios com informações do evento."
+      >
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+              <FormSectionCard
+                  title="Dados do evento"
+                  description="Informações principais do congresso."
+              >
+                  <div className="grid gap-5 md:grid-cols-2">
+                      <FormField label="Título" required error={errors.title?.message}>
+                          <Input
+                              {...register("title")}
+                              placeholder="Ex.: SBSI 2024"
+                              className={errors.title ? "border-red/60 focus-visible:ring-red/30" : ""}
+                          />
+                      </FormField>
 
-            <FormField
-              label="Ano de publicação"
-              required
-              error={errors.ano_de_publicacao?.message}
-            >
-              <Input
-                {...register("ano_de_publicacao", {
-                  valueAsNumber: true,
-                })}
-                type="number"
-                placeholder="2025"
-                className={
-                  errors.ano_de_publicacao
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
+                      <FormField label="Data" required error={errors.data?.message}>
+                          <Input
+                              {...register("data")}
+                              type="date"
+                              className={errors.data ? "border-red/60 focus-visible:ring-red/30" : ""}
+                          />
+                      </FormField>
 
-            <FormField
-              label="Autores"
-              required
-              error={errors.autores?.message}
-            >
-              <Input
-                {...register("autores")}
-                placeholder="Autor 1, Autor 2, Autor 3"
-                className={
-                  errors.autores
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
+                      <FormField label="Local" required error={errors.local?.message}>
+                          <Input
+                              {...register("local")}
+                              placeholder="Ex.: Fortaleza, CE"
+                              className={errors.local ? "border-red/60 focus-visible:ring-red/30" : ""}
+                          />
+                      </FormField>
 
-            <FormField
-              label="Professor responsável"
-              required
-              error={errors.professor?.message}
-            >
-              <Input
-                {...register("professor")}
-                placeholder="Nome do professor responsável"
-                className={
-                  errors.professor
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
-          </div>
-        </FormSectionCard>
+                      <FormField label="URL" required error={errors.url?.message}>
+                          <Input
+                              {...register("url")}
+                              placeholder="https://..."
+                              className={errors.url ? "border-red/60 focus-visible:ring-red/30" : ""}
+                          />
+                      </FormField>
 
-        <FormSectionCard
-          title="Publicação"
-          description="Informações sobre onde o artigo foi publicado."
-        >
-          <div className="grid gap-5 md:grid-cols-2">
-            <FormField
-              label="Congresso"
-              required
-              error={errors.congresso?.message}
-            >
-              <Input
-                {...register("congresso")}
-                placeholder="Ex.: SBSI, SBES, WebMedia..."
-                className={
-                  errors.congresso
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
+                      <FormField label="Status" required error={errors.tipo?.message}>
+                          <select {...register("tipo")} className="w-full border rounded-md px-3 py-2">
+                              <option value="andamento">Em andamento</option>
+                              <option value="finalizado">Finalizado</option>
+                              <option value="a ser publicado">A ser publicado</option>
+                          </select>
+                      </FormField>
+                  </div>
+              </FormSectionCard>
 
-            <FormField
-              label="Base de publicação"
-              required
-              error={errors.base?.message}
-            >
-              <Input
-                {...register("base")}
-                placeholder="IEEE, Scopus, ACM, Springer..."
-                className={
-                  errors.base
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
-            </FormField>
-          </div>
-        </FormSectionCard>
+              <FormSectionCard title="Descrição" description="Resumo do congresso.">
+                  <FormField label="Descrição" required error={errors.description?.message}>
+                      <Input
+                          {...register("description")}
+                          placeholder="Descreva o congresso..."
+                          className={errors.description ? "border-red/60 focus-visible:ring-red/30" : ""}
+                      />
+                  </FormField>
+              </FormSectionCard>
 
-        <FormSectionCard
-          title="Descrição"
-          description="Resumo e palavras-chave do artigo."
-        >
-          <FormField
-            label="Resumo"
-            required
-            error={errors.descricao?.message}
-          >
-            <FormTextarea
-              {...register("descricao")}
-              placeholder="Descreva os objetivos, metodologia e resultados do artigo."
-              className={
-                errors.descricao
-                  ? "border-red/60 focus-visible:ring-red/30"
-                  : ""
-              }
-            />
-          </FormField>
-
-          <FormField
-            label="Palavras-chave"
-            required
-            className="mt-5"
-            error={errors.keywords?.message}
-          >
-            <Input
-              {...register("keywords")}
-              placeholder="IA, Educação, Inclusão Digital..."
-              className={
-                errors.keywords
-                  ? "border-red/60 focus-visible:ring-red/30"
-                  : ""
-              }
-            />
-          </FormField>
-        </FormSectionCard>
-
-        {submitted && (
-          <FormSectionCard
-            title="Último envio"
-            description="Resumo dos dados enviados."
-          >
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Título
-                </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.titulo}
-                </p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+                  <Button
+                      type="submit"
+                      variant="primary"
+                      className="px-6 py-3"
+                      disabled={isSubmitting || loading}
+                  >
+                      Salvar congresso
+                  </Button>
               </div>
-
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Autores
-                </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.autores}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Congresso
-                </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.congresso}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Ano
-                </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.ano_de_publicacao}
-                </p>
-              </div>
-            </div>
-          </FormSectionCard>
-        )}
-
-        <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-          <Button
-            type="submit"
-            variant="quaternary"
-            className="px-6 py-3"
-            disabled={isSubmitting}
-          >
-            Salvar rascunho
-          </Button>
-
-          <Button
-            type="submit"
-            variant="primary"
-            className="px-6 py-3"
-            disabled={isSubmitting}
-          >
-            Publicar artigo
-          </Button>
-        </div>
-      </form>
-    </FormPage>
+          </form>
+      </FormPage>
   );
 }
 
