@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using VitrineAPI.Database;
 using VitrineAPI.Features.Projects.Shared;
 
-namespace VitrineAPI.Features.Projetos.Endpoints
+namespace VitrineAPI.Features.Projects.Endpoints
 {
     public class GetProjectByIdHandler(AppDbContext db)
     {

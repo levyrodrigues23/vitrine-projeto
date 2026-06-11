@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VitrineAPI.Database;
 using VitrineAPI.Features.Projects.Endpoints;
-using VitrineAPI.Features.Projetos.Endpoints;
 
 namespace VitrineAPI
 {
