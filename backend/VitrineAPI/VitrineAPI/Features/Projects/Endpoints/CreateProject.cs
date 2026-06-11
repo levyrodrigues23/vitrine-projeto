@@ -16,7 +16,15 @@ namespace VitrineAPI.Features.Projects.Endpoints
                 Title = request.Title,
                 Category = Enum.Parse<ProjectCategory>(request.Category!),
                 Description = request.Description,
-                ImageUrl = request.ImageUrl
+                ImageUrl = request.ImageUrl,
+
+                WorksDone = request.WorksDone.Select(w => new WorkDone
+                {
+                    Title = w.Title,
+                    Category = Enum.Parse<ProjectCategory>(w.Category),
+                    Description = w.Description,
+                    ImageUrl = w.ImageUrl
+                }).ToList()
             };
 
             await db.AddAsync(project);

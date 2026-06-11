@@ -1,11 +1,10 @@
-﻿using VitrineAPI.Database.Models.Enums;
-
-namespace VitrineAPI.Features.Projects.Shared
+﻿namespace VitrineAPI.Features.Projects.Shared
 {
     public record ProjectRequest(
         string Title,
         string? Category,
         string Description,
-        string ImageUrl
+        string ImageUrl,
+        List<WorkDoneRequest> WorksDone
     );
 }
