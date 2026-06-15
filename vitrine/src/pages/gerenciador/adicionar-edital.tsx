@@ -64,8 +64,8 @@ export function AdicionarArtigoPage() {
       keywords: values.keywords,
       autores: values.autores,
       base: values.base,
-      professor: values.professor,
-      congresso: values.congresso,
+      professorId: values.professor,
+      congressoId: values.congresso,
     }
 
    
