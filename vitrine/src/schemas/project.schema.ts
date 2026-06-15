@@ -28,7 +28,7 @@ export const imageFileSchema = z
 
 export const workDoneFormSchema = z.object({
   title: z.string().min(2, "Informe um título com ao menos 2 caracteres."),
-  category: z.string().min(2, "Informe uma categoria ou keyword."),
+  category: z.enum(["inovação", "extensão", "pesquisa"]),
   description: z
     .string()
     .min(10, "A descrição deve ter ao menos 10 caracteres."),
@@ -53,7 +53,7 @@ export const workDoneSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
-  category: z.string(),
+  category: projectCategorySchema,
   imageUrl: z.string(),
 });
 

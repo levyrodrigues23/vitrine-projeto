@@ -3,7 +3,7 @@ import { Controller, useWatch } from "react-hook-form";
 import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 
-import { Button, FormField, FormTextarea, Input } from "../../ui";
+import { Button, FormField, FormTextarea, Input, FormSelect } from "../../ui";
 import type { ProjectFormValues } from "../../../schemas/project.schema";
 
 type WorkDoneFormProps = {
@@ -106,19 +106,23 @@ export function WorkDoneForm({
         </FormField>
 
         <FormField
-          label="Categoria / Keyword"
+          label="Categoria"
           required
           error={fieldErrors?.category?.message}
         >
-          <Input
+          <FormSelect
             {...register(`worksDone.${index}.category`)}
-            placeholder="Ex.: Visualização de dados"
             className={
               fieldErrors?.category
                 ? "border-red/60 focus-visible:ring-red/30"
                 : ""
             }
-          />
+          >
+            <option value="">Selecione uma categoria...</option>
+            <option value="inovação">Inovação</option>
+            <option value="extensão">Extensão</option>
+            <option value="pesquisa">Pesquisa</option>
+          </FormSelect>
         </FormField>
       </div>
 

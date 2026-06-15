@@ -1,9 +1,7 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import type { Artigo } from "../../types/papers.types";
 
 import {
   Button,
@@ -13,6 +11,7 @@ import {
   FormTextarea,
   Input,
 } from "../../components/ui";
+
 import { useCreateArtigo } from "../../hooks/paper";
 
 const articleSchema = z.object({
@@ -21,11 +20,9 @@ const articleSchema = z.object({
   descricao: z.string().min(20, "Descreva melhor o resumo."),
   keywords: z.string().min(3, "Adicione palavras-chave."),
   autores: z.string().min(3, "Informe os autores."),
-  base: z
-    .string()
-    .min(3, "Descreva a base onde ele foi publicado. Ex: Scopus, IEEE"),
-  professor: z.string().min(3, "Informe o professor responsável."),
-  congresso: z.string().min(3, "Informe o congresso responsável."),
+  base: z.string().min(3, "Ex: Scopus, IEEE"),
+  professorId: z.string().min(1, "Selecione o professor."),
+  congressoId: z.string().min(1, "Selecione o congresso."),
 });
 
 type ArticleFormValues = z.infer<typeof articleSchema>;
@@ -37,38 +34,38 @@ const defaultValues: ArticleFormValues = {
   keywords: "",
   autores: "",
   base: "",
-  professor: "",
-  congresso: "",
+  professorId: "",
+  congressoId: "",
 };
 
 export function AdicionarArtigoPage() {
-  const {execute, loading} = useCreateArtigo();
+  const { execute, loading } = useCreateArtigo();
   const [submitted, setSubmitted] = useState<ArticleFormValues | null>(null);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<ArticleFormValues>({
     resolver: zodResolver(articleSchema),
     defaultValues,
   });
 
-  const onSubmit = (values: ArticleFormValues) => {
+  const onSubmit = async (values: ArticleFormValues) => {
     setSubmitted(values);
 
-    const paper: Artigo = {
+    const paper = {
       titulo: values.titulo,
       ano_de_publicacao: values.ano_de_publicacao,
       descricao: values.descricao,
       keywords: values.keywords,
       autores: values.autores,
       base: values.base,
-      professor: values.professor,
-      congresso: values.congresso,
-    }
+      professorId: values.professorId,
+      congressoId: values.congressoId,
+    };
 
-   
+    await execute(paper);
   };
 
   return (
@@ -82,213 +79,59 @@ export function AdicionarArtigoPage() {
           description="Informações principais do artigo científico."
         >
           <div className="grid gap-5 md:grid-cols-2">
-            <FormField
-              label="Título do artigo"
-              required
-              error={errors.titulo?.message}
-            >
-              <Input
-                {...register("titulo")}
-                placeholder="Ex.: Tecnologias para inclusão e acessibilidade"
-                className={
-                  errors.titulo
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
+            <FormField label="Título" required error={errors.titulo?.message}>
+              <Input {...register("titulo")} />
             </FormField>
 
-            <FormField
-              label="Ano de publicação"
-              required
-              error={errors.ano_de_publicacao?.message}
-            >
+            <FormField label="Ano" required error={errors.ano_de_publicacao?.message}>
               <Input
+                type="number"
                 {...register("ano_de_publicacao", {
                   valueAsNumber: true,
                 })}
-                type="number"
-                placeholder="2025"
-                className={
-                  errors.ano_de_publicacao
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
               />
             </FormField>
 
-            <FormField
-              label="Autores"
-              required
-              error={errors.autores?.message}
-            >
-              <Input
-                {...register("autores")}
-                placeholder="Autor 1, Autor 2, Autor 3"
-                className={
-                  errors.autores
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
+            <FormField label="Autores" required error={errors.autores?.message}>
+              <Input {...register("autores")} />
             </FormField>
 
-            <FormField
-              label="Professor responsável"
-              required
-              error={errors.professor?.message}
-            >
-              <Input
-                {...register("professor")}
-                placeholder="Nome do professor responsável"
-                className={
-                  errors.professor
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
+            <FormField label="Base" required error={errors.base?.message}>
+              <Input {...register("base")} />
             </FormField>
           </div>
         </FormSectionCard>
 
-        <FormSectionCard
-          title="Publicação"
-          description="Informações sobre onde o artigo foi publicado."
-        >
+        <FormSectionCard title="Relacionamentos">
           <div className="grid gap-5 md:grid-cols-2">
-            <FormField
-              label="Congresso"
-              required
-              error={errors.congresso?.message}
-            >
-              <Input
-                {...register("congresso")}
-                placeholder="Ex.: SBSI, SBES, WebMedia..."
-                className={
-                  errors.congresso
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
+            <FormField label="Professor" required error={errors.professorId?.message}>
+              <Input {...register("professorId")} />
             </FormField>
 
-            <FormField
-              label="Base de publicação"
-              required
-              error={errors.base?.message}
-            >
-              <Input
-                {...register("base")}
-                placeholder="IEEE, Scopus, ACM, Springer..."
-                className={
-                  errors.base
-                    ? "border-red/60 focus-visible:ring-red/30"
-                    : ""
-                }
-              />
+            <FormField label="Congresso" required error={errors.congressoId?.message}>
+              <Input {...register("congressoId")} />
             </FormField>
           </div>
         </FormSectionCard>
 
-        <FormSectionCard
-          title="Descrição"
-          description="Resumo e palavras-chave do artigo."
-        >
-          <FormField
-            label="Resumo"
-            required
-            error={errors.descricao?.message}
-          >
-            <FormTextarea
-              {...register("descricao")}
-              placeholder="Descreva os objetivos, metodologia e resultados do artigo."
-              className={
-                errors.descricao
-                  ? "border-red/60 focus-visible:ring-red/30"
-                  : ""
-              }
-            />
+        <FormSectionCard title="Descrição">
+          <FormField label="Resumo" required error={errors.descricao?.message}>
+            <FormTextarea {...register("descricao")} />
           </FormField>
 
-          <FormField
-            label="Palavras-chave"
-            required
-            className="mt-5"
-            error={errors.keywords?.message}
-          >
-            <Input
-              {...register("keywords")}
-              placeholder="IA, Educação, Inclusão Digital..."
-              className={
-                errors.keywords
-                  ? "border-red/60 focus-visible:ring-red/30"
-                  : ""
-              }
-            />
+          <FormField label="Palavras-chave" required error={errors.keywords?.message}>
+            <Input {...register("keywords")} />
           </FormField>
         </FormSectionCard>
 
         {submitted && (
-          <FormSectionCard
-            title="Último envio"
-            description="Resumo dos dados enviados."
-          >
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Título
-                </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.titulo}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Autores
-                </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.autores}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Congresso
-                </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.congresso}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-gray-base">
-                  Ano
-                </p>
-                <p className="mt-2 text-sm font-semibold text-black">
-                  {submitted.ano_de_publicacao}
-                </p>
-              </div>
-            </div>
+          <FormSectionCard title="Último envio">
+            <p className="text-sm font-medium">{submitted.titulo}</p>
           </FormSectionCard>
         )}
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-          <Button
-            type="submit"
-            variant="quaternary"
-            className="px-6 py-3"
-            disabled={isSubmitting}
-          >
-            Salvar rascunho
-          </Button>
-
-          <Button
-            type="submit"
-            variant="primary"
-            className="px-6 py-3"
-            disabled={isSubmitting}
-          >
+        <div className="flex justify-end">
+          <Button type="submit" variant="primary" disabled={loading}>
             Publicar artigo
           </Button>
         </div>
@@ -296,4 +139,3 @@ export function AdicionarArtigoPage() {
     </FormPage>
   );
 }
-

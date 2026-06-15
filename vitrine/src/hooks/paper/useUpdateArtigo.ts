@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateArtigo } from "../../services/papers.service";
 import { queryKeys } from "../../services/query-keys";
-import type { Artigo } from "../../types/papers.types";
+import type { Artigo, UpdateArtigoPayload } from "../../types/papers.types";
 
 export function useUpdateArtigo() {
   const queryClient = useQueryClient();
@@ -15,7 +15,7 @@ export function useUpdateArtigo() {
     },
   });
 
-  const execute = async (id: string, payload: Partial<Artigo>) => {
+  const execute = async (id: string, payload: UpdateArtigoPayload) => {
     try {
       const data = await mutation.mutateAsync({ id, payload });
       return { success: true, data };

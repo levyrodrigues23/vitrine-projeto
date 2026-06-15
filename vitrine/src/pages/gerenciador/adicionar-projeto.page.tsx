@@ -112,7 +112,7 @@ export function AdicionarProjetoPage() {
         return {
           id: crypto.randomUUID(),
           title: item.title,
-          category: item.category,
+          category: CATEGORY_MAP[item.category],
           description: item.description,
           imageUrl,
         };

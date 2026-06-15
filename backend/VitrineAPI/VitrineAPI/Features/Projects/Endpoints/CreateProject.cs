@@ -1,15 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using VitrineAPI.Database;
 using VitrineAPI.Database.Models;
 using VitrineAPI.Database.Models.Enums;
 
 namespace VitrineAPI.Features.Projects.Endpoints
 {
+    public record CreateWorkDoneRequest(
+        string Title,
+        ProjectCategory Category,
+        string Description,
+        string ImageUrl
+    );
+
     public record CreateProjectRequest(
         string Title,
         ProjectCategory Category,
         string Description,
-        string? ImageUrl
+        string? ImageUrl,
+        string? Responsible,
+        List<CreateWorkDoneRequest>? WorksDone
+    );
+
+    public record WorkDoneResponse(
+        Guid Id,
+        string Title,
+        ProjectCategory Category,
+        string Description,
+        string ImageUrl
     );
 
     public record CreateProjectResponse(
@@ -17,7 +34,9 @@ namespace VitrineAPI.Features.Projects.Endpoints
         string Title,
         ProjectCategory Category,
         string Description,
-        string ImageUrl
+        string ImageUrl,
+        string Responsible,
+        List<WorkDoneResponse> WorksDone
     );
 
     public class CreateProjectHandler(AppDbContext db)
@@ -29,7 +48,15 @@ namespace VitrineAPI.Features.Projects.Endpoints
                 Title = request.Title,
                 Category = request.Category,
                 Description = request.Description,
-                ImageUrl = request.ImageUrl ?? string.Empty
+                ImageUrl = request.ImageUrl ?? string.Empty,
+                Responsible = request.Responsible ?? string.Empty,
+                WorksDone = request.WorksDone?.Select(w => new WorkDone
+                {
+                    Title = w.Title,
+                    Category = w.Category,
+                    Description = w.Description,
+                    ImageUrl = w.ImageUrl
+                }).ToList() ?? []
             };
 
             await db.AddAsync(project);
@@ -40,7 +67,15 @@ namespace VitrineAPI.Features.Projects.Endpoints
                 project.Title,
                 project.Category,
                 project.Description,
-                project.ImageUrl
+                project.ImageUrl,
+                project.Responsible,
+                project.WorksDone.Select(w => new WorkDoneResponse(
+                    w.Id,
+                    w.Title,
+                    w.Category,
+                    w.Description,
+                    w.ImageUrl
+                )).ToList()
             );
         }
     }

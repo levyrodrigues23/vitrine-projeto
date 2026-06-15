@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VitrineAPI.Database;
 using VitrineAPI.Database.Models.Enums;
 
 namespace VitrineAPI.Features.Projetos.Endpoints
 {
-    public record GetProjectByIdResponse(
+    public record WorkDoneResponse(
         Guid Id,
         string Title,
         ProjectCategory Category,
@@ -13,18 +13,37 @@ namespace VitrineAPI.Features.Projetos.Endpoints
         string ImageUrl
     );
 
+    public record GetProjectByIdResponse(
+        Guid Id,
+        string Title,
+        ProjectCategory Category,
+        string Description,
+        string ImageUrl,
+        string Responsible,
+        List<WorkDoneResponse> WorksDone
+    );
+
     public class GetProjectByIdHandler(AppDbContext db)
     {
         public async Task<GetProjectByIdResponse?> Handle(Guid id)
         {
             return await db.Projects
+                .Include(p => p.WorksDone)
                 .Where(p => p.Id == id)
                 .Select(p => new GetProjectByIdResponse(
                     p.Id,
                     p.Title,
                     p.Category,
                     p.Description,
-                    p.ImageUrl
+                    p.ImageUrl,
+                    p.Responsible,
+                    p.WorksDone.Select(w => new WorkDoneResponse(
+                        w.Id,
+                        w.Title,
+                        w.Category,
+                        w.Description,
+                        w.ImageUrl
+                    )).ToList()
                 ))
                 .FirstOrDefaultAsync();
         }
