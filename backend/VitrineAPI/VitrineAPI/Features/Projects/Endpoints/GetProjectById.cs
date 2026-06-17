@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VitrineAPI.Database;
-using VitrineAPI.Database.Models.Enums;
+using VitrineAPI.Features.Projects.Shared;
 
-namespace VitrineAPI.Features.Projetos.Endpoints
+namespace VitrineAPI.Features.Projects.Endpoints
 {
     public record WorkDoneResponse(
         Guid Id,
@@ -25,12 +25,12 @@ namespace VitrineAPI.Features.Projetos.Endpoints
 
     public class GetProjectByIdHandler(AppDbContext db)
     {
-        public async Task<GetProjectByIdResponse?> Handle(Guid id)
+        public async Task<ProjectsResponse?> Handle(Guid id)
         {
             return await db.Projects
                 .Include(p => p.WorksDone)
                 .Where(p => p.Id == id)
-                .Select(p => new GetProjectByIdResponse(
+                .Select(p => new ProjectsResponse(
                     p.Id,
                     p.Title,
                     p.Category,
