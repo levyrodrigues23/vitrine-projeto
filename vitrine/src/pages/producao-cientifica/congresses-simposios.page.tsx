@@ -70,9 +70,10 @@ export default function CongressesSimposiosPage() {
                             ))
                         )}
                     </div>
+
                 )}
             </Section>
-
+            div
             <Section showSeparator={false} align="center">
                 <NavLink
                     to="/producao-cientifica"

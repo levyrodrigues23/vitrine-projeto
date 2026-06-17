@@ -15,4 +15,6 @@ export const queryKeys = {
   juniorCompanyDetail: (id: string) => ["junior-company", id] as const,
   congresses: ["congresses"] as const,
   congressDetail: (id: string) => ["congresses", id] as const,
+  notices: ["notices"] as const,
+  noticesDetail: (id: string) => ["notices", id] as const,
 };

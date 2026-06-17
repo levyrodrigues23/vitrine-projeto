@@ -1,4 +1,4 @@
-﻿using VitrineAPI.Database.Models.Enums;
+using VitrineAPI.Database.Models.Enums;
 
 namespace VitrineAPI.Database.Models
 {

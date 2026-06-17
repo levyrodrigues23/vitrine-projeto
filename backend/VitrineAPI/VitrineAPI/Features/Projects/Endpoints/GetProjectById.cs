@@ -1,22 +1,49 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VitrineAPI.Database;
 using VitrineAPI.Features.Projects.Shared;
 
 namespace VitrineAPI.Features.Projects.Endpoints
 {
+    public record WorkDoneResponse(
+        Guid Id,
+        string Title,
+        ProjectCategory Category,
+        string Description,
+        string ImageUrl
+    );
+
+    public record GetProjectByIdResponse(
+        Guid Id,
+        string Title,
+        ProjectCategory Category,
+        string Description,
+        string ImageUrl,
+        string Responsible,
+        List<WorkDoneResponse> WorksDone
+    );
+
     public class GetProjectByIdHandler(AppDbContext db)
     {
         public async Task<ProjectsResponse?> Handle(Guid id)
         {
             return await db.Projects
+                .Include(p => p.WorksDone)
                 .Where(p => p.Id == id)
                 .Select(p => new ProjectsResponse(
                     p.Id,
                     p.Title,
                     p.Category,
                     p.Description,
-                    p.ImageUrl
+                    p.ImageUrl,
+                    p.Responsible,
+                    p.WorksDone.Select(w => new WorkDoneResponse(
+                        w.Id,
+                        w.Title,
+                        w.Category,
+                        w.Description,
+                        w.ImageUrl
+                    )).ToList()
                 ))
                 .FirstOrDefaultAsync();
         }

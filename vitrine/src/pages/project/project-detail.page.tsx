@@ -55,21 +55,21 @@ export function ProjectDetailPage() {
 
   return (
     <main className="flex flex-col">
-      <section className="relative isolate min-h-105 overflow-hidden">
+      <section className="relative isolate flex min-h-[500px] w-full flex-col justify-end overflow-hidden pb-16 pt-32 md:min-h-[600px] md:pb-24">
         <img
           src={project.imageUrl}
           alt={`Imagem de destaque do projeto ${project.title}`}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 -z-20 h-full w-full object-cover"
         />
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 -z-10"
           aria-hidden="true"
           style={{
             backgroundImage:
-              "linear-gradient(to right, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0.22))",
+              "linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%), linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 50%)",
           }}
         />
-        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-16 md:py-24">
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-4 px-6">
           <Badge variant="secondary" className="ml-0 w-fit px-3 py-1 text-xs">
             {project.category}
           </Badge>
