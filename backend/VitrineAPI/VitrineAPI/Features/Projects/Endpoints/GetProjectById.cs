@@ -5,24 +5,6 @@ using VitrineAPI.Features.Projects.Shared;
 
 namespace VitrineAPI.Features.Projects.Endpoints
 {
-    public record WorkDoneResponse(
-        Guid Id,
-        string Title,
-        ProjectCategory Category,
-        string Description,
-        string ImageUrl
-    );
-
-    public record GetProjectByIdResponse(
-        Guid Id,
-        string Title,
-        ProjectCategory Category,
-        string Description,
-        string ImageUrl,
-        string Responsible,
-        List<WorkDoneResponse> WorksDone
-    );
-
     public class GetProjectByIdHandler(AppDbContext db)
     {
         public async Task<ProjectsResponse?> Handle(Guid id)
@@ -35,15 +17,7 @@ namespace VitrineAPI.Features.Projects.Endpoints
                     p.Title,
                     p.Category,
                     p.Description,
-                    p.ImageUrl,
-                    p.Responsible,
-                    p.WorksDone.Select(w => new WorkDoneResponse(
-                        w.Id,
-                        w.Title,
-                        w.Category,
-                        w.Description,
-                        w.ImageUrl
-                    )).ToList()
+                    p.ImageUrl
                 ))
                 .FirstOrDefaultAsync();
         }
