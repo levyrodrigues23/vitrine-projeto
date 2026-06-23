@@ -1,6 +1,20 @@
 @baseUrl = http://localhost:5026
 @projectId = 00000000-0000-0000-0000-000000000000
 
+###
+POST {{baseUrl}}/api/projects/{{projectId}}/worksdone
+content-type: application/json
+{
+  "title": "SafeCI",
+  "category": "Categoria teste",
+  "description": "Um projeto",
+  "imageUrl": "https://example.com/work-image.jpg"
+}
+
+###
+
+GET {{baseUrl}}/api/projects/{{projectId}}/worksdone
+
 ### Criar projeto válido
 POST {{baseUrl}}/api/projects
 Content-Type: application/json
@@ -9,7 +23,15 @@ Content-Type: application/json
   "title": "Projeto de Extensão UFC",
   "category": "Extensão",
   "description": "Descrição do projeto de extensão da universidade",
-  "imageUrl": "https://example.com/image.jpg"
+  "imageUrl": "https://example.com/image.jpg",
+  "worksDone": [
+    {
+      "title": "Devtutor",
+      "category": "Extensão - VSCode",
+      "description": "Uma extensão com propósito de ser um agente de IA educativo no ambiente de desenvolvimento",
+      "imageUrl": "https://example.com/work-image.jpg"
+    }
+  ]
 }
 
 ###

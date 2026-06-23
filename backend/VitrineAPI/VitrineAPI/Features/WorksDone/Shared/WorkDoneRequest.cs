@@ -1,4 +1,4 @@
-﻿namespace VitrineAPI.Features.Projects.Shared
+﻿namespace VitrineAPI.Features.WorksDone.Shared
 {
     public record WorkDoneRequest(
         string Title,

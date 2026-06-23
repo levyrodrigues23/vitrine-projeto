@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using VitrineAPI.Database;
 using VitrineAPI.Features.Projects.Endpoints;
+using VitrineAPI.Features.WorksDone.Endpoints;
 
 namespace VitrineAPI
 {
@@ -40,13 +41,18 @@ namespace VitrineAPI
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            
+            // Projects handlers
             builder.Services.AddScoped<CreateProjectHandler>();
             builder.Services.AddScoped<GetProjectsHandler>();
             builder.Services.AddScoped<GetProjectByIdHandler>();
             builder.Services.AddScoped<UpdateProjectHandler>();
             builder.Services.AddScoped<DeleteProjectHandler>();
 
+            // WorksDone handlers
+            builder.Services.AddScoped<CreateWorkDoneHandler>();
+            builder.Services.AddScoped<GetWorksDoneByProjectIdHandler>();
+            
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
             builder.Services.AddCors(options =>
