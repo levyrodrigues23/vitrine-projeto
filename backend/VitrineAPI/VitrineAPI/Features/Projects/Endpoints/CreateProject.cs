@@ -21,7 +21,7 @@ namespace VitrineAPI.Features.Projects.Endpoints
                 WorksDone = request.WorksDone.Select(w => new WorkDone
                 {
                     Title = w.Title,
-                    Category = Enum.Parse<ProjectCategory>(w.Category),
+                    Category = w.Category,
                     Description = w.Description,
                     ImageUrl = w.ImageUrl
                 }).ToList()

@@ -5,7 +5,7 @@ namespace VitrineAPI.Features.WorksDone.Shared
      public record WorkDoneResponse(
          Guid Id,
          string Title,
-         ProjectCategory Category,
+         string Category,
          string Description,
          string ImageUrl,
          Guid ProjectId
