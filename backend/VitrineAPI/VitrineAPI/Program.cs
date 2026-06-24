@@ -53,6 +53,7 @@ namespace VitrineAPI
             builder.Services.AddScoped<CreateWorkDoneHandler>();
             builder.Services.AddScoped<GetWorksDoneByProjectIdHandler>();
             builder.Services.AddScoped<DeleteWorkDoneHandler>();
+            builder.Services.AddScoped<UpdateWorkDoneHandler>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 

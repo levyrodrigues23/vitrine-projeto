@@ -1,5 +1,41 @@
 @baseUrl = http://localhost:5026
 @projectId = 00000000-0000-0000-0000-000000000000
+@workDoneId = 00000000-0000-0000-0000-000000000000
+
+### Atualizar workdone
+PUT {{baseUrl}}/api/projects/{{projectId}}/worksdone/{{workDoneId}}
+Content-Type: application/json
+
+{
+  "title": "Título atualizado",
+  "category": "Pesquisa",
+  "description": "Descrição atualizada",
+  "imageUrl": "https://example.com/imagem-atualizada.jpg"
+}
+
+### Atualizar workdone — título vazio (deve retornar 400)
+PUT {{baseUrl}}/api/projects/{{projectId}}/worksdone/{{workDoneId}}
+Content-Type: application/json
+
+{
+  "title": "",
+  "category": "Pesquisa",
+  "description": "Descrição válida",
+  "imageUrl": "https://example.com/imagem.jpg"
+}
+
+### Atualizar workdone inexistente (deve retornar 404)
+PUT {{baseUrl}}/api/projects/{{projectId}}/worksdone/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "title": "Título válido",
+  "category": "Pesquisa",
+  "description": "Descrição válida",
+  "imageUrl": "https://example.com/imagem.jpg"
+}
+
+###
 
 DELETE {{baseUrl}}/api/projects/{{projectId}}/worksdone/fdebfc77-9998-4f68-87cd-4b074b73f276
 
