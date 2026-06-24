@@ -2,6 +2,9 @@
 @projectId = 00000000-0000-0000-0000-000000000000
 @workDoneId = 00000000-0000-0000-0000-000000000000
 
+### Buscar workdone por ID
+GET {{baseUrl}}/api/worksdone/{{workDoneId}}
+
 ### Atualizar workdone
 PUT {{baseUrl}}/api/projects/{{projectId}}/worksdone/{{workDoneId}}
 Content-Type: application/json
@@ -43,7 +46,7 @@ DELETE {{baseUrl}}/api/projects/{{projectId}}/worksdone/fdebfc77-9998-4f68-87cd-
 POST {{baseUrl}}/api/projects/{{projectId}}/worksdone
 content-type: application/json
 {
-  "title": "SafeCI",
+  "title": "SafeCI 2",
   "category": "Categoria teste",
   "description": "Um projeto",
   "imageUrl": "https://example.com/work-image.jpg"
