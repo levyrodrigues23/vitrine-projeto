@@ -52,7 +52,8 @@ namespace VitrineAPI
             // WorksDone handlers
             builder.Services.AddScoped<CreateWorkDoneHandler>();
             builder.Services.AddScoped<GetWorksDoneByProjectIdHandler>();
-            
+            builder.Services.AddScoped<DeleteWorkDoneHandler>();
+
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
             builder.Services.AddCors(options =>

@@ -1,6 +1,8 @@
 @baseUrl = http://localhost:5026
 @projectId = 00000000-0000-0000-0000-000000000000
 
+DELETE {{baseUrl}}/api/projects/{{projectId}}/worksdone/fdebfc77-9998-4f68-87cd-4b074b73f276
+
 ###
 POST {{baseUrl}}/api/projects/{{projectId}}/worksdone
 content-type: application/json
