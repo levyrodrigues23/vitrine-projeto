@@ -39,13 +39,52 @@ namespace VitrineAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ResponsibleId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ResponsibleId");
+
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("VitrineAPI.Database.Models.Teacher", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("AcademicDegree")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Field")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Lattes")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("VitrineAPI.Database.Models.WorkDone", b =>
@@ -69,6 +108,9 @@ namespace VitrineAPI.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("ResponsibleId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
@@ -77,7 +119,18 @@ namespace VitrineAPI.Migrations
 
                     b.HasIndex("ProjectId");
 
+                    b.HasIndex("ResponsibleId");
+
                     b.ToTable("WorksDone");
+                });
+
+            modelBuilder.Entity("VitrineAPI.Database.Models.Project", b =>
+                {
+                    b.HasOne("VitrineAPI.Database.Models.Teacher", "Responsible")
+                        .WithMany("Projects")
+                        .HasForeignKey("ResponsibleId");
+
+                    b.Navigation("Responsible");
                 });
 
             modelBuilder.Entity("VitrineAPI.Database.Models.WorkDone", b =>
@@ -88,11 +141,24 @@ namespace VitrineAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("VitrineAPI.Database.Models.Teacher", "Responsible")
+                        .WithMany("WorksDone")
+                        .HasForeignKey("ResponsibleId");
+
                     b.Navigation("Project");
+
+                    b.Navigation("Responsible");
                 });
 
             modelBuilder.Entity("VitrineAPI.Database.Models.Project", b =>
                 {
+                    b.Navigation("WorksDone");
+                });
+
+            modelBuilder.Entity("VitrineAPI.Database.Models.Teacher", b =>
+                {
+                    b.Navigation("Projects");
+
                     b.Navigation("WorksDone");
                 });
 #pragma warning restore 612, 618
