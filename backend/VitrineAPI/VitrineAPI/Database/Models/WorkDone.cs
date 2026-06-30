@@ -11,5 +11,8 @@ namespace VitrineAPI.Database.Models
         public string ImageUrl { get; set; } = string.Empty;
         public Guid ProjectId { get; set; }
         public Project Project { get; set; } = null!;
+        public Guid? ResponsibleId { get; set; }
+        public Teacher? Responsible { get; set; }
+
     }
 }
