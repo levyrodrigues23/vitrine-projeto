@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using VitrineAPI.Database;
 using VitrineAPI.Features.Projects.Endpoints;
+using VitrineAPI.Features.Teachers.Endpoints;
 using VitrineAPI.Features.WorksDone.Endpoints;
 
 namespace VitrineAPI
@@ -55,6 +56,9 @@ namespace VitrineAPI
             builder.Services.AddScoped<GetWorksDoneByProjectIdHandler>();
             builder.Services.AddScoped<DeleteWorkDoneHandler>();
             builder.Services.AddScoped<UpdateWorkDoneHandler>();
+
+            // Teachers handlers
+            builder.Services.AddScoped<CreateTeacherHandler>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 

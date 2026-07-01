@@ -2,6 +2,18 @@
 @projectId = 00000000-0000-0000-0000-000000000000
 @workDoneId = 00000000-0000-0000-0000-000000000000
 
+### Criando professor
+POST {{baseUrl}}/api/teachers
+Content-Type: application/json
+{
+  "name": "Professor Teste",
+  "description": "Professor adjunto de teste",
+  "email": "professor@gmail.com",
+  "lattes": "https://lattes.cnpq.br/1234567890123456",
+  "field": "Engenharia de Software",
+  "academicDegree": "Pós_Doutorado"
+}
+
 ### Buscar workdone por ID
 GET {{baseUrl}}/api/worksdone/{{workDoneId}}
 
