@@ -2,6 +2,9 @@
 @projectId = 00000000-0000-0000-0000-000000000000
 @workDoneId = 00000000-0000-0000-0000-000000000000
 
+### Buscando todos os professores
+GET {{baseUrl}}/api/teachers
+
 ### Criando professor
 POST {{baseUrl}}/api/teachers
 Content-Type: application/json
