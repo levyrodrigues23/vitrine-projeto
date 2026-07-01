@@ -16,7 +16,7 @@ namespace VitrineAPI.Features.Projects.Endpoints
                 Title = request.Title,
                 Category = Enum.Parse<ProjectCategory>(request.Category!),
                 Description = request.Description,
-                ImageUrl = request.ImageUrl ?? string.Empty,
+                ImageUrl = request.ImageUrl,
 
                 WorksDone = request.WorksDone.Select(w => new WorkDone
                 {
