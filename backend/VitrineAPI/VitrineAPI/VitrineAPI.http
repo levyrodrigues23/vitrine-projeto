@@ -1,6 +1,10 @@
 @baseUrl = http://localhost:5026
 @projectId = 00000000-0000-0000-0000-000000000000
 @workDoneId = 00000000-0000-0000-0000-000000000000
+@teacherId = 00000000-0000-0000-0000-000000000000
+
+### Buscando um professor por ID
+GET {{baseUrl}}/api/teachers/{{teacherId}}
 
 ### Buscando todos os professores
 GET {{baseUrl}}/api/teachers
