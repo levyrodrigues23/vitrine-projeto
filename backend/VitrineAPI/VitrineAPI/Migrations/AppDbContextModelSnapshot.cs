@@ -39,7 +39,7 @@ namespace VitrineAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("ResponsibleId")
+                    b.Property<Guid?>("TeacherId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Title")
@@ -48,7 +48,7 @@ namespace VitrineAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ResponsibleId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Projects");
                 });
@@ -108,7 +108,7 @@ namespace VitrineAPI.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ResponsibleId")
+                    b.Property<Guid?>("TeacherId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Title")
@@ -119,18 +119,18 @@ namespace VitrineAPI.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.HasIndex("ResponsibleId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("WorksDone");
                 });
 
             modelBuilder.Entity("VitrineAPI.Database.Models.Project", b =>
                 {
-                    b.HasOne("VitrineAPI.Database.Models.Teacher", "Responsible")
+                    b.HasOne("VitrineAPI.Database.Models.Teacher", "Teacher")
                         .WithMany("Projects")
-                        .HasForeignKey("ResponsibleId");
+                        .HasForeignKey("TeacherId");
 
-                    b.Navigation("Responsible");
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("VitrineAPI.Database.Models.WorkDone", b =>
@@ -141,13 +141,13 @@ namespace VitrineAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VitrineAPI.Database.Models.Teacher", "Responsible")
+                    b.HasOne("VitrineAPI.Database.Models.Teacher", "Teacher")
                         .WithMany("WorksDone")
-                        .HasForeignKey("ResponsibleId");
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Project");
 
-                    b.Navigation("Responsible");
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("VitrineAPI.Database.Models.Project", b =>

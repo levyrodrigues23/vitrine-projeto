@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VitrineAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddResponsible : Migration
+    public partial class AddTeachers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<Guid>(
-                name: "ResponsibleId",
+                name: "TeacherId",
                 table: "WorksDone",
                 type: "uuid",
                 nullable: true);
 
             migrationBuilder.AddColumn<Guid>(
-                name: "ResponsibleId",
+                name: "TeacherId",
                 table: "Projects",
                 type: "uuid",
                 nullable: true);
@@ -41,26 +41,26 @@ namespace VitrineAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorksDone_ResponsibleId",
+                name: "IX_WorksDone_TeacherId",
                 table: "WorksDone",
-                column: "ResponsibleId");
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_ResponsibleId",
+                name: "IX_Projects_TeacherId",
                 table: "Projects",
-                column: "ResponsibleId");
+                column: "TeacherId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Projects_Teachers_ResponsibleId",
+                name: "FK_Projects_Teachers_TeacherId",
                 table: "Projects",
-                column: "ResponsibleId",
+                column: "TeacherId",
                 principalTable: "Teachers",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_WorksDone_Teachers_ResponsibleId",
+                name: "FK_WorksDone_Teachers_TeacherId",
                 table: "WorksDone",
-                column: "ResponsibleId",
+                column: "TeacherId",
                 principalTable: "Teachers",
                 principalColumn: "Id");
         }
@@ -69,30 +69,30 @@ namespace VitrineAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Projects_Teachers_ResponsibleId",
+                name: "FK_Projects_Teachers_TeacherId",
                 table: "Projects");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_WorksDone_Teachers_ResponsibleId",
+                name: "FK_WorksDone_Teachers_TeacherId",
                 table: "WorksDone");
 
             migrationBuilder.DropTable(
                 name: "Teachers");
 
             migrationBuilder.DropIndex(
-                name: "IX_WorksDone_ResponsibleId",
+                name: "IX_WorksDone_TeacherId",
                 table: "WorksDone");
 
             migrationBuilder.DropIndex(
-                name: "IX_Projects_ResponsibleId",
+                name: "IX_Projects_TeacherId",
                 table: "Projects");
 
             migrationBuilder.DropColumn(
-                name: "ResponsibleId",
+                name: "TeacherId",
                 table: "WorksDone");
 
             migrationBuilder.DropColumn(
-                name: "ResponsibleId",
+                name: "TeacherId",
                 table: "Projects");
         }
     }

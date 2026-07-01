@@ -9,8 +9,8 @@ namespace VitrineAPI.Database.Models
         public ProjectCategory Category { get; set; }
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
-        public Guid? ResponsibleId { get; set; }
-        public Teacher? Responsible { get; set; }
+        public Guid? TeacherId { get; set; }
+        public Teacher? Teacher { get; set; }
         public ICollection<WorkDone> WorksDone { get; set; } = [];
     }
 }
