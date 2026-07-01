@@ -63,6 +63,7 @@ namespace VitrineAPI
             builder.Services.AddScoped<GetTeachersHandler>();
             builder.Services.AddScoped<GetTeacherByIdHandler>();
             builder.Services.AddScoped<UpdateTeacherHandler>();
+            builder.Services.AddScoped<DeleteTeacherHandler>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 

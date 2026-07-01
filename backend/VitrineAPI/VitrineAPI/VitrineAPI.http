@@ -1,7 +1,10 @@
 @baseUrl = http://localhost:5026
 @projectId = 00000000-0000-0000-0000-000000000000
 @workDoneId = 00000000-0000-0000-0000-000000000000
-@teacherId = d024c74a-7cb9-4a72-a65c-ff702fadaed9
+@teacherId = 5283e68d-229c-43e4-a705-f213c63dfbfe
+
+### Deletando um professor
+DELETE {{baseUrl}}/api/teachers/{{teacherId}}
 
 ### Atualizando atributos de um professor
 PUT {{baseUrl}}/api/teachers/{{teacherId}}
