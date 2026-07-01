@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:5026
 @projectId = 00000000-0000-0000-0000-000000000000
 @workDoneId = 00000000-0000-0000-0000-000000000000
-@teacherId = 5283e68d-229c-43e4-a705-f213c63dfbfe
+@teacherId = 3c9e9ecc-fff4-4757-a8fb-d3d57dc7be1b
 
 ### Deletando um professor
 DELETE {{baseUrl}}/api/teachers/{{teacherId}}
@@ -15,7 +15,8 @@ Content-Type: application/json
   "email": "professor@gmail.com",
   "lattes": "https://lattes.cnpq.br/1234567890123456",
   "field": "Engenharia de Dados",
-  "academicDegree": "Doutorado"
+  "academicDegree": "Doutorado",
+  "imageUrl": "https://example.com/imagem.jpg"
 }
 
 ### Buscando um professor por ID
@@ -33,7 +34,8 @@ Content-Type: application/json
   "email": "professor@gmail.com",
   "lattes": "https://lattes.cnpq.br/1234567890123456",
   "field": "Engenharia de Software",
-  "academicDegree": "Pós_Doutorado"
+  "academicDegree": "Pós_Doutorado",
+  "imageUrl": "https://example.com/imagem.jpg"
 }
 
 ### Buscar workdone por ID

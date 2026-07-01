@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace VitrineAPI.Features.Projects.Endpoints
+namespace VitrineAPI.Features.Upload.Endpoints
 {
     public record UploadProjectImageResponse(string Url);
 
     [ApiController]
-    [Route("api/projects")]
+    [Route("api/upload")]
     public class UploadProjectImageController(IWebHostEnvironment environment) : ControllerBase
     {
         private static readonly HashSet<string> AllowedExtensions = new(StringComparer.OrdinalIgnoreCase)
@@ -15,9 +15,18 @@ namespace VitrineAPI.Features.Projects.Endpoints
 
         private const long MaxFileSizeBytes = 5 * 1024 * 1024; // 5MB
 
-        [HttpPost("image")]
-        public async Task<IActionResult> Upload(IFormFile? file)
+        [HttpPost("{entity}/image")]
+        public async Task<IActionResult> Upload(string entity, IFormFile? file)
         {
+            var allowedEntities = new HashSet<string> { "projects", "worksdone", "teachers" };
+            if (!allowedEntities.Contains(entity.ToLower()))
+                return BadRequest(new { error = "Invalid entity." });
+
+            var webRootPath = environment.WebRootPath
+                ?? Path.Combine(environment.ContentRootPath, "wwwroot");
+
+            var uploadDirectory = Path.Combine(webRootPath, "uploads", entity.ToLower());
+
             if (file is null || file.Length == 0)
                 return BadRequest(new { error = "No file was sent." });
 
@@ -28,10 +37,6 @@ namespace VitrineAPI.Features.Projects.Endpoints
             if (!AllowedExtensions.Contains(extension))
                 return BadRequest(new { error = "Unsupported format. Allowed: .jpg, .jpeg, .png, .webp" });
 
-            var webRootPath = environment.WebRootPath
-                ?? Path.Combine(environment.ContentRootPath, "wwwroot");
-
-            var uploadDirectory = Path.Combine(webRootPath, "uploads", "projects");
             Directory.CreateDirectory(uploadDirectory);
 
             var fileName = $"{Guid.NewGuid():N}{extension.ToLowerInvariant()}";
@@ -42,7 +47,7 @@ namespace VitrineAPI.Features.Projects.Endpoints
                 await file.CopyToAsync(stream);
             }
 
-            var publicUrl = $"{Request.Scheme}://{Request.Host}/uploads/projects/{fileName}";
+            var publicUrl = $"{Request.Scheme}://{Request.Host}/uploads/{entity.ToLower()}/{fileName}";
 
             return Ok(new UploadProjectImageResponse(publicUrl));
         }
