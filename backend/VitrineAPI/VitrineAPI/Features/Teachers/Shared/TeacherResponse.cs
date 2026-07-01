@@ -7,6 +7,7 @@
         string Email,
         string Lattes,
         string Field,
-        string AcademicDegree
+        string AcademicDegree,
+        string ImageUrl
     );
 }

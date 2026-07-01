@@ -19,6 +19,7 @@ namespace VitrineAPI.Features.Teachers.Endpoints
             teacher.Lattes = request.Lattes;
             teacher.Field = request.Field;
             teacher.AcademicDegree = Enum.Parse<TeacherAcademicDegree>(request.AcademicDegree);
+            teacher.ImageUrl = request.ImageUrl;
 
             await db.SaveChangesAsync();
 
@@ -29,7 +30,8 @@ namespace VitrineAPI.Features.Teachers.Endpoints
                 teacher.Email,
                 teacher.Lattes,
                 teacher.Field,
-                teacher.AcademicDegree.ToString()
+                teacher.AcademicDegree.ToString(),
+                teacher.ImageUrl
             );
         }
     }

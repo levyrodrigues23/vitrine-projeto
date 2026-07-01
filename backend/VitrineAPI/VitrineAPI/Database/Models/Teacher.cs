@@ -11,6 +11,7 @@ namespace VitrineAPI.Database.Models
         public string Lattes { get; set; } = string.Empty;
         public string Field { get; set; } = string.Empty;
         public TeacherAcademicDegree AcademicDegree { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
         public ICollection<Project> Projects { get; set; } = [];
         public ICollection<WorkDone> WorksDone { get; set; } = [];
     }

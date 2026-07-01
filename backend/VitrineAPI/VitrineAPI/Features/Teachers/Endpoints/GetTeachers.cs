@@ -18,7 +18,8 @@ namespace VitrineAPI.Features.Teachers.Endpoints
                     t.Email,
                     t.Lattes,
                     t.Field,
-                    t.AcademicDegree.ToString()))
+                    t.AcademicDegree.ToString(),
+                    t.ImageUrl))
                 .ToListAsync();
         }
     }

@@ -74,6 +74,10 @@ namespace VitrineAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Lattes")
                         .IsRequired()
                         .HasColumnType("text");
