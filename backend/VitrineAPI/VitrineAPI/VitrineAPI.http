@@ -1,7 +1,19 @@
 @baseUrl = http://localhost:5026
 @projectId = 00000000-0000-0000-0000-000000000000
 @workDoneId = 00000000-0000-0000-0000-000000000000
-@teacherId = 00000000-0000-0000-0000-000000000000
+@teacherId = d024c74a-7cb9-4a72-a65c-ff702fadaed9
+
+### Atualizando atributos de um professor
+PUT {{baseUrl}}/api/teachers/{{teacherId}}
+Content-Type: application/json
+{
+  "name": "Professor Teste",
+  "description": "Professor adjunto de teste",
+  "email": "professor@gmail.com",
+  "lattes": "https://lattes.cnpq.br/1234567890123456",
+  "field": "Engenharia de Dados",
+  "academicDegree": "Doutorado"
+}
 
 ### Buscando um professor por ID
 GET {{baseUrl}}/api/teachers/{{teacherId}}
